@@ -2,8 +2,14 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
+const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
+const ejsMate = require('ejs-mate');
+const methodOverride = require('method-override');
+
+const studentRouter = require('./routes/studentRoute');
+const hrRouter = require('./routes/hrRoute');
 
 // Instantiate express app
 const app = express();
@@ -12,5 +18,32 @@ const app = express();
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+// Serve static assets
+app.use(express.static(path.join(__dirname, '/public')));
+
+// Views and View Engine
+app.engine('ejs', ejsMate);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views/'));
+
+// Body-parser middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+// Method-override middleware
+app.use(
+  methodOverride((req, res) => {
+    if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+      let method = req.body._method;
+      delete req.body._method;
+      return method;
+    }
+  })
+);
+
+// Routers
+app.use('/students', studentRouter);
+app.use('/hrs', hrRouter);
 
 module.exports = app;
