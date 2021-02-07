@@ -5,11 +5,13 @@ if (process.env.NODE_ENV !== 'production') {
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
+const session = require('express-session');
+const flash = require('connect-flash');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 
 const studentRouter = require('./routes/studentRoute');
-const hrRouter = require('./routes/hrRoute');
+const interviewerRouter = require('./routes/interviewerRoute');
 
 // Instantiate express app
 const app = express();
@@ -42,8 +44,31 @@ app.use(
   })
 );
 
+// express-session middleware
+const sessionConfig = {
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  },
+};
+app.use(session(sessionConfig));
+
+// connect-flash middleware
+app.use(flash());
+
+// flash middleware
+app.use((req, res, next) => {
+  res.locals.success = req.flash('success');
+  res.locals.error = req.flash('error');
+  next();
+});
+
 // Routers
 app.use('/students', studentRouter);
-app.use('/hrs', hrRouter);
+app.use('/interviewers', interviewerRouter);
 
 module.exports = app;
