@@ -1,0 +1,34 @@
+<% layout("layouts/boilerplate") -%>
+
+<main class="container">
+
+  <% if(students && students.length) { %>
+  <table class="table table-bordered table-hover" id="students">
+    <thead>
+      <tr>
+        <th>SNO</th>
+        <th>Register Number</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Section</th>
+        <th>Preference</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% students.forEach((student, index) => { %>
+        <td><%= index + 1 %></td>
+        <td class="text-center"><%= student.register_num %></td>
+        <td><%= student.name %></td>
+        <td class="text-center"><%= student.dept %></td>
+        <td><%= student.section %></td>
+        <td><%= student.preference %></td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  <% } else { %>
+  <p>You have not created any students yet.</p>
+  <% } %>
+</main>
+
+<%- include("./modals/new.ejs") %> <%- include("./modals/edit.ejs") %> <%- include("./modals/delete.ejs") %>

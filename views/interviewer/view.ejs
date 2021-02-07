@@ -1,0 +1,30 @@
+<% layout("layouts/boilerplate") -%>
+
+<main class="container">
+  <h3>Interviewer Name : <%= interviewer[0].name %></h3>
+  <h3>Interviewer Company : <%= interviewer[0].company %></h3>
+  <h1>List of Students to Interviewees</h1>
+  <table class="table table-bordered table-hover">
+    <thead class="bg-light">
+      <tr>
+        <th>SNO</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Aptitude Score</th>
+        <th>GD Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% interviewer[0].students.forEach((student, index) => { %>
+      <tr>
+        <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
+        <td><%= index + 1 %></td>
+        <td><%= student.name %></td>
+        <td><%= student.dept %></td>
+        <td><%= sumOfValues(student.aptitude_scores) %> / 50</td>
+        <td><%= sumOfValues(student.gd_scores) %> / 30</td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</main>

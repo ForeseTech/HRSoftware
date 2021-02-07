@@ -1,0 +1,57 @@
+<% layout("layouts/boilerplate") -%>
+
+<main class="container">
+  <button class="btn btn-primary mt-4 mb-3" data-toggle="modal" data-target="#newInterviewer">
+    Add New Interviewer
+  </button>
+  <%- include("../partials/flash.ejs") %>
+  <h1>Interview Date : 20<sup>th</sup> February, 2021</h1>
+  <table class="table table-bordered table-hover" id="interviewers20">
+    <thead class="bg-light">
+      <tr>
+        <th>SNO</th>
+        <th>Name</th>
+        <th>Company</th>
+        <th>Students Assigned</th>
+        <th>View</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% interviewers20.forEach((interviewer, index) => { %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= interviewer.name %></td>
+        <td><%= interviewer.company %></td>
+        <td><%= studentsPerInterviewer20[interviewer._id] %></td>
+        <td><a href="interviewers/<%= interviewer._id %>">View</a></td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+
+  <h1>Interview Date : 21<sup>st</sup> February, 2021</h1>
+  <table class="table table-bordered table-hover" id="interviewers21">
+    <thead class="bg-light">
+      <tr>
+        <th>SNO</th>
+        <th>Name</th>
+        <th>Company</th>
+        <th>Students Assigned</th>
+        <th>View</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% interviewers21.forEach((interviewer, index) => { %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= interviewer.name %></td>
+        <td><%= interviewer.company %></td>
+        <td><%= studentsPerInterviewer21[interviewer._id] %></td>
+        <td><a href="interviewers/<%= interviewer._id %>">View</a></td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</main>
+
+<%- include("./modals/new.ejs") %> <%- include("./modals/edit.ejs") %> <%- include("./modals/delete.ejs") %>
