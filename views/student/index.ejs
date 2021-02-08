@@ -13,7 +13,8 @@
         <th>Preference</th>
         <th>Aptitude Score</th>
         <th>GD Score</th>
-        <th>Number Of Interviews</th>
+        <th>Interviews</th>
+        <th>View</th>
       </tr>
     </thead>
     <tbody>
@@ -24,11 +25,12 @@
         <td class="text-center"><%= student.register_num %></td>
         <td><%= student.name %></td>
         <td class="text-center"><%= student.dept %></td>
-        <td><%= student.section %></td>
+        <td class="text-center"><%= student.section %></td>
         <td><%= student.preference %></td>
         <td><%= sumOfValues(student.aptitude_scores) %> / 50</td>
         <td><%= sumOfValues(student.gd_scores) %> / 30</td>
-        <td><%= interviewsPerStudent[student._id] %></td>
+        <td class="text-center"><%= interviewsPerStudent[student._id] %></td>
+        <td><a href="/students/<%= student._id %>">View</a></td>
       </tr>
       <% }); %>
     </tbody>

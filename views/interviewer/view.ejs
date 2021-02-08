@@ -2,8 +2,8 @@
 
 <main class="container">
   <%- include("../partials/flash.ejs") %>
-  <h3>Interviewer Name : <%= interviewer[0].name %></h3>
-  <h3>Interviewer Company : <%= interviewer[0].company %></h3>
+  <h3>Interviewer Name : <%= interviewer.name %></h3>
+  <h3>Interviewer Company : <%= interviewer.company %></h3>
   <h1>List of Interviewees</h1>
   <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addStudent">Add Student</button>
   <table class="table table-bordered table-hover">
@@ -17,7 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      <% interviewer[0].students.forEach((student, index) => { %>
+      <% interviewer.students.forEach((student, index) => { %>
       <tr>
         <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
         <td><%= index + 1 %></td>

@@ -16,6 +16,13 @@ const renderStudent = asyncHandler(async (req, res, next) => {
   res.render('student/index', { students, interviewsPerStudent });
 });
 
+const getStudent = asyncHandler(async (req, res, next) => {
+  const studentId = req.params.id;
+  const student = await Student.findById(studentId).populate('interviewers');
+
+  res.render('student/view', { student });
+});
+
 const createStudent = asyncHandler(async (req, res, next) => {
   console.log(req.body);
   await Student.create(req.body);
@@ -33,6 +40,7 @@ const deleteStudent = asyncHandler(async (req, res, next) => {
 
 module.exports = {
   renderStudent,
+  getStudent,
   createStudent,
   updateStudent,
   deleteStudent,

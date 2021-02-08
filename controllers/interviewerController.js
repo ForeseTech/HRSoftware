@@ -60,17 +60,18 @@ const renderInterviewer = asyncHandler(async (req, res, next) => {
   });
 });
 
+const getInterviewer = asyncHandler(async (req, res, next) => {
+  const interviewerId = req.params.id;
+  const interviewer = await Interviewer.findById(interviewerId).populate('students');
+
+  res.render('interviewer/view', { interviewer });
+});
+
 const createInterviewer = asyncHandler(async (req, res, next) => {
   await Interviewer.create(req.body);
 
   req.flash('success', 'New Interviewer Successfully Created');
   res.redirect('/interviewers');
-});
-
-const getInterviewer = asyncHandler(async (req, res, next) => {
-  const interviewerId = req.params.id;
-  const interviewer = await Interviewer.find({ _id: interviewerId }).populate('students');
-  res.render('interviewer/view', { interviewer });
 });
 
 const updateInterviewer = asyncHandler(async (req, res, next) => {});
@@ -82,11 +83,29 @@ const deleteInterviewer = asyncHandler(async (req, res, next) => {
 });
 
 const assignStudentToInterviewer = asyncHandler(async (req, res, next) => {
+  // Get register number and interviewerId
   const registerNum = req.body.register_num;
   const interviewerId = req.params.id;
+
+  // Search for Interviewer
+  const interviewer = await Interviewer.findById(interviewerId);
+  console.log(interviewer);
+
+  // Search for Student
   const student = await Student.findOne({ register_num: parseInt(registerNum) });
+
+  // Get studentId
+  const studentId = student['_id'];
+
+  // Push InterviewerId to student.interviewers array
   student.interviewers.push(interviewerId);
   student.save();
+
+  // Push studentId to interviewers.students array
+  interviewer.students.push(studentId);
+  interviewer.save();
+
+  // Success Flash Message
   req.flash('success', 'Student successfully assigned');
   res.redirect(`/interviewers/${interviewerId}`);
 });

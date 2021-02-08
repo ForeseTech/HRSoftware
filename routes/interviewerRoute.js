@@ -3,8 +3,8 @@ const router = express.Router();
 
 const {
   renderInterviewer,
-  createInterviewer,
   getInterviewer,
+  createInterviewer,
   updateInterviewer,
   deleteInterviewer,
   assignStudentToInterviewer,
