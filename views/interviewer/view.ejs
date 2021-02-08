@@ -14,6 +14,7 @@
         <th>Department</th>
         <th>Aptitude Score</th>
         <th>GD Score</th>
+        <th>Student Details</th>
       </tr>
     </thead>
     <tbody>
@@ -25,6 +26,7 @@
         <td><%= student.dept %></td>
         <td><%= sumOfValues(student.aptitude_scores) %> / 50</td>
         <td><%= sumOfValues(student.gd_scores) %> / 30</td>
+        <td><a href="/students/<%= student._id %>">View</a></td>
       </tr>
       <% }); %>
     </tbody>

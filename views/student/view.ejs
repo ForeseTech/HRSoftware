@@ -1,0 +1,33 @@
+<% layout("layouts/boilerplate") -%>
+
+<main class="container">
+  <h3>Student Register Number : <%= student.register_num %></h3>
+  <h3>Student Name : <%= student.name %></h3>
+  <h3>Student Department : <%= student.dept %></h3>
+  <h2>List Of Interviews:-</h2>
+  <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addInterviewer">Add Interviewer</button>
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>SNO</th>
+        <th>Interviewer Name</th>
+        <th>Inteviewer Company</th>
+        <th>Interview Date</th>
+        <th>Interviewer Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% student.interviewers.forEach((interviewer, index) => { %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= interviewer.name %></td>
+        <td><%= interviewer.company %></td>
+        <td><%= interviewer.interview_date %></td>
+        <td><a href="/interviewers/<%= interviewer._id %>">View</a></td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</main>
+
+<%- include("./modals/add.ejs"); %>

@@ -89,7 +89,6 @@ const assignStudentToInterviewer = asyncHandler(async (req, res, next) => {
 
   // Search for Interviewer
   const interviewer = await Interviewer.findById(interviewerId);
-  console.log(interviewer);
 
   // Search for Student
   const student = await Student.findOne({ register_num: parseInt(registerNum) });
