@@ -14,7 +14,8 @@
       "critical_thinking": 3,
       "leadership_skills": 3
     },
-    "aptitude_scores": { "core": 14, "verbal": 4, "quants": 4, "programming": 4 }
+    "aptitude_scores": { "core": 14, "verbal": 4, "quants": 4, "programming": 4 },
+    "interviewers": []
   },
   {
     "register_num": 180101003,

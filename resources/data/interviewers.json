@@ -4,34 +4,30 @@
     "name": "Adhihariharan",
     "company": "Cognizant",
     "interview_date": "2021-02-20",
-    "students": ["601f209dd401721aac56338c", "601f209dd401721aac56338d"]
+    "students": []
   },
   {
     "_id": "5d713995b721c3bb38c1f5d1",
     "name": "Joann",
     "company": "Infosys",
-    "interview_date": "2021-02-20",
-    "students": ["601f209dd401721aac56338e", "601f209dd401721aac56338f"]
+    "interview_date": "2021-02-20"
   },
   {
     "_id": "5d713995b721c3bb38c1f5d2",
     "name": "Dhivya",
     "company": "TCS",
-    "interview_date": "2021-02-20",
-    "students": ["601f209dd401721aac563390", "601f209dd401721aac563391"]
+    "interview_date": "2021-02-20"
   },
   {
     "_id": "5d713995b721c3bb38c1f5d3",
     "name": "Anuja",
     "company": "Google",
-    "interview_date": "2021-02-21",
-    "students": ["601f209dd401721aac563392", "601f209dd401721aac563393"]
+    "interview_date": "2021-02-21"
   },
   {
     "_id": "5d713995b721c3bb38c1f5d4",
     "name": "Govind",
     "company": "Amazon",
-    "interview_date": "2021-02-21",
-    "students": ["601f209dd401721aac563394", "601f209dd401721aac563395"]
+    "interview_date": "2021-02-21"
   }
 ]

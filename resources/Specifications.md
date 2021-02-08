@@ -1,4 +1,4 @@
-Probable Domain : hr.forese.in
+Probable Domain : interviewer.forese.in
 
 Login : /login
 Dashboard : /dashboard
@@ -6,5 +6,5 @@ Logout : /logout
 
 Admin Routes:-
 
-/students - View all students and the HR assigned to each student
-/hrs - View all HR's and list of students assigned to each HR
+/students - View all students and the Interviewer assigned to each student
+/interviewers - View all Interviewer's and list of students assigned to each Interviewer

@@ -15,7 +15,7 @@ const interviewers = JSON.parse(fs.readFileSync(`${__dirname}/resources/data/int
 // Import into DB
 const importData = async () => {
   try {
-    // await Student.create(students);
+    await Student.create(students);
     await Interviewer.create(interviewers);
 
     console.log('Data Imported...'.green);
@@ -28,7 +28,7 @@ const importData = async () => {
 // Delete Data
 const deleteData = async () => {
   try {
-    // await Student.deleteMany();
+    await Student.deleteMany();
     await Interviewer.deleteMany();
 
     console.log('Data Destroyed...'.red);
