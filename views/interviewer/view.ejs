@@ -1,9 +1,11 @@
 <% layout("layouts/boilerplate") -%>
 
 <main class="container">
+  <%- include("../partials/flash.ejs") %>
   <h3>Interviewer Name : <%= interviewer[0].name %></h3>
   <h3>Interviewer Company : <%= interviewer[0].company %></h3>
-  <h1>List of Students to Interviewees</h1>
+  <h1>List of Interviewees</h1>
+  <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addStudent">Add Student</button>
   <table class="table table-bordered table-hover">
     <thead class="bg-light">
       <tr>
@@ -28,3 +30,5 @@
     </tbody>
   </table>
 </main>
+
+<%- include("./modals/add.ejs") %>

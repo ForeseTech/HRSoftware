@@ -1,10 +1,9 @@
 <% layout("layouts/boilerplate") -%>
 
 <main class="container">
-
   <% if(students && students.length) { %>
   <table class="table table-bordered table-hover" id="students">
-    <thead>
+    <thead class="bg-light">
       <tr>
         <th>SNO</th>
         <th>Register Number</th>
@@ -12,16 +11,24 @@
         <th>Department</th>
         <th>Section</th>
         <th>Preference</th>
+        <th>Aptitude Score</th>
+        <th>GD Score</th>
+        <th>Number Of Interviews</th>
       </tr>
     </thead>
     <tbody>
       <% students.forEach((student, index) => { %>
+      <tr>
+        <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
         <td><%= index + 1 %></td>
         <td class="text-center"><%= student.register_num %></td>
         <td><%= student.name %></td>
         <td class="text-center"><%= student.dept %></td>
         <td><%= student.section %></td>
         <td><%= student.preference %></td>
+        <td><%= sumOfValues(student.aptitude_scores) %> / 50</td>
+        <td><%= sumOfValues(student.gd_scores) %> / 30</td>
+        <td><%= interviewsPerStudent[student._id] %></td>
       </tr>
       <% }); %>
     </tbody>
@@ -30,5 +37,3 @@
   <p>You have not created any students yet.</p>
   <% } %>
 </main>
-
-<%- include("./modals/new.ejs") %> <%- include("./modals/edit.ejs") %> <%- include("./modals/delete.ejs") %>
