@@ -1,4 +1,6 @@
 const Interviewer = require('../models/interviewerModel');
+const Student = require('../models/studentModel');
+
 const asyncHandler = require('../middleware/async');
 
 const renderInterviewer = asyncHandler(async (req, res, next) => {
@@ -67,10 +69,8 @@ const createInterviewer = asyncHandler(async (req, res, next) => {
 
 const getInterviewer = asyncHandler(async (req, res, next) => {
   const interviewerId = req.params.id;
-  console.log(interviewerId);
   const interviewer = await Interviewer.find({ _id: interviewerId }).populate('students');
   res.render('interviewer/view', { interviewer });
-  // res.json(interviewer);
 });
 
 const updateInterviewer = asyncHandler(async (req, res, next) => {});
@@ -81,10 +81,21 @@ const deleteInterviewer = asyncHandler(async (req, res, next) => {
   res.redirect('/interviewers');
 });
 
+const assignStudentToInterviewer = asyncHandler(async (req, res, next) => {
+  const registerNum = req.body.register_num;
+  const interviewerId = req.params.id;
+  const student = await Student.findOne({ register_num: parseInt(registerNum) });
+  student.interviewers.push(interviewerId);
+  student.save();
+  req.flash('success', 'Student successfully assigned');
+  res.redirect(`/interviewers/${interviewerId}`);
+});
+
 module.exports = {
   renderInterviewer,
   createInterviewer,
   getInterviewer,
   updateInterviewer,
   deleteInterviewer,
+  assignStudentToInterviewer,
 };
