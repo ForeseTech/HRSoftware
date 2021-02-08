@@ -68,6 +68,10 @@ app.use((req, res, next) => {
 });
 
 // Routers
+app.get('/', (req, res, next) => {
+  res.render('index');
+});
+
 app.use('/students', studentRouter);
 app.use('/interviewers', interviewerRouter);
 
