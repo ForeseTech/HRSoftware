@@ -1,5 +1,6 @@
 const Interviewer = require('../models/interviewerModel');
 const Student = require('../models/studentModel');
+const Score = require('../models/scoreModel');
 
 const asyncHandler = require('../middleware/async');
 
@@ -109,6 +110,27 @@ const assignStudentToInterviewer = asyncHandler(async (req, res, next) => {
   res.redirect(`/interviewers/${interviewerId}`);
 });
 
+const scoreStudent = asyncHandler(async (req, res, next) => {
+  const interviewer = req.params.interviewerId;
+  const student = req.params.studentId;
+
+  const scores = {};
+  scores['professionalAppearence'] = req.body.professionalAppearence ? req.body.professionalAppearence : 0;
+  scores['managerialAptitude'] = req.body.managerialAptitude ? req.body.managerialAptitude : 0;
+  scores['generalIntelligence'] = req.body.generalIntelligence ? req.body.generalIntelligence : 0;
+  scores['technicalKnowledge'] = req.body.technicalKnowledge ? req.body.technicalKnowledge : 0;
+  scores['communicationSkills'] = req.body.communicationSkills ? req.body.communicationSkills : 0;
+  scores['selfConfidence'] = req.body.selfConfidence ? req.body.selfConfidence : 0;
+
+  const comments = req.body.comments;
+
+  await Score.create({ interviewer, student, scores, comments });
+
+  // Success Flash Message
+  req.flash('success', 'Student successfully scored');
+  res.redirect(`/interviewers/${interviewer}`);
+});
+
 module.exports = {
   renderInterviewer,
   createInterviewer,
@@ -116,4 +138,5 @@ module.exports = {
   updateInterviewer,
   deleteInterviewer,
   assignStudentToInterviewer,
+  scoreStudent,
 };
