@@ -5,59 +5,20 @@ const Score = require('../models/scoreModel');
 const asyncHandler = require('../middleware/async');
 
 const renderInterviewer = asyncHandler(async (req, res, next) => {
-  const interviewers20 = await Interviewer.find({
-    interview_date: {
-      $gte: new Date(2021, 1, 20),
-      $lt: new Date(2021, 1, 21),
-    },
-  }).populate('students');
+  // Get all interviewers
+  const interviewers = await Interviewer.find({}).sort('interview_date').populate('students');
 
-  const students20 = await Interviewer.aggregate([
-    {
-      $match: {
-        interview_date: {
-          $gte: new Date(2021, 1, 20),
-          $lt: new Date(2021, 1, 21),
-        },
-      },
-    },
-    { $project: { students: { $size: '$students' } } },
-  ]);
+  // Aggregate number of students per interviewer
+  const students = await Interviewer.aggregate([{ $project: { count: { $size: '$students' } } }]);
 
-  let studentsPerInterviewer20 = {};
-  for (let i = 0; i < students20.length; i++) {
-    studentsPerInterviewer20[students20[i]._id] = students20[i].students;
-  }
-
-  const interviewers21 = await Interviewer.find({
-    interview_date: {
-      $gte: new Date(2021, 1, 21),
-      $lt: new Date(2021, 1, 22),
-    },
-  }).populate('students');
-
-  const students21 = await Interviewer.aggregate([
-    {
-      $match: {
-        interview_date: {
-          $gte: new Date(2021, 1, 21),
-          $lt: new Date(2021, 1, 22),
-        },
-      },
-    },
-    { $project: { students: { $size: '$students' } } },
-  ]);
-
-  let studentsPerInterviewer21 = {};
-  for (let i = 0; i < students21.length; i++) {
-    studentsPerInterviewer21[students21[i]._id] = students21[i].students;
+  let studentsPerInterviewer = {};
+  for (let i = 0; i < students.length; i++) {
+    studentsPerInterviewer[students[i]._id] = students[i].count;
   }
 
   res.render('interviewer/index', {
-    interviewers20,
-    studentsPerInterviewer20,
-    interviewers21,
-    studentsPerInterviewer21,
+    interviewers,
+    studentsPerInterviewer,
   });
 });
 
@@ -78,7 +39,7 @@ const createInterviewer = asyncHandler(async (req, res, next) => {
 const updateInterviewer = asyncHandler(async (req, res, next) => {});
 
 const deleteInterviewer = asyncHandler(async (req, res, next) => {
-  await Student.findByIdAndDelete(req.params.id);
+  await Interviewer.findByIdAndDelete(req.params.id);
   req.flash('success', 'Interviewer Successfully Deleted');
   res.redirect('/interviewers');
 });

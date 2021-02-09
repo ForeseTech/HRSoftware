@@ -2,39 +2,79 @@
 
 <main class="container">
   <% if(students && students.length) { %>
-  <table class="table table-bordered table-hover" id="students">
-    <thead class="bg-light">
-      <tr>
-        <th>SNO</th>
-        <th>Register Number</th>
-        <th>Name</th>
-        <th>Department</th>
-        <th>Section</th>
-        <th>Preference</th>
-        <th>Aptitude Score</th>
-        <th>GD Score</th>
-        <th>Interviews</th>
-        <th>View</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% students.forEach((student, index) => { %>
-      <tr>
-        <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
-        <td><%= index + 1 %></td>
-        <td class="text-center"><%= student.register_num %></td>
-        <td><%= student.name %></td>
-        <td class="text-center"><%= student.dept %></td>
-        <td class="text-center"><%= student.section %></td>
-        <td><%= student.preference %></td>
-        <td><%= sumOfValues(student.aptitude_scores) %> / 50</td>
-        <td><%= sumOfValues(student.gd_scores) %> / 30</td>
-        <td class="text-center"><%= interviewsPerStudent[student._id] %></td>
-        <td><a href="/students/<%= student._id %>">View</a></td>
-      </tr>
-      <% }); %>
-    </tbody>
-  </table>
+  <nav class="mb-3">
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active" data-toggle="tab" href="#online" role="tab">Online</a>
+      <a class="nav-item nav-link" data-toggle="tab" href="#offline" role="tab">Offline</a>
+    </div>
+  </nav>
+
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="online" role="tabpanel">
+      <table class="table table-bordered table-hover" id="onlineStudents">
+        <thead class="bg-light">
+          <tr>
+            <th>Register Number</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Section</th>
+            <th>Aptitude Score</th>
+            <th>GD Score</th>
+            <th>Interviews</th>
+            <th>View</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% students.forEach((student, index) => { %> <% if(student.preference === "Online") { %>
+          <tr>
+            <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
+            <td class="text-center"><%= student.register_num %></td>
+            <td><%= student.name %></td>
+            <td class="text-center"><%= student.dept %></td>
+            <td class="text-center"><%= student.section != "" ? student.section : "-" %></td>
+            <td><%= sumOfValues(student.aptitude_scores) %></td>
+            <td><%= sumOfValues(student.gd_scores) %></td>
+            <td class="text-center"><%= interviewsPerStudent[student._id] %></td>
+            <td><a href="/students/<%= student._id %>">View</a></td>
+          </tr>
+          <% } %> <% }); %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tab-pane fade" id="offline" role="tabpanel">
+      <table class="table table-bordered table-hover" id="offlineStudents">
+        <thead class="bg-light">
+          <tr>
+            <th>Register Number</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Section</th>
+            <th>Aptitude Score</th>
+            <th>GD Score</th>
+            <th>Interviews</th>
+            <th>View</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% students.forEach((student, index) => { %> <% if(student.preference === "Offline") { %>
+          <tr>
+            <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
+            <td class="text-center"><%= student.register_num %></td>
+            <td><%= student.name %></td>
+            <td class="text-center"><%= student.dept %></td>
+            <td class="text-center"><%= student.section %></td>
+            <td><%= sumOfValues(student.aptitude_scores) %></td>
+            <td><%= sumOfValues(student.gd_scores) %></td>
+            <td class="text-center"><%= interviewsPerStudent[student._id] %></td>
+            <td><a href="/students/<%= student._id %>">View</a></td>
+          </tr>
+          <% } %> <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <% } else { %>
   <p>You have not created any students yet.</p>
   <% } %>

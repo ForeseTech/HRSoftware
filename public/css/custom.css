@@ -32,6 +32,7 @@ footer {
   padding: 0.65rem 1rem;
   width: 100%;
   box-sizing: border-box;
+  z-index: 2;
 }
 
 @media (min-width: 768px) {
