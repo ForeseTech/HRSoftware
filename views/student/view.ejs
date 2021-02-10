@@ -1,12 +1,13 @@
 <% layout("layouts/boilerplate") -%>
 
 <main class="container">
+  <%- include("../partials/flash.ejs") %>
   <h3>Student Register Number : <%= student.register_num %></h3>
   <h3>Student Name : <%= student.name %></h3>
   <h3>Student Department : <%= student.dept %></h3>
   <h2>List Of Interviews:-</h2>
   <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addInterviewer">Add Interviewer</button>
-  <table class="table table-bordered table-hover">
+  <table class="table table-bordered table-hover text-center">
     <thead>
       <tr>
         <th>SNO</th>
@@ -23,7 +24,17 @@
         <td><%= interviewer.name %></td>
         <td><%= interviewer.company %></td>
         <td><%= interviewer.interview_date %></td>
-        <td><a href="/interviewers/<%= interviewer._id %>">View</a></td>
+        <td>
+          <a href="/interviewers/<%= interviewer._id %>" class="btn btn-dark btn-sm">View</a>
+          <form
+            action="/students/<%= student._id %>/deallocate_interviewer/<%= interviewer._id %>"
+            method="POST"
+            class="d-inline"
+          >
+            <input type="hidden" name="_method" value="PUT" />
+            <button type="submit" class="btn btn-warning btn-sm">Deallocate Interviewer</button>
+          </form>
+        </td>
       </tr>
       <% }); %>
     </tbody>

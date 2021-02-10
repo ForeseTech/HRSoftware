@@ -71,6 +71,22 @@ const assignStudentToInterviewer = asyncHandler(async (req, res, next) => {
   res.redirect(`/interviewers/${interviewerId}`);
 });
 
+const deallocateStudentToInterviewer = asyncHandler(async (req, res, next) => {
+  // Get interviewerId and studentId
+  const studentId = req.params.studentId;
+  const interviewerId = req.params.interviewerId;
+
+  // Pop interviewerId from student.interviewers array
+  await Interviewer.updateOne({ _id: interviewerId }, { $pull: { students: studentId } });
+
+  // Pop studentId from interviewers.students array
+  await Student.updateOne({ _id: studentId }, { $pull: { interviewers: interviewerId } });
+
+  // Success Flash Message
+  req.flash('success', 'Student successfully deallocated.');
+  res.redirect(`/interviewers/${interviewerId}`);
+});
+
 const scoreStudent = asyncHandler(async (req, res, next) => {
   const interviewer = req.params.interviewerId;
   const student = req.params.studentId;
@@ -99,5 +115,6 @@ module.exports = {
   updateInterviewer,
   deleteInterviewer,
   assignStudentToInterviewer,
+  deallocateStudentToInterviewer,
   scoreStudent,
 };
