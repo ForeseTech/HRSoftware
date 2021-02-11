@@ -36,7 +36,11 @@ const createInterviewer = asyncHandler(async (req, res, next) => {
   res.redirect('/interviewers');
 });
 
-const updateInterviewer = asyncHandler(async (req, res, next) => {});
+const updateInterviewer = asyncHandler(async (req, res, next) => {
+  await Interviewer.findByIdAndUpdate(req.params.id, req.body);
+  req.flash('success', 'Interviewer Details Successfully Updated');
+  res.redirect('/interviewers');
+});
 
 const deleteInterviewer = asyncHandler(async (req, res, next) => {
   await Interviewer.findByIdAndDelete(req.params.id);
