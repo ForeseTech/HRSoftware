@@ -30,20 +30,28 @@ const getInterviewer = asyncHandler(async (req, res, next) => {
 });
 
 const createInterviewer = asyncHandler(async (req, res, next) => {
+  // Create interviewer with data passed in request body
   await Interviewer.create(req.body);
 
+  // Success Flash Message
   req.flash('success', 'New Interviewer Successfully Created');
   res.redirect('/interviewers');
 });
 
 const updateInterviewer = asyncHandler(async (req, res, next) => {
+  // Find by Id and update it with data passed in the request body
   await Interviewer.findByIdAndUpdate(req.params.id, req.body);
+
+  // Success Flash Message
   req.flash('success', 'Interviewer Details Successfully Updated');
   res.redirect('/interviewers');
 });
 
 const deleteInterviewer = asyncHandler(async (req, res, next) => {
+  // Find by Id and delete the interviewer
   await Interviewer.findByIdAndDelete(req.params.id);
+
+  // Success Flash Message
   req.flash('success', 'Interviewer Successfully Deleted');
   res.redirect('/interviewers');
 });

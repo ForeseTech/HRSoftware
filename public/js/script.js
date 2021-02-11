@@ -11,36 +11,17 @@ for (let i = 0; i < rateBtns.length; i++) {
   });
 }
 
-const editBtns = document.querySelectorAll('.btn-warning');
-
+const editBtns = document.querySelectorAll('.edit-interviewer');
 for (let i = 0; i < editBtns.length; i++) {
   editBtns[i].addEventListener('click', function () {
-    var editInterviewer = document.getElementsByClassName("edit-form-submit-btn");
-    var autofillName = document.getElementsByClassName("name");
-    var autofillCompany = document.getElementsByClassName("company");
-    var autofillSelectedDate = document.getElementsByClassName("option1");
-    var autofillUnselectedDate = document.getElementsByClassName("option2");
+    // Select the editForm by ID
+    const editInterviewerForm = document.getElementById('edit-interviewer-form');
 
-    const interviewerId = this.getAttribute('data-id') ?? '';
-    const interviewerName = this.getAttribute('data-name') ?? '';
-    const interviewerCompany = this.getAttribute('data-company') ?? '';
-    const interviewDate = this.getAttribute('data-date') ?? '';
+    // Set form action
+    editInterviewerForm.action = `/interviewers/${this.getAttribute('data-id')}`;
 
-    editInterviewer[0].action = `/interviewers/${interviewerId}`;
-    autofillName[0].value = interviewerName;
-    autofillCompany[0].value = interviewerCompany;
-    autofillSelectedDate[0].value = interviewDate;
-    if(autofillSelectedDate[0].value === "Sat") {
-      autofillUnselectedDate[0].value = "2021-02-21";
-      autofillSelectedDate[0].value = "2021-02-20";
-      autofillUnselectedDate[0].innerHTML = "21st February, 2021";
-      autofillSelectedDate[0].innerHTML = "20th February, 2021"
-    }
-    else {
-      autofillUnselectedDate[0].value = "2021-02-20";   
-      autofillSelectedDate[0].value = "2021-02-21";   
-      autofillUnselectedDate[0].innerHTML = "20th February, 2021";
-      autofillSelectedDate[0].innerHTML = "21st February, 2021"
-    }
+    // Prefill input fields
+    editInterviewerForm['name'].value = this.getAttribute('data-name') ?? '';
+    editInterviewerForm['company'].value = this.getAttribute('data-company') ?? '';
   });
 }
