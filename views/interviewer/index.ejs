@@ -3,9 +3,8 @@
 <main class="container">
   <nav class="mb-3">
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-      <a class="nav-item nav-link active" data-toggle="tab" href="#mocks20" role="tab"
-        >20<sup>th</sup> February, 2021</a
-      >
+      <a class="nav-item nav-link active" data-toggle="tab" href="#mocks21" role="tab"
+        >20<sup>th</sup> February, 2021</a>
       <a class="nav-item nav-link" data-toggle="tab" href="#mocks21" role="tab">21<sup>st</sup> February, 2021</a>
     </div>
   </nav>
@@ -28,15 +27,15 @@
           </tr>
         </thead>
         <tbody>
-          <% interviewers.forEach((interviewer, index) => { interview_date = new Date(interviewer.interview_date); %> <%
-          if(interview_date.getDate() == 20) { %>
+          <% interviewers.forEach((interviewer, index) => { interview_date = new Date(interviewer.interview_date); %>
+          <% if(interview_date.getDate() == 20) { %>
           <tr>
             <td><%= interviewer.name %></td>
             <td><%= interviewer.company %></td>
             <td><%= studentsPerInterviewer[interviewer._id] %></td>
             <td>
               <a href="/interviewers/<%= interviewer._id %>" class="btn btn-sm btn-secondary">View</a>
-              <button class="btn btn-sm btn-warning">Edit</button>
+              <button class="btn btn-sm btn-warning" data-toggle="modal" data-name=<%= interviewer.name %> data-id=<%= interviewer._id %> data-company=<%= interviewer.company %> data-date=<%= interview_date %> data-target="#editInterviewer">Edit</button>
               <form action="/interviewers/<%= interviewer._id %>" method="POST" class="d-inline">
                 <input type="hidden" name="_method" value="DELETE" />
                 <button class="btn btn-sm btn-danger" type="submit">Delete</button>
@@ -63,15 +62,16 @@
           </tr>
         </thead>
         <tbody>
-          <% interviewers.forEach((interviewer, index) => { interview_date = new Date(interviewer.interview_date); %> <%
-          if(interview_date.getDate() == 21) { %>
+          <% interviewers.forEach((interviewer, index) => { interview_date = new Date(interviewer.interview_date); %>
+          <% if(interview_date.getDate() == 21) { %>
           <tr>
             <td><%= interviewer.name %></td>
             <td><%= interviewer.company %></td>
             <td><%= studentsPerInterviewer[interviewer._id] %></td>
             <td>
+              <% console.log(interviewer); %>
               <a href="/interviewers/<%= interviewer._id %>" class="btn btn-sm btn-secondary">View</a>
-              <button class="btn btn-sm btn-warning">Edit</button>
+              <button class="btn btn-sm btn-warning" data-toggle="modal" data-name=<%= interviewer.name %> data-id=<%= interviewer._id %> data-company=<%= interviewer.company %> data-date=<%= interview_date %> data-target="#editInterviewer">Edit</button>
               <form action="/interviewers/<%= interviewer._id %>" method="POST" class="d-inline">
                 <input type="hidden" name="_method" value="DELETE" />
                 <button class="btn btn-sm btn-danger" type="submit">Delete</button>
