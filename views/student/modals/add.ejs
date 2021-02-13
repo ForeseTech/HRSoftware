@@ -1,4 +1,4 @@
-<!-- Assign Interviewer Modal -->
+<!-- Assign user Modal -->
 <div class="modal fade" id="addInterviewer">
   <div class="modal-dialog form-modal">
     <div class="modal-content">
@@ -10,17 +10,12 @@
       </div>
 
       <div class="modal-body">
-        <form
-          method="POST"
-          action="/students/<%= student._id %>/assign_interviewer"
-          class="needs-validation"
-          novalidate
-        >
-          <select name="interviewer" class="form-control">
+        <form method="POST" action="/students/<%= student._id %>/assign_user" class="needs-validation" novalidate>
+          <select name="user" class="form-control">
             <option value="" selected disabled>Select Interviewer</option>
-            <% interviewers.forEach((interviewer) => { %>
-            <option value="<%= interviewer._id  %>"><%= interviewer.name %> - <%= interviewer.company %></option>
-            <% }); %>
+            <% users.forEach((user) => { if(user.role === "Interviewer") { %>
+            <option value="<%= user._id  %>"><%= user.name %> - <%= user.company %> (<%= user.date %>)</option>
+            <% }}); %>
           </select>
           <div class="modal-footer">
             <button type="submit" class="btn btn-success">Assign Student</button>

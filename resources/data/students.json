@@ -15,7 +15,7 @@
       "leadership_skills": 3
     },
     "aptitude_scores": { "core": 14, "verbal": 4, "quants": 4, "programming": 4 },
-    "interviewers": []
+    "users": []
   },
   {
     "register_num": 180101003,

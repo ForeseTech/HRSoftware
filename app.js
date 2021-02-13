@@ -6,12 +6,13 @@ const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 
 const studentRouter = require('./routes/studentRoute');
-const interviewerRouter = require('./routes/interviewerRoute');
+const userRouter = require('./routes/userRoute');
 
 // Instantiate express app
 const app = express();
@@ -67,12 +68,15 @@ app.use((req, res, next) => {
   next();
 });
 
+// Cookie parser middleware
+app.use(cookieParser());
+
 // Routers
 app.get('/', (req, res, next) => {
   res.render('index');
 });
 
 app.use('/students', studentRouter);
-app.use('/interviewers', interviewerRouter);
+app.use('/users', userRouter);
 
 module.exports = app;

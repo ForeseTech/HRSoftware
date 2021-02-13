@@ -23,16 +23,16 @@
         <td><%= index + 1 %></td>
         <td><%= interviewer.name %></td>
         <td><%= interviewer.company %></td>
-        <td><%= interviewer.interview_date %></td>
+        <td><%= interviewer.date %></td>
         <td>
-          <a href="/interviewers/<%= interviewer._id %>" class="btn btn-dark btn-sm">View</a>
+          <a href="/users/<%= interviewer._id %>" class="btn btn-dark btn-sm">View</a>
           <form
-            action="/students/<%= student._id %>/deallocate_interviewer/<%= interviewer._id %>"
+            action="/students/<%= student._id %>/deallocate_user/<%= interviewer._id %>"
             method="POST"
             class="d-inline"
           >
             <input type="hidden" name="_method" value="PUT" />
-            <button type="submit" class="btn btn-warning btn-sm">Deallocate Interviewer</button>
+            <button type="submit" class="btn btn-warning btn-sm">Deallocate User</button>
           </form>
         </td>
       </tr>

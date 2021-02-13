@@ -1,0 +1,46 @@
+<!-- New user Modal -->
+<div class="modal fade" id="newUser">
+  <div class="modal-dialog form-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add New User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form method="POST" action="/users" class="needs-validation" name="newUser" novalidate>
+          <%- include("../../partials/user/form_fields.ejs"); %>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Save User</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const newUserForm = document.forms['newUser'];
+  const role = newUserForm['role'];
+
+  role.addEventListener('change', function () {
+    if (this.value === 'Interviewer') {
+      newUserForm['company'].classList.remove('d-none');
+      newUserForm['company'].required = true;
+    }
+    if (this.value !== 'Admin') {
+      newUserForm['date'].classList.remove('d-none');
+      newUserForm['date'].required = true;
+    } else {
+      newUserForm['date'] = '';
+      newUserForm['company'] = '';
+      newUserForm['date'].classList.add('d-none');
+      newUserForm['company'].classList.add('d-none');
+      newUserForm['date'].required = false;
+      newUserForm['company'].required = false;
+    }
+  });
+</script>

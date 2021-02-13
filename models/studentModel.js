@@ -40,7 +40,7 @@ const StudentSchema = mongoose.Schema({
   interviewers: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: 'Interviewer',
+      ref: 'User',
     },
   ],
 });

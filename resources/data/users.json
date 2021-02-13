@@ -3,31 +3,46 @@
     "_id": "5d713995b721c3bb38c1f5d0",
     "name": "Adhihariharan",
     "company": "Cognizant",
-    "interview_date": "2021-02-20",
+    "role": "Interviewer",
+    "date": "2021-02-20",
     "students": []
   },
   {
     "_id": "5d713995b721c3bb38c1f5d1",
     "name": "Joann",
     "company": "Infosys",
+    "role": "Interviewer",
     "interview_date": "2021-02-20"
   },
   {
     "_id": "5d713995b721c3bb38c1f5d2",
     "name": "Dhivya",
     "company": "TCS",
-    "interview_date": "2021-02-20"
+    "role": "Interviewer",
+    "date": "2021-02-20"
   },
   {
     "_id": "5d713995b721c3bb38c1f5d3",
     "name": "Anuja",
     "company": "Google",
-    "interview_date": "2021-02-21"
+    "role": "Interviewer",
+    "date": "2021-02-21"
   },
   {
     "_id": "5d713995b721c3bb38c1f5d4",
     "name": "Govind",
     "company": "Amazon",
-    "interview_date": "2021-02-21"
+    "role": "Interviewer",
+    "date": "2021-02-21"
+  },
+  {
+    "_id": "5d713995b721c3bb38c1f5d5",
+    "name": "Anirudh",
+    "role": "Admin"
+  },
+  {
+    "_id": "5d713995b721c3bb38c1f5d6",
+    "name": "Deekshitha",
+    "role": "Admin"
   }
 ]

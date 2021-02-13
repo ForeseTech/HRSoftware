@@ -18,7 +18,15 @@
   </head>
 
   <body>
-    <%- include('../partials/navbar.ejs'); %> <%- body %> <%- include('../partials/footer.ejs'); %>
+    <!-- prettier-ignore -->
+    <% if(typeof name !== "undefined" && typeof company !== "undefined") { %> 
+      <%- include("../partials/navbar.ejs"); %> 
+    <% } %>
+    <!-- prettier-ignore -->
+
+    <%- body %> 
+    
+    <%- include('../partials/footer.ejs'); %>
   </body>
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

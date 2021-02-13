@@ -1,11 +1,8 @@
 <% layout("layouts/boilerplate") -%>
 
 <main class="container">
-  <%- include("../partials/flash.ejs") %>
-  <h3>Interviewer Name : <%= interviewer.name %></h3>
-  <h3>Interviewer Company : <%= interviewer.company %></h3>
-  <h1>List of Interviewees</h1>
-  <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addStudent">Add Student</button>
+  <div class="mt-2"><%- include("../partials/flash.ejs") %></div>
+  <button class="btn btn-primary mb-3 px-4" data-toggle="modal" data-target="#addStudent">Add Student</button>
   <table class="table table-bordered table-hover text-center">
     <thead class="bg-light">
       <tr>
@@ -19,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      <% interviewer.students.forEach((student, index) => { %>
+      <% user.students.forEach((student, index) => { %>
       <tr>
         <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
         <td><%= index + 1 %></td>
@@ -31,18 +28,14 @@
         <td>
           <button
             class="btn btn-secondary btn-sm rate-student"
-            data-interviewer="<%= interviewer._id %>"
+            data-user="<%= user._id %>"
             data-student="<%= student._id %>"
             data-toggle="modal"
             data-target="#rateStudent"
           >
             Rate Student
           </button>
-          <form
-            action="/interviewers/<%= interviewer._id %>/deallocate_student/<%= student._id %>"
-            method="POST"
-            class="d-inline"
-          >
+          <form action="/users/<%= user._id %>/deallocate_student/<%= student._id %>" method="POST" class="d-inline">
             <input type="hidden" name="_method" value="PUT" />
             <button type="submit" class="btn btn-sm btn-warning">Deallocate Student</button>
           </form>

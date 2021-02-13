@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const ScoreSchema = mongoose.Schema({
   interviewer: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Interviewer',
+    ref: 'User',
   },
   student: {
     type: mongoose.Schema.ObjectId,
