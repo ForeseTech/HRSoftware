@@ -73,7 +73,7 @@ app.use(cookieParser());
 
 // Routers
 app.get('/', (req, res, next) => {
-  res.render('index');
+  res.redirect('/users/login');
 });
 
 app.use('/students', studentRouter);

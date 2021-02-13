@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
-const User = mongoose.model('User');
+const User = require('../models/userModel');
 
 // Protect Routes
 const isLoggedIn = async (req, res, next) => {
@@ -20,7 +20,7 @@ const isLoggedIn = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    req.user = await user.findById(decoded.id);
+    req.user = await User.findById(decoded.id);
 
     next();
   } catch (err) {
