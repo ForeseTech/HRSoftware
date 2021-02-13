@@ -13,7 +13,7 @@ const {
   assignStudentToUser,
   deallocateStudentToUser,
   scoreStudent,
-} = require('../controllers/UserController');
+} = require('../controllers/userController');
 
 const { isLoggedIn, authorize } = require('../middleware/auth');
 
@@ -25,10 +25,10 @@ router
   .get(isLoggedIn, getUser)
   .put(isLoggedIn, authorize('Admin'), updateUser)
   .delete(isLoggedIn, authorize('Admin'), deleteUser);
-router.route('/:interviewerId/assign_student').post(isLoggedIn, authorize('Incharge', 'Admin'), assignStudentToUser);
+router.route('/:interviewerId/assign_student').post(isLoggedIn, authorize('Interviewer', 'Admin'), assignStudentToUser);
 router
   .route('/:interviewerId/deallocate_student/:studentId')
-  .put(authorize('Incharge', 'Admin'), deallocateStudentToUser);
+  .put(authorize('Interviewer', 'Admin'), deallocateStudentToUser);
 router.route('/:interviewerId/students/:studentId').post(authorize('Interviewer', 'Admin'), scoreStudent);
 
 module.exports = router;

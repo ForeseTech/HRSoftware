@@ -5,44 +5,57 @@
     "company": "Cognizant",
     "role": "Interviewer",
     "date": "2021-02-20",
-    "students": []
+    "username": "adhihariharan_tcs",
+    "password": "adhihariharan_tcs"
   },
   {
     "_id": "5d713995b721c3bb38c1f5d1",
     "name": "Joann",
     "company": "Infosys",
     "role": "Interviewer",
-    "interview_date": "2021-02-20"
+    "interview_date": "2021-02-20",
+    "username": "joann_infosys",
+    "password": "joann_infosys"
   },
   {
     "_id": "5d713995b721c3bb38c1f5d2",
     "name": "Dhivya",
-    "company": "TCS",
+    "company": "MuSigma",
     "role": "Interviewer",
-    "date": "2021-02-20"
+    "date": "2021-02-20",
+    "username": "dhivya_musigma",
+    "password": "dhivya_musigma"
   },
   {
     "_id": "5d713995b721c3bb38c1f5d3",
     "name": "Anuja",
     "company": "Google",
     "role": "Interviewer",
-    "date": "2021-02-21"
+    "date": "2021-02-21",
+    "username": "anuja_google",
+    "password": "anuja_google"
   },
   {
     "_id": "5d713995b721c3bb38c1f5d4",
     "name": "Govind",
     "company": "Amazon",
     "role": "Interviewer",
-    "date": "2021-02-21"
+    "date": "2021-02-21",
+    "username": "govind_amazon",
+    "password": "govind_amazon"
   },
   {
     "_id": "5d713995b721c3bb38c1f5d5",
     "name": "Anirudh",
-    "role": "Admin"
+    "role": "Admin",
+    "username": "anirudh@forese.in",
+    "password": "654321"
   },
   {
     "_id": "5d713995b721c3bb38c1f5d6",
     "name": "Deekshitha",
-    "role": "Admin"
+    "role": "Admin",
+    "username": "deekshitha@forese.in",
+    "password": "654321"
   }
 ]
