@@ -76,7 +76,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
   }
 
   // Check if password matches
-  const isMatch = await User.matchPassword(password);
+  const isMatch = await user.matchPassword(password);
   if (!isMatch) {
     req.flash('error', 'Invalid Login Credentials.');
     return res.redirect('/users/login');
