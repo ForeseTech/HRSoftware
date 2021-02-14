@@ -30,6 +30,8 @@
             class="btn btn-secondary btn-sm rate-student"
             data-user="<%= user._id %>"
             data-student="<%= student._id %>"
+            data-aptitude="<%= JSON.stringify(student.aptitude_scores) %>"
+            data-gd="<%= JSON.stringify(student.gd_scores) %>"
             data-toggle="modal"
             data-target="#rateStudent"
           >

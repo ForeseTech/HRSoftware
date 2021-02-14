@@ -19,7 +19,7 @@
 
   <body>
     <!-- prettier-ignore -->
-    <% if(typeof name !== "undefined" && typeof company !== "undefined") { %> 
+    <% if(typeof name !== "undefined") { %> 
       <%- include("../partials/navbar.ejs"); %> 
     <% } %>
     <!-- prettier-ignore -->
@@ -33,14 +33,14 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
-  <script>
+  <!-- <script>
     $(document).ready(function () {
       $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
       });
       $('table.table').DataTable({ paging: false });
     });
-  </script>
+  </script> -->
 
   <script src="/js/validateForms.js"></script>
   <script src="/js/script.js"></script>

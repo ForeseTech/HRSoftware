@@ -1,9 +1,10 @@
 <% layout("layouts/boilerplate") -%>
 
 <main class="container">
+  <div class="mt-2"><%- include("../partials/flash.ejs") %></div>
   <button class="btn btn-primary mt-4 mb-3" data-toggle="modal" data-target="#newUser">Add New User</button>
 
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
+  <ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
     <li class="nav-item">
       <a class="nav-link active" data-toggle="tab" href="#interviewer" role="tab">Interviewers</a>
     </li>
@@ -122,37 +123,36 @@
             <thead class="bg-light">
               <tr>
                 <th>Name</th>
-                <th>HR Assigned</th>
-                <th>Students Assigned</th>
+                <th>Interviewer Assigned</th>
+                <th>Interviewer Company</th>
                 <th>View</th>
               </tr>
             </thead>
             <tbody>
-              <% users.forEach((user, index) => { date = new Date(user.date); %> <% if(date.getDate() == 20 && user.role
-              === "Incharge") { %>
+              <% incharges.forEach((incharge, index) => { %>
               <tr>
-                <td><%= user.name %></td>
-                <td>Nilesh - Hexaware</td>
-                <td><%= studentsPerInterviewer[interviewer._id] %></td>
+                <td><%= incharge.name %></td>
+                <td><%= incharge.interviewer.name %></td>
+                <td><%= incharge.interviewer.company %></td>
                 <td>
-                  <a href="/users/<%= user._id %>" class="btn btn-sm btn-secondary">View</a>
+                  <a href="/users/<%= incharge.interviewer._id %>" class="btn btn-sm btn-secondary">View</a>
                   <button
                     class="btn btn-sm btn-warning edit-interviewer"
                     data-toggle="modal"
-                    data-name="<%= user.name %>"
-                    data-id="<%= user._id %>"
-                    data-company="<%= user.company%>"
+                    data-name="<%= incharge.name %>"
+                    data-id="<%= incharge._id %>"
+                    data-company="<%= incharge.company%>"
                     data-target="#editUser"
                   >
                     Edit
                   </button>
-                  <form action="/users/<%= user._id %>" method="POST" class="d-inline">
+                  <form action="/incharges/<%= incharge._id %>" method="POST" class="d-inline">
                     <input type="hidden" name="_method" value="DELETE" />
                     <button class="btn btn-sm btn-danger" type="submit">Delete</button>
                   </form>
                 </td>
               </tr>
-              <% } %> <% }); %>
+              <% }); %>
             </tbody>
           </table>
         </div>
@@ -161,37 +161,36 @@
             <thead class="bg-light">
               <tr>
                 <th>Name</th>
-                <th>Company</th>
-                <th>Students Assigned</th>
+                <th>Interviewer Assigned</th>
+                <th>Interviewer Company</th>
                 <th>View</th>
               </tr>
             </thead>
             <tbody>
-              <% users.forEach((user, index) => { date = new Date(user.date); %> <% if(date.getDate() == 21 && user.role
-              === "Incharge") { %>
+              <% incharges.forEach((incharge, index) => { %>
               <tr>
-                <td><%= user.name %></td>
-                <td><%= user.company %></td>
-                <td><%= studentsPerInterviewer[interviewer._id] %></td>
+                <td><%= incharge.name %></td>
+                <td><%= incharge.interviewer.name %></td>
+                <td><%= incharge.interviewer.company %></td>
                 <td>
-                  <a href="/users/<%= user._id %>" class="btn btn-sm btn-secondary">View</a>
+                  <a href="/incharges/<%= incharge._id %>" class="btn btn-sm btn-secondary">View</a>
                   <button
                     class="btn btn-sm btn-warning edit-interviewer"
                     data-toggle="modal"
-                    data-name="<%= user.name %>"
-                    data-id="<%= user._id %>"
-                    data-company="<%= user.company%>"
+                    data-name="<%= incharge.name %>"
+                    data-id="<%= incharge._id %>"
+                    data-company="<%= incharge.company%>"
                     data-target="#editUser"
                   >
                     Edit
                   </button>
-                  <form action="/users/<%= user._id %>" method="POST" class="d-inline">
+                  <form action="/incharges/<%= incharge._id %>" method="POST" class="d-inline">
                     <input type="hidden" name="_method" value="DELETE" />
                     <button class="btn btn-sm btn-danger" type="submit">Delete</button>
                   </form>
                 </td>
               </tr>
-              <% } %> <% }); %>
+              <% }); %>
             </tbody>
           </table>
         </div>
@@ -203,28 +202,12 @@
         <thead class="bg-light">
           <tr>
             <th>Name</th>
-            <th>View</th>
           </tr>
         </thead>
         <tbody>
           <% users.forEach((user, index) => { %> <% if(user.role === "Admin") { %>
           <tr>
             <td><%= user.name %></td>
-            <td>
-              <button
-                class="btn btn-sm btn-warning edit-interviewer"
-                data-toggle="modal"
-                data-name="<%= user.name %>"
-                data-id="<%= user._id %>"
-                data-target="#editUser"
-              >
-                Edit
-              </button>
-              <form action="/users/<%= user._id %>" method="POST" class="d-inline">
-                <input type="hidden" name="_method" value="DELETE" />
-                <button class="btn btn-sm btn-danger" type="submit">Delete</button>
-              </form>
-            </td>
           </tr>
           <% } %> <% }); %>
         </tbody>

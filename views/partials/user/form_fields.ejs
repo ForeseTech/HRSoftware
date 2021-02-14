@@ -10,9 +10,16 @@
 <input type="text" name="company" class="form-control d-none mt-2" placeholder="Enter Company Name" />
 
 <select name="date" class="form-control mt-2 d-none">
-  <option value="" selected disabled>Enter Interview Date</option>
+  <option value="" selected disabled>Select Date</option>
   <option value="2021-02-20">20 February, 2021</option>
   <option value="2021-02-21">21 February, 2021</option>
   <option value="2021-02-27">27 February, 2021</option>
   <option value="2021-02-28">28 February, 2021</option>
+</select>
+
+<select name="interviewer" class="form-control mt-2 d-none">
+  <option value="" selected disabled>Select the HR You Are Incharge For</option>
+  <% users.forEach((user) => { if(user.role === "Interviewer") { %>
+  <option value="<%= user._id  %>"><%= user.name %> - <%= user.company %> (<%= user.date %>)</option>
+  <% }}); %>
 </select>

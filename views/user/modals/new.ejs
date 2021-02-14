@@ -28,19 +28,30 @@
 
   role.addEventListener('change', function () {
     if (this.value === 'Interviewer') {
+      console.log(newUserForm['date'].classList.remove('d-none'));
       newUserForm['company'].classList.remove('d-none');
-      newUserForm['company'].required = true;
-    }
-    if (this.value !== 'Admin') {
-      newUserForm['date'].classList.remove('d-none');
+      newUserForm['interviewer'].classList.add('d-none');
       newUserForm['date'].required = true;
+      newUserForm['company'].required = true;
+      newUserForm['interviewer'].required = false;
+    } else if (this.value === 'Incharge') {
+      newUserForm['interviewer'].classList.remove('d-none');
+      newUserForm['date'].classList.add('d-none');
+      newUserForm['company'].classList.add('d-none');
+      newUserForm['company'] = '';
+      newUserForm['interviewer'].required = true;
+      newUserForm['date'].required = false;
+      newUserForm['company'].required = false;
     } else {
       newUserForm['date'] = '';
       newUserForm['company'] = '';
+      newUserForm['interviewer'] = '';
       newUserForm['date'].classList.add('d-none');
       newUserForm['company'].classList.add('d-none');
+      newUserForm['interviewer'].classList.add('d-none');
       newUserForm['date'].required = false;
       newUserForm['company'].required = false;
+      newUserForm['interviewer'].required = false;
     }
   });
 </script>

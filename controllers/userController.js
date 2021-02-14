@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const Student = require('../models/studentModel');
+const Incharge = require('../models/inchargeModel');
 const Score = require('../models/scoreModel');
 
 const asyncHandler = require('../middleware/async');
@@ -10,6 +11,7 @@ const asyncHandler = require('../middleware/async');
 const renderUsers = asyncHandler(async (req, res, next) => {
   // Get all users
   const users = await User.find({}).populate('students');
+  const incharges = await Incharge.find({}).populate('interviewer');
 
   // Aggregate number of students per user
   const students = await User.aggregate([
@@ -24,7 +26,9 @@ const renderUsers = asyncHandler(async (req, res, next) => {
 
   res.render('user/index', {
     users,
+    incharges,
     studentsPerInterviewer,
+    name: req.user.name,
   });
 });
 
@@ -39,15 +43,16 @@ const createUser = asyncHandler(async (req, res, next) => {
   if (user.role === 'Admin') {
     user['username'] = `${user['name'].split(' ')[0]}@forese.in`.toLowerCase();
     user['password'] = '654321';
+    await User.create(user);
   } else if (user.role === 'Interviewer') {
     user['username'] = `${user['name'].split(' ')[0]}_${user['company'].split(' ')[0]}`.toLowerCase();
     user['password'] = `${user['name'].split(' ')[0]}_${user['company'].split(' ')[0]}`.toLowerCase();
+    await User.create(user);
   } else if (user.role === 'Incharge') {
     user['username'] = `${user['name'].split(' ')[0]}@forese.in`.toLowerCase();
     user['password'] = '123456';
+    await Incharge.create(user);
   }
-
-  await User.create(user);
 
   // Success Flash Message
   req.flash('success', 'New User Successfully Created');
@@ -76,7 +81,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
   }
 
   // Check if password matches
-  const isMatch = await User.matchPassword(password);
+  const isMatch = await user.matchPassword(password);
   if (!isMatch) {
     req.flash('error', 'Invalid Login Credentials.');
     return res.redirect('/users/login');
@@ -120,7 +125,7 @@ const deleteUser = asyncHandler(async (req, res, next) => {
   await User.findByIdAndDelete(req.params.id);
 
   // Success Flash Message
-  req.flash('success', 'user Successfully Deleted');
+  req.flash('success', 'User Successfully Deleted');
   res.redirect('/users');
 });
 
@@ -194,13 +199,10 @@ const sendTokenResponse = (user, req, res) => {
 
   if (user.role === 'Admin') {
     req.flash('success', `Welcome, ${user.name}`);
-    res.cookie('token', token, options).redirect(`/users`);
+    res.cookie('token', token, options).redirect('/users');
   } else if (user.role === 'Interviewer') {
     req.flash('success', `Welcome, ${user.name}`);
     res.cookie('token', token, options).redirect(`/users/${user._id}`);
-  } else if (user.role === 'Incharge') {
-    req.flash('success', `Welcome, ${user.name}`);
-    res.cookie('token', token, options).redirect(`/users/${user.interviewer}`);
   }
 };
 
