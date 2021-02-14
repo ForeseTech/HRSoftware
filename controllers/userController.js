@@ -108,7 +108,7 @@ const getUser = asyncHandler(async (req, res, next) => {
   const userId = req.params.id;
   const user = await User.findById(userId).populate('students');
 
-  res.render('user/view', { user });
+  res.render('user/view', { user, name: req.user.name });
 });
 
 const updateUser = asyncHandler(async (req, res, next) => {
@@ -199,7 +199,11 @@ const sendTokenResponse = (user, req, res) => {
 
   if (user.role === 'Admin') {
     req.flash('success', `Welcome, ${user.name}`);
+<<<<<<< HEAD
     res.cookie('token', token, options).redirect('/users');
+=======
+    res.cookie('token', token, options).redirect('/students');
+>>>>>>> 390d9b379ca233cdaa6192e4731cf4984103f683
   } else if (user.role === 'Interviewer') {
     req.flash('success', `Welcome, ${user.name}`);
     res.cookie('token', token, options).redirect(`/users/${user._id}`);

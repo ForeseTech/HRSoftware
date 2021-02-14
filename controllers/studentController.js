@@ -11,7 +11,7 @@ const renderStudent = asyncHandler(async (req, res, next) => {
     interviewsPerStudent[numOfInterviews[i]._id] = numOfInterviews[i].interviewers;
   }
 
-  res.render('student/index', { students, interviewsPerStudent });
+  res.render('student/index', { students, interviewsPerStudent, name: req.user.name });
 });
 
 const getStudent = asyncHandler(async (req, res, next) => {
@@ -20,7 +20,7 @@ const getStudent = asyncHandler(async (req, res, next) => {
 
   const users = await User.find({});
 
-  res.render('student/view', { student, users });
+  res.render('student/view', { student, users, name: req.user.name });
 });
 
 const deleteStudent = asyncHandler(async (req, res, next) => {

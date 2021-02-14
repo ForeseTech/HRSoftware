@@ -28,7 +28,7 @@ router
 router.route('/:interviewerId/assign_student').post(isLoggedIn, authorize('Interviewer', 'Admin'), assignStudentToUser);
 router
   .route('/:interviewerId/deallocate_student/:studentId')
-  .put(authorize('Interviewer', 'Admin'), deallocateStudentToUser);
-router.route('/:interviewerId/students/:studentId').post(authorize('Interviewer', 'Admin'), scoreStudent);
+  .put(isLoggedIn, authorize('Interviewer', 'Admin'), deallocateStudentToUser);
+router.route('/:interviewerId/students/:studentId').post(isLoggedIn, authorize('Interviewer', 'Admin'), scoreStudent);
 
 module.exports = router;
