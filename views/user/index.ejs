@@ -76,16 +76,7 @@
                     <td><%= studentsPerInterviewer[user._id] %></td>
                     <td>
                       <a href="/users/<%= user._id %>" class="btn btn-sm btn-secondary">View</a>
-                      <button
-                        class="btn btn-sm btn-warning edit-interviewer"
-                        data-toggle="modal"
-                        data-name="<%= user.name %>"
-                        data-id="<%= user._id %>"
-                        data-company="<%= user.company%>"
-                        data-target="#editInterviewer"
-                      >
-                        Edit
-                      </button>
+                     
                       <form action="/users/<%= user._id %>" method="POST" class="d-inline">
                         <input type="hidden" name="_method" value="DELETE" />
                         <button class="btn btn-sm btn-danger" type="submit">Delete</button>
@@ -117,16 +108,7 @@
                     <td><%= studentsPerInterviewer[user._id] %></td>
                     <td>
                       <a href="/users/<%= user._id %>" class="btn btn-sm btn-secondary">View</a>
-                      <button
-                        class="btn btn-sm btn-warning edit-interviewer"
-                        data-toggle="modal"
-                        data-name="<%= user.name %>"
-                        data-id="<%= user._id %>"
-                        data-company="<%= user.company%>"
-                        data-target="#editInterviewer"
-                      >
-                        Edit
-                      </button>
+                      
                       <form action="/users/<%= user._id %>" method="POST" class="d-inline">
                         <input type="hidden" name="_method" value="DELETE" />
                         <button class="btn btn-sm btn-danger" type="submit">Delete</button>
@@ -175,16 +157,7 @@
                     <td><%= studentsPerInterviewer[incharge.interviewer._id] %></td>
                     <td>
                       <a href="/users/<%= incharge.interviewer._id %>" class="btn btn-sm btn-secondary">View</a>
-                      <button
-                        class="btn btn-sm btn-warning edit-interviewer"
-                        data-toggle="modal"
-                        data-name="<%= incharge.name %>"
-                        data-id="<%= incharge._id %>"
-                        data-company="<%= incharge.company%>"
-                        data-target="#editUser"
-                      >
-                        Edit
-                      </button>
+                      
                       <form action="/incharges/<%= incharge._id %>" method="POST" class="d-inline">
                         <input type="hidden" name="_method" value="DELETE" />
                         <button class="btn btn-sm btn-danger" type="submit">Delete</button>
@@ -218,16 +191,7 @@
                     <td><%= studentsPerInterviewer[incharge.interviewer._id] %></td>
                     <td>
                       <a href="/incharges/<%= incharge._id %>" class="btn btn-sm btn-secondary">View</a>
-                      <button
-                        class="btn btn-sm btn-warning edit-interviewer"
-                        data-toggle="modal"
-                        data-name="<%= incharge.name %>"
-                        data-id="<%= incharge._id %>"
-                        data-company="<%= incharge.company%>"
-                        data-target="#editUser"
-                      >
-                        Edit
-                      </button>
+                      
                       <form action="/incharges/<%= incharge._id %>" method="POST" class="d-inline">
                         <input type="hidden" name="_method" value="DELETE" />
                         <button class="btn btn-sm btn-danger" type="submit">Delete</button>
@@ -262,8 +226,7 @@
       </div>
     </main>
 
-    <%- include('../partials/footer.ejs'); %> <%- include("./modals/new.ejs") %> <%- include("./modals/edit.ejs") %>
-  </body>
+    <%- include('../partials/footer.ejs'); %> <%- include("./modals/new.ejs") %> 
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -283,22 +246,5 @@
       });
       $('table.table').DataTable({ paging: false });
     });
-  </script>
-
-  <script>
-    const editBtns = document.querySelectorAll('.edit-user');
-    for (let i = 0; i < editBtns.length; i++) {
-      editBtns[i].addEventListener('click', function () {
-        // Select the editForm by ID
-        const edituserForm = document.getElementById('edit-user-form');
-
-        // Set form action
-        edituserForm.action = `/users/${this.getAttribute('data-id')}`;
-
-        // Prefill input fields
-        edituserForm['name'].value = this.getAttribute('data-name') ?? '';
-        edituserForm['company'].value = this.getAttribute('data-company') ?? '';
-      });
-    }
   </script>
 </html>

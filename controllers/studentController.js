@@ -21,7 +21,7 @@ const renderStudent = asyncHandler(async (req, res, next) => {
     interviewsPerStudent[numOfInterviews[i]._id] = numOfInterviews[i].interviewers;
   }
 
-  res.render('student/index', { students, interviewsPerStudent, name: req.user.name });
+  res.render('student/index', { students, interviewsPerStudent, name: req.user.name, role: req.user.role });
 });
 
 // @desc       View info of a single student

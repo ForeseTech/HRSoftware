@@ -13,9 +13,13 @@
         <form method="POST" action="/students/<%= student._id %>/assign_user" class="needs-validation" novalidate>
           <select name="user" class="form-control">
             <option value="" selected disabled>Select Interviewer</option>
-            <% users.forEach((user) => { if(user.role === "Interviewer") { %>
-            <option value="<%= user._id  %>"><%= user.name %> - <%= user.company %> (<%= user.date %>)</option>
-            <% }}); %>
+            <% users.forEach(user => { %>
+              <% if(user.role === "Interviewer") { %>  
+                <%  if(!user.students.includes(student._id)) { %>
+                  <option value="<%= user._id  %>"><%= user.name %> - <%= user.company %> (<%= user.date %>)</option>
+                <% } %>
+              <% } %>
+            <% }); %>
           </select>
           <div class="modal-footer">
             <button type="submit" class="btn btn-success">Assign Student</button>

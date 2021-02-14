@@ -77,6 +77,7 @@ const renderUsers = asyncHandler(async (req, res, next) => {
     incharges,
     studentsPerInterviewer,
     name: req.user.name,
+    role: req.user.role,
   });
 });
 
@@ -120,18 +121,6 @@ const getUser = asyncHandler(async (req, res, next) => {
   res.render('user/view', { user, name: req.user.name, role: req.user.role });
 });
 
-// @desc       Update details of a particular interviewer/student incharge
-// @route      PUT /users/:id
-// @access     Private (Admin)
-const updateUser = asyncHandler(async (req, res, next) => {
-  // Find by Id and update it with data passed in the request body
-  await User.findByIdAndUpdate(req.params.id, req.body);
-
-  // Success Flash Message
-  req.flash('success', 'user Details Successfully Updated');
-  res.redirect('/users');
-});
-
 // @desc       Delete particular interviewer/student incharge
 // @route      DELETE /users/:id
 // @access     Private (Admin)
@@ -145,7 +134,7 @@ const deleteUser = asyncHandler(async (req, res, next) => {
 });
 
 // @desc       Assign a student to a particular interviewer
-// @route      POST /interviewer/:interviewerId/assign_student
+// @route      POST /users/:interviewerId/assign_student
 // @access     Private (Admin, Student Incharge)
 const assignStudentToUser = asyncHandler(async (req, res, next) => {
   // Get register number and userId
@@ -238,7 +227,6 @@ module.exports = {
   renderUsers,
   createUser,
   getUser,
-  updateUser,
   deleteUser,
   assignStudentToUser,
   deallocateStudentToUser,

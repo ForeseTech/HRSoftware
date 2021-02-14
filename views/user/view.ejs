@@ -21,8 +21,11 @@
     <!-- Include Navbar Partial -->
     <%- include("../partials/navbar.ejs"); %>
 
+    <!-- Container Class Begins Here -->
     <main class="container">
+      <!-- Flash Message Partial -->
       <div class="mt-2"><%- include("../partials/flash.ejs") %></div>
+
       <% if(role === "Admin") { %>
       <button class="btn btn-primary mb-3 px-4" data-toggle="modal" data-target="#addStudent">Add Student</button>
       <% } %>

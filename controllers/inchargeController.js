@@ -1,5 +1,7 @@
 // Include required models
 const Incharge = require('../models/inchargeModel');
+const User = require('../models/userModel');
+const Student = require('../models/studentModel');
 
 // Middleware for handling async methods
 const asyncHandler = require('../middleware/async');
@@ -67,8 +69,33 @@ const getIncharge = asyncHandler(async (req, res, next) => {
   res.render('incharge/view', { user, name: req.user.name });
 });
 
+// @desc       Assign a student to a particular interviewer
+// @route      POST /incharges/:interviewerId/assign_student
+// @access     Private (Admin, Student Incharge)
+const assignStudentToUser = asyncHandler(async (req, res, next) => {
+  // Get register number and userId
+  const registerNum = req.body.register_num;
+  const interviewerId = req.params.interviewerId;
+
+  // Search for Student
+  const student = await Student.findOne({ register_num: parseInt(registerNum) });
+
+  // Get studentId
+  const studentId = student['_id'];
+
+  // Push intervirwerId to student.users array
+  await Student.updateOne({ _id: studentId }, { $push: { interviewers: interviewerId } });
+
+  // Push studentId to users.students array
+  await User.updateOne({ _id: interviewerId }, { $push: { students: studentId } });
+
+  // Success Flash Message
+  req.flash('success', 'Student successfully assigned');
+  res.redirect(`/incharges/${req.user._id}`);
+});
+
 // @desc       Deallocate a student from a particular interviewer
-// @route      POST /users/:interviewerId/deallocate_student/:studentId
+// @route      POST /incharges/:interviewerId/deallocate_student/:studentId
 // @access     Private (Admin, Student Incharge)
 const deallocateStudentToUser = asyncHandler(async (req, res, next) => {
   // Get interviewerId and studentId
@@ -83,7 +110,7 @@ const deallocateStudentToUser = asyncHandler(async (req, res, next) => {
 
   // Success Flash Message
   req.flash('success', 'Student Successfully Deallocated.');
-  res.redirect(`/users/${interviewerId}`);
+  res.redirect(`/incharges/${req.user._id}`);
 });
 
 // Get token from model, create cookie and send response
@@ -105,5 +132,6 @@ module.exports = {
   loginIncharge,
   logoutIncharge,
   getIncharge,
+  assignStudentToUser,
   deallocateStudentToUser,
 };

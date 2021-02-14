@@ -8,7 +8,6 @@ const {
   renderUsers,
   createUser,
   getUser,
-  updateUser,
   deleteUser,
   assignStudentToUser,
   deallocateStudentToUser,
@@ -23,13 +22,9 @@ router.route('/logout').get(logoutUser);
 
 // CRUD Routes
 router.route('/').get(isLoggedIn, authorize('Admin'), renderUsers).post(isLoggedIn, authorize('Admin'), createUser);
-router
-  .route('/:id')
-  .get(isLoggedIn, getUser)
-  .put(isLoggedIn, authorize('Admin'), updateUser)
-  .delete(isLoggedIn, authorize('Admin'), deleteUser);
+router.route('/:id').get(isLoggedIn, getUser).delete(isLoggedIn, authorize('Admin'), deleteUser);
 
-// Assign and Deallocation Routes
+// Assign and Deallocate Student Routes
 router.route('/:interviewerId/assign_student').post(isLoggedIn, authorize('Admin'), assignStudentToUser);
 router
   .route('/:interviewerId/deallocate_student/:studentId')
