@@ -14,54 +14,53 @@
     <link rel="stylesheet" href="/css/custom.css" />
 
     <!-- Page Title -->
-    <title>FORESE - MOCK PLACEMENTS 2021</title>
+    <title>FORESE - MOCK PLACEMENTS 2021 | STUDENT INCHARGE</title>
   </head>
-
   <body>
     <!-- Include Navbar Partial -->
     <%- include("../partials/navbar.ejs"); %>
 
-    <!-- Container Begins Here -->
+    <!-- Container Class Begins -->
     <main class="container">
       <!-- Flash Message Partial -->
       <div class="mt-2"><%- include("../partials/flash.ejs") %></div>
 
-      <!-- Student Info -->
-      <h3>Student Register Number : <%= student.register_num %></h3>
-      <h3>Student Name : <%= student.name %></h3>
-      <h3>Student Department : <%= student.dept %></h3>
+      <!-- Incharge Info -->
+      <h3>Student Incharge Name : <%= user.name %></h3>
+      <h3>Interviewer You Are Incharge For : <%= user.interviewer.name %></h3>
+      <h3>Interviewer Company : <%= user.interviewer.company %></h3>
 
-      <!-- Add Interviewer Button -->
-      <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addInterviewer">Add Interviewer</button>
+      <!-- Add Student Button -->
+      <button class="btn btn-primary mb-3 px-4" data-toggle="modal" data-target="#addStudent">Add Student</button>
 
-      <!-- Student's table of interviews -->
-      <h2>List Of Interviews:-</h2>
-      <table class="table table-bordered table-hover text-center" id="interviewers">
-        <thead>
+      <table class="table table-bordered table-hover text-center" id="students">
+        <thead class="bg-light">
           <tr>
             <th>SNO</th>
-            <th>Interviewer Name</th>
-            <th>Inteviewer Company</th>
-            <th>Interview Date</th>
-            <th>Interviewer Details</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Aptitude Score</th>
+            <th>GD Score</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <% student.interviewers.forEach((interviewer, index) => { %>
+          <% user.interviewer.students.forEach((student, index) => { %>
           <tr>
+            <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
             <td><%= index + 1 %></td>
-            <td><%= interviewer.name %></td>
-            <td><%= interviewer.company %></td>
-            <td><%= interviewer.date %></td>
+            <td><%= student.name %></td>
+            <td><%= student.dept %></td>
+            <td><%= sumOfValues(student.aptitude_scores) %> / 50</td>
+            <td><%= sumOfValues(student.gd_scores) %> / 30</td>
             <td>
-              <a href="/users/<%= interviewer._id %>" class="btn btn-dark btn-sm">View</a>
               <form
-                action="/students/<%= student._id %>/deallocate_user/<%= interviewer._id %>"
+                action="/incharges/<%= user.interviewer._id %>/deallocate_student/<%= student._id %>"
                 method="POST"
                 class="d-inline"
               >
                 <input type="hidden" name="_method" value="PUT" />
-                <button type="submit" class="btn btn-warning btn-sm">Deallocate User</button>
+                <button type="submit" class="btn btn-sm btn-warning">Deallocate Student</button>
               </form>
             </td>
           </tr>
@@ -72,9 +71,6 @@
 
     <!-- Include Footer Partial -->
     <%- include("../partials/footer.ejs"); %>
-
-    <!-- Assign an interviewer to a student -->
-    <%- include("./modals/add.ejs"); %>
   </body>
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -97,7 +93,9 @@
   <!-- Initialize Datatables -->
   <script>
     $(document).ready(function () {
-      $('#interviewers').DataTable({ paging: false });
+      $('#students').DataTable({ paging: false });
     });
   </script>
+  <!-- Script to validate forms -->
+  <script src="/js/validateForms.js"></script>
 </html>

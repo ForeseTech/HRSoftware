@@ -11,6 +11,7 @@ const {
 
 const { isLoggedIn, authorize } = require('../middleware/auth');
 
+// View student info routes
 router.route('/').get(isLoggedIn, authorize('Admin'), renderStudent);
 router.route('/:id').get(isLoggedIn, authorize('Admin'), getStudent);
 

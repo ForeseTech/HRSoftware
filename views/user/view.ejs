@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/css/custom.css" />
 
     <!-- Page Title -->
-    <title>FORESE - MOCK PLACEMENTS 2021</title>
+    <title>FORESE - MOCK PLACEMENTS 2021 | INTERVIEWER</title>
   </head>
 
   <body>
@@ -23,7 +23,9 @@
 
     <main class="container">
       <div class="mt-2"><%- include("../partials/flash.ejs") %></div>
+      <% if(role === "Admin") { %>
       <button class="btn btn-primary mb-3 px-4" data-toggle="modal" data-target="#addStudent">Add Student</button>
+      <% } %>
       <table class="table table-bordered table-hover text-center" id="students">
         <thead class="bg-light">
           <tr>
@@ -32,8 +34,10 @@
             <th>Department</th>
             <th>Aptitude Score</th>
             <th>GD Score</th>
+            <% if(role === "Admin") { %>
             <th>Student Details</th>
-            <th>Rate</th>
+            <% } %>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -45,8 +49,11 @@
             <td><%= student.dept %></td>
             <td><%= sumOfValues(student.aptitude_scores) %> / 50</td>
             <td><%= sumOfValues(student.gd_scores) %> / 30</td>
+            <% if(role === "Admin") { %>
             <td><a href="/students/<%= student._id %>">View</a></td>
+            <% } %>
             <td>
+              <% if(role === "Interviewer") { %>
               <button
                 class="btn btn-secondary btn-sm rate-student"
                 data-user="<%= user._id %>"
@@ -58,6 +65,7 @@
               >
                 Rate Student
               </button>
+              <% } %> <% if(role === "Admin") { %>
               <form
                 action="/users/<%= user._id %>/deallocate_student/<%= student._id %>"
                 method="POST"
@@ -66,12 +74,16 @@
                 <input type="hidden" name="_method" value="PUT" />
                 <button type="submit" class="btn btn-sm btn-warning">Deallocate Student</button>
               </form>
+              <% } %>
             </td>
           </tr>
           <% }); %>
         </tbody>
       </table>
     </main>
+
+    <!-- Include Footer Partial -->
+    <%- include("../partials/footer.ejs"); %>
 
     <!-- Assign a student to an interviewer -->
     <%- include("./modals/add.ejs") %>

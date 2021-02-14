@@ -54,7 +54,7 @@
               </tr>
             </thead>
             <tbody>
-              <% students.forEach((student, index) => { %> <% if(student.preference === "Online") { %>
+              <% students.forEach(student => { %> <% if(student.preference === "Online") { %>
               <tr>
                 <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
                 <td class="text-center"><%= student.register_num %></td>
@@ -87,7 +87,7 @@
               </tr>
             </thead>
             <tbody>
-              <% students.forEach((student, index) => { %> <% if(student.preference === "Offline") { %>
+              <% students.forEach(student => { %> <% if(student.preference === "Offline") { %>
               <tr>
                 <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
                 <td class="text-center"><%= student.register_num %></td>
@@ -99,10 +99,41 @@
                 <td class="text-center"><%= interviewsPerStudent[student._id] %></td>
                 <td><a href="/students/<%= student._id %>">View</a></td>
               </tr>
+              <% } %> <% }); %>
             </tbody>
           </table>
         </div>
       </div>
     </main>
+
+    <!-- Include Footer Partial -->
+    <%- include("../partials/footer.ejs"); %>
   </body>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+  <!-- PopperJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+  <!-- BootstrapJS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <!-- DataTablesJS -->
+  <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+
+  <!-- DataTables for Bootstrap -->
+  <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Script for Form Validation -->
+  <script src="/js/validateForms.js"></script>
+
+  <!-- Initialize Datatables -->
+  <script>
+    $(document).ready(function () {
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+      });
+      $('table.table').DataTable({ paging: false });
+    });
+  </script>
 </html>

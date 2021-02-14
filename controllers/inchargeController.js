@@ -53,7 +53,38 @@ const logoutIncharge = (req, res, next) => {
   res.redirect('/incharges/login');
 };
 
-const getIncharge = asyncHandler(async (req, res, next) => {});
+// @desc       View data for a student incharge
+// @route      GET /incharges/:id
+// @access     Private (Student Incharge)
+const getIncharge = asyncHandler(async (req, res, next) => {
+  // Get Incharge ID
+  const inchargeId = req.params.id;
+
+  // Get Student Incharge data from DB
+  const user = await Incharge.findById(inchargeId).populate({ path: 'interviewer', populate: { path: 'students' } });
+  console.log(user);
+
+  res.render('incharge/view', { user, name: req.user.name });
+});
+
+// @desc       Deallocate a student from a particular interviewer
+// @route      POST /users/:interviewerId/deallocate_student/:studentId
+// @access     Private (Admin, Student Incharge)
+const deallocateStudentToUser = asyncHandler(async (req, res, next) => {
+  // Get interviewerId and studentId
+  const interviewerId = req.params.interviewerId;
+  const studentId = req.params.studentId;
+
+  // Pop userId from student.users array
+  await User.updateOne({ _id: interviewerId }, { $pull: { students: studentId } });
+
+  // Pop studentId from users.students array
+  await Student.updateOne({ _id: studentId }, { $pull: { interviewers: interviewerId } });
+
+  // Success Flash Message
+  req.flash('success', 'Student Successfully Deallocated.');
+  res.redirect(`/users/${interviewerId}`);
+});
 
 // Get token from model, create cookie and send response
 const sendTokenResponse = (user, req, res) => {
@@ -66,11 +97,13 @@ const sendTokenResponse = (user, req, res) => {
 
   // Success Flash Response
   req.flash('success', `Welcome, ${user.name}`);
-  res.cookie('token', token, options).redirect(`/users/${user.interviewer}`);
+  res.cookie('token', token, options).redirect(`/incharges/${user._id}`);
 };
 
 module.exports = {
   renderLogin,
   loginIncharge,
   logoutIncharge,
+  getIncharge,
+  deallocateStudentToUser,
 };

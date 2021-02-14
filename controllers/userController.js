@@ -117,7 +117,7 @@ const getUser = asyncHandler(async (req, res, next) => {
   // Get user data from DB
   const user = await User.findById(userId).populate('students');
 
-  res.render('user/view', { user, name: req.user.name });
+  res.render('user/view', { user, name: req.user.name, role: req.user.role });
 });
 
 // @desc       Update details of a particular interviewer/student incharge

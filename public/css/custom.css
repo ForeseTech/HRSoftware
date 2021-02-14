@@ -3,6 +3,7 @@ body {
   padding-bottom: 3.5rem;
 }
 
+/* CSS for the scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -19,12 +20,7 @@ body {
   background: #555;
 }
 
-h4 {
-  margin-bottom: 0;
-  margin-top: 1rem;
-  font-weight: bold;
-}
-
+/* CSS for the footer */
 footer {
   display: block;
   position: fixed;
@@ -35,6 +31,7 @@ footer {
   z-index: 2;
 }
 
+/* CSS for screens whose width > 768px */
 @media (min-width: 768px) {
   .form-modal {
     max-width: 90%;
