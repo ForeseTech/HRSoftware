@@ -13,8 +13,7 @@ const methodOverride = require('method-override');
 const studentRouter = require('./routes/studentRoute');
 const userRouter = require('./routes/userRoute');
 const inchargeRouter = require('./routes/inchargeRoute');
-
-const { renderScores } = require('./controllers/scoreController');
+const scoreRouter = require('./routes/scoreRoute');
 
 // Instantiate express app
 const app = express();
@@ -77,10 +76,10 @@ app.get('/', (req, res, next) => {
   res.redirect('/users/login');
 });
 
-app.get('/scores', renderScores);
 app.use('/students', studentRouter);
 app.use('/users', userRouter);
 app.use('/incharges', inchargeRouter);
+app.use('/scores', scoreRouter);
 
 // Export app to server
 module.exports = app;

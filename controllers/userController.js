@@ -5,6 +5,51 @@ const Score = require('../models/scoreModel');
 
 const asyncHandler = require('../middleware/async');
 
+// @desc       Page for user login
+// @route      GET /users/login
+// @access     Public
+const renderLogin = (req, res, next) => {
+  res.render('user/login');
+};
+
+// @desc       Login user
+// @route      POST /users/login
+// @access     Public
+const loginUser = asyncHandler(async (req, res, next) => {
+  const { username, password } = req.body;
+
+  const user = await User.findOne({ username: username }).select('+password');
+
+  // Check if user exists
+  if (!user) {
+    req.flash('error', 'No such user exists. Please contact your student incharge.');
+    return res.redirect('/users/login');
+  }
+
+  // Check if password matches
+  const isMatch = await user.matchPassword(password);
+  if (!isMatch) {
+    req.flash('error', 'Invalid Login Credentials.');
+    return res.redirect('/users/login');
+  }
+
+  // Send token response
+  sendTokenResponse(user, req, res);
+});
+
+// @desc       Logout user
+// @route      GET /users/logout
+// @access     Public
+const logoutUser = (req, res, next) => {
+  res.cookie('token', 'none', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+
+  req.flash('success', 'You Have Logged Out');
+  res.redirect('/users/login');
+};
+
 // @desc       List all participating users
 // @route      GET /users
 // @access     Private / Admin
@@ -58,51 +103,6 @@ const createUser = asyncHandler(async (req, res, next) => {
   req.flash('success', 'New User Successfully Created');
   res.redirect('/users');
 });
-
-// @desc       Page for user login
-// @route      GET /users/login
-// @access     Public
-const renderLogin = (req, res, next) => {
-  res.render('user/login');
-};
-
-// @desc       Login user
-// @route      POST /users/login
-// @access     Public
-const loginUser = asyncHandler(async (req, res, next) => {
-  const { username, password } = req.body;
-
-  const user = await User.findOne({ username: username }).select('+password');
-
-  // Check if user exists
-  if (!user) {
-    req.flash('error', 'No such user exists. Please contact your student incharge.');
-    return res.redirect('/users/login');
-  }
-
-  // Check if password matches
-  const isMatch = await user.matchPassword(password);
-  if (!isMatch) {
-    req.flash('error', 'Invalid Login Credentials.');
-    return res.redirect('/users/login');
-  }
-
-  // Send token response
-  sendTokenResponse(user, req, res);
-});
-
-// @desc       Logout user
-// @route      GET /users/logout
-// @access     Public
-const logoutUser = (req, res, next) => {
-  res.cookie('token', 'none', {
-    expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true,
-  });
-
-  req.flash('success', 'You Have Logged Out');
-  res.redirect('/users/login');
-};
 
 const getUser = asyncHandler(async (req, res, next) => {
   const userId = req.params.id;

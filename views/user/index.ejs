@@ -153,6 +153,7 @@
                 <thead class="bg-light">
                   <tr>
                     <th>Name</th>
+                    <th>Username</th>
                     <th>Interviewer Assigned</th>
                     <th>Interviewer Company</th>
                     <th>View</th>
@@ -162,6 +163,7 @@
                   <% incharges.forEach((incharge, index) => { %>
                   <tr>
                     <td><%= incharge.name %></td>
+                    <td><%= incharge.username %></td>
                     <td><%= incharge.interviewer.name %></td>
                     <td><%= incharge.interviewer.company %></td>
                     <td>
@@ -191,6 +193,7 @@
                 <thead class="bg-light">
                   <tr>
                     <th>Name</th>
+                    <th>Username</th>
                     <th>Interviewer Assigned</th>
                     <th>Interviewer Company</th>
                     <th>View</th>
@@ -200,6 +203,7 @@
                   <% incharges.forEach((incharge, index) => { %>
                   <tr>
                     <td><%= incharge.name %></td>
+                    <td><%= incharge.username %></td>
                     <td><%= incharge.interviewer.name %></td>
                     <td><%= incharge.interviewer.company %></td>
                     <td>
@@ -239,7 +243,7 @@
               <% users.forEach((user, index) => { %> <% if(user.role === "Admin") { %>
               <tr>
                 <td><%= user.name %></td>
-                <td><%= user.name %></td>
+                <td><%= user.username %></td>
               </tr>
               <% } %> <% }); %>
             </tbody>
