@@ -13,6 +13,8 @@ const { isLoggedIn, authorize } = require('../middleware/auth');
 
 router.route('/').get(isLoggedIn, authorize('Admin'), renderStudent);
 router.route('/:id').get(isLoggedIn, authorize('Admin'), getStudent);
+
+// Student allocation and de-allocation routes
 router.route('/:id/assign_user').post(isLoggedIn, authorize('Admin'), assignInterviewerToStudent);
 router
   .route('/:studentId/deallocate_user/:interviewerId')

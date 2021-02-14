@@ -30,12 +30,12 @@ router
   .delete(isLoggedIn, authorize('Admin'), deleteUser);
 
 // Assign and Deallocation Routes
-router.route('/:interviewerId/assign_student').post(isLoggedIn, authorize('Interviewer', 'Admin'), assignStudentToUser);
+router.route('/:interviewerId/assign_student').post(isLoggedIn, authorize('Admin'), assignStudentToUser);
 router
   .route('/:interviewerId/deallocate_student/:studentId')
-  .put(isLoggedIn, authorize('Interviewer', 'Admin'), deallocateStudentToUser);
+  .put(isLoggedIn, authorize('Admin'), deallocateStudentToUser);
 
 // Score Student Route
-router.route('/:interviewerId/students/:studentId').post(isLoggedIn, authorize('Interviewer', 'Admin'), scoreStudent);
+router.route('/:interviewerId/students/:studentId').post(isLoggedIn, authorize('Interviewer'), scoreStudent);
 
 module.exports = router;

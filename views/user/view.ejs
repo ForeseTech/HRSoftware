@@ -24,7 +24,7 @@
     <main class="container">
       <div class="mt-2"><%- include("../partials/flash.ejs") %></div>
       <button class="btn btn-primary mb-3 px-4" data-toggle="modal" data-target="#addStudent">Add Student</button>
-      <table class="table table-bordered table-hover text-center">
+      <table class="table table-bordered table-hover text-center" id="students">
         <thead class="bg-light">
           <tr>
             <th>SNO</th>
@@ -78,22 +78,62 @@
 
     <!-- Score a student -->
     <%- include("./modals/rate.ejs") %>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
-    <script>
-      $(document).ready(function () {
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-          $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
-        });
-        $('table.table').DataTable({ paging: false });
-      });
-    </script>
-
-    <script src="/js/validateForms.js"></script>
-    <script src="/js/script.js"></script>
   </body>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+  <!-- PopperJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+  <!-- BootstrapJS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <!-- DataTablesJS -->
+  <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+
+  <!-- DataTables for Bootstrap -->
+  <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Script for Form Validation -->
+  <script src="/js/validateForms.js"></script>
+
+  <!-- Initialize Datatables -->
+  <script>
+    $(document).ready(function () {
+      $('#students').DataTable({ paging: false });
+    });
+  </script>
+
+  <script>
+    const rateBtns = document.querySelectorAll('.rate-student');
+
+    for (let i = 0; i < rateBtns.length; i++) {
+      rateBtns[i].addEventListener('click', function () {
+        const rateStudentForm = document.getElementById('rate-student-form');
+
+        const aptitudeScoresTable = document.querySelectorAll('#aptitudeScores tbody tr td');
+        const gdScoresTable = document.querySelectorAll('#gdScores tbody tr td');
+
+        const userId = this.getAttribute('data-user') ?? '';
+        const studentId = this.getAttribute('data-student') ?? '';
+
+        rateStudentForm.action = `/users/${userId}/students/${studentId}`;
+
+        const aptitudeScores = JSON.parse(this.getAttribute('data-aptitude'));
+        aptitudeScoresTable[0].innerHTML = aptitudeScores['core'];
+        aptitudeScoresTable[1].innerHTML = aptitudeScores['verbal'];
+        aptitudeScoresTable[2].innerHTML = aptitudeScores['quants'];
+        aptitudeScoresTable[3].innerHTML = aptitudeScores['programming'];
+
+        const gdScores = JSON.parse(this.getAttribute('data-gd'));
+        gdScoresTable[0].innerHTML = gdScores['subject_knowledge'];
+        gdScoresTable[1].innerHTML = gdScores['communication_skills'];
+        gdScoresTable[2].innerHTML = gdScores['body_language'];
+        gdScoresTable[3].innerHTML = gdScores['listening_skills'];
+        gdScoresTable[4].innerHTML = gdScores['critical_thinking'];
+        gdScoresTable[5].innerHTML = gdScores['leadership_skills'];
+      });
+    }
+  </script>
 </html>

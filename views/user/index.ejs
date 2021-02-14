@@ -59,6 +59,7 @@
               <table class="table table-bordered table-hover text-center" id="interviewers">
                 <thead class="bg-light">
                   <tr>
+                    <th>Username</th>
                     <th>Name</th>
                     <th>Company</th>
                     <th>Students Assigned</th>
@@ -69,6 +70,7 @@
                   <% users.forEach((user, index) => { interview_date = new Date(user.date); %> <%
                   if(interview_date.getDate() == 20 && user.role === "Interviewer") { %>
                   <tr>
+                    <td><%= user.username %></td>
                     <td><%= user.name %></td>
                     <td><%= user.company %></td>
                     <td><%= studentsPerInterviewer[user._id] %></td>
@@ -98,6 +100,7 @@
               <table class="table table-bordered table-hover text-center" id="interviewers">
                 <thead class="bg-light">
                   <tr>
+                    <th>Username</th>
                     <th>Name</th>
                     <th>Company</th>
                     <th>Students Assigned</th>
@@ -108,6 +111,7 @@
                   <% users.forEach((user, index) => { interview_date = new Date(user.date); %> <%
                   if(interview_date.getDate() == 21 && user.role === "Interviewer") { %>
                   <tr>
+                    <td><%= user.username %></td>
                     <td><%= user.name %></td>
                     <td><%= user.company %></td>
                     <td><%= studentsPerInterviewer[user._id] %></td>
@@ -259,6 +263,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+  <script src="/js/validateForms.js"></script>
   <script>
     $(document).ready(function () {
       $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -268,6 +273,20 @@
     });
   </script>
 
-  <script src="/js/validateForms.js"></script>
-  <script src="/js/script.js"></script>
+  <script>
+    const editBtns = document.querySelectorAll('.edit-user');
+    for (let i = 0; i < editBtns.length; i++) {
+      editBtns[i].addEventListener('click', function () {
+        // Select the editForm by ID
+        const edituserForm = document.getElementById('edit-user-form');
+
+        // Set form action
+        edituserForm.action = `/users/${this.getAttribute('data-id')}`;
+
+        // Prefill input fields
+        edituserForm['name'].value = this.getAttribute('data-name') ?? '';
+        edituserForm['company'].value = this.getAttribute('data-company') ?? '';
+      });
+    }
+  </script>
 </html>

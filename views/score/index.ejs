@@ -19,6 +19,7 @@
 
   <body>
     <!-- Include Navbar Partial -->
+    <%- include("../partials/navbar.ejs"); %>
 
     <main class="container">
       <table class="table table-bordered table-hover text-center" id="scores">
@@ -27,6 +28,7 @@
           <th>Student Name</th>
           <th>Interviewer Name</th>
           <th>Interviewer Company</th>
+          <th>Comments</th>
         </thead>
         <tbody>
           <% scores.forEach((score, index) => { %>
@@ -35,6 +37,7 @@
             <td><%= score.student.name %></td>
             <td><%= score.interviewer.name %></td>
             <td><%= score.interviewer.company %></td>
+            <td><%= score.comments %></td>
           </tr>
           <% }) %>
         </tbody>

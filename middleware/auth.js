@@ -2,8 +2,38 @@ const jwt = require('jsonwebtoken');
 const Incharge = require('../models/inchargeModel');
 const User = require('../models/userModel');
 
-// Protect Routes
+// Protect Interviewer and Admin Routes
 const isLoggedIn = async (req, res, next) => {
+  let token;
+
+  if (req.cookies.token) {
+    token = req.cookies.token;
+  }
+
+  // Make sure token exists
+  if (!token) {
+    // Error Flash Message
+    req.flash('error', 'Please log in to view the page');
+    return res.redirect('/users/login');
+  }
+
+  // Verify Token
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Store user data in req.user
+    req.user = await User.findById(decoded.id);
+
+    next();
+  } catch (err) {
+    // Error Flash Message
+    req.flash('error', 'Please log in to view the page');
+    return res.redirect('/users/login');
+  }
+};
+
+// Protect Interviewer and Admin Routes
+const authorizeIncharge = async (req, res, next) => {
   let token;
 
   if (req.cookies.token) {
@@ -19,16 +49,13 @@ const isLoggedIn = async (req, res, next) => {
   // Verify Token
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const userType = req.headers.referer.split('/')[3];
 
-    if (userType === 'incharges') {
-      req.user = await Incharge.findById(decoded.id);
-    } else {
-      req.user = await User.findById(decoded.id);
-    }
+    // Store Student Incharge data in req.user
+    req.user = await Incharge.findById(decoded.id);
 
     next();
   } catch (err) {
+    // Error Flash Message
     req.flash('error', 'Please log in to view the page');
     return res.redirect('/users/login');
   }
@@ -45,4 +72,4 @@ const authorize = (...roles) => {
   };
 };
 
-module.exports = { isLoggedIn, authorize };
+module.exports = { isLoggedIn, authorizeIncharge, authorize };

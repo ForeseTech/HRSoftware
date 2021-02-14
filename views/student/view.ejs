@@ -36,7 +36,7 @@
 
       <!-- Student's table of interviews -->
       <h2>List Of Interviews:-</h2>
-      <table class="table table-bordered table-hover text-center">
+      <table class="table table-bordered table-hover text-center" id="interviewers">
         <thead>
           <tr>
             <th>SNO</th>
@@ -70,22 +70,31 @@
       </table>
     </main>
 
+    <!-- Assign an interviewer to a student -->
     <%- include("./modals/add.ejs"); %>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
-    <script>
-      $(document).ready(function () {
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-          $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
-        });
-        $('table.table').DataTable({ paging: false });
-      });
-    </script>
-
-    <script src="/js/validateForms.js"></script>
-    <script src="/js/script.js"></script>
   </body>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+  <!-- PopperJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+  <!-- BootstrapJS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <!-- DataTablesJS -->
+  <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+
+  <!-- DataTables for Bootstrap -->
+  <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Script for Form Validation -->
+  <script src="/js/validateForms.js"></script>
+
+  <!-- Initialize Datatables -->
+  <script>
+    $(document).ready(function () {
+      $('#interviewers').DataTable({ paging: false });
+    });
+  </script>
 </html>

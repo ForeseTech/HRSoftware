@@ -11,7 +11,7 @@ const renderScores = asyncHandler(async (req, res, next) => {
   // Get all scores and populate the student and the interviewer fields
   const scores = await Score.find({}).sort('-createdAt').populate('student').populate('interviewer');
 
-  res.render('score/index', { scores });
+  res.render('score/index', { scores, name: req.user.name });
 });
 
 module.exports = {

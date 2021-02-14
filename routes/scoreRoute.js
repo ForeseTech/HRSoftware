@@ -3,6 +3,8 @@ const router = express.Router();
 
 const { renderScores } = require('../controllers/scoreController');
 
-router.route('/').get(renderScores);
+const { isLoggedIn, authorize } = require('../middleware/auth');
+
+router.route('/').get(isLoggedIn, authorize('Admin'), renderScores);
 
 module.exports = router;
