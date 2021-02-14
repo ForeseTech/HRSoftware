@@ -1,8 +1,10 @@
+// Include required models
 const User = require('../models/userModel');
 const Student = require('../models/studentModel');
 const Incharge = require('../models/inchargeModel');
 const Score = require('../models/scoreModel');
 
+// Middleware for handling async methods
 const asyncHandler = require('../middleware/async');
 
 // @desc       Page for user login
@@ -46,13 +48,14 @@ const logoutUser = (req, res, next) => {
     httpOnly: true,
   });
 
+  // Success flash response
   req.flash('success', 'You Have Logged Out');
   res.redirect('/users/login');
 };
 
 // @desc       List all participating users
 // @route      GET /users
-// @access     Private / Admin
+// @access     Private (Admin)
 const renderUsers = asyncHandler(async (req, res, next) => {
   // Get all users
   const users = await User.find({}).populate('students');
@@ -79,7 +82,7 @@ const renderUsers = asyncHandler(async (req, res, next) => {
 
 // @desc       Create an user
 // @route      POST /users
-// @access     Private / Admin
+// @access     Private (Admin)
 const createUser = asyncHandler(async (req, res, next) => {
   // Get data passed in request body
   let user = req.body;
@@ -104,13 +107,22 @@ const createUser = asyncHandler(async (req, res, next) => {
   res.redirect('/users');
 });
 
+// @desc       Get details of a particular interviewer/student incharge
+// @route      GET /users/:id
+// @access     Private (Admin, Interviewer)
 const getUser = asyncHandler(async (req, res, next) => {
+  // Get User ID
   const userId = req.params.id;
+
+  // Get user data from DB
   const user = await User.findById(userId).populate('students');
 
   res.render('user/view', { user, name: req.user.name });
 });
 
+// @desc       Update details of a particular interviewer/student incharge
+// @route      PUT /users/:id
+// @access     Private (Admin)
 const updateUser = asyncHandler(async (req, res, next) => {
   // Find by Id and update it with data passed in the request body
   await User.findByIdAndUpdate(req.params.id, req.body);
@@ -120,6 +132,9 @@ const updateUser = asyncHandler(async (req, res, next) => {
   res.redirect('/users');
 });
 
+// @desc       Delete particular interviewer/student incharge
+// @route      DELETE /users/:id
+// @access     Private (Admin)
 const deleteUser = asyncHandler(async (req, res, next) => {
   // Find by Id and delete the user
   await User.findByIdAndDelete(req.params.id);
@@ -129,6 +144,9 @@ const deleteUser = asyncHandler(async (req, res, next) => {
   res.redirect('/users');
 });
 
+// @desc       Assign a student to a particular interviewer
+// @route      POST /interviewer/:interviewerId/assign_student
+// @access     Private (Admin, Student Incharge)
 const assignStudentToUser = asyncHandler(async (req, res, next) => {
   // Get register number and userId
   const registerNum = req.body.register_num;
@@ -140,7 +158,7 @@ const assignStudentToUser = asyncHandler(async (req, res, next) => {
   // Get studentId
   const studentId = student['_id'];
 
-  // Push userId to student.users array
+  // Push intervirwerId to student.users array
   await Student.updateOne({ _id: studentId }, { $push: { interviewers: interviewerId } });
 
   // Push studentId to users.students array
@@ -151,8 +169,11 @@ const assignStudentToUser = asyncHandler(async (req, res, next) => {
   res.redirect(`/users/${interviewerId}`);
 });
 
+// @desc       Deallocate a student from a particular interviewer
+// @route      POST /users/:interviewerId/deallocate_student/:studentId
+// @access     Private (Admin, Student Incharge)
 const deallocateStudentToUser = asyncHandler(async (req, res, next) => {
-  // Get userId and studentId
+  // Get interviewerId and studentId
   const interviewerId = req.params.interviewerId;
   const studentId = req.params.studentId;
 
@@ -167,6 +188,9 @@ const deallocateStudentToUser = asyncHandler(async (req, res, next) => {
   res.redirect(`/users/${interviewerId}`);
 });
 
+// @desc       Assign Scores to a Student
+// @route      POST /users/:interviewerId/students/:studentId
+// @access     Private (Interviewer)
 const scoreStudent = asyncHandler(async (req, res, next) => {
   const interviewer = req.params.interviewerId;
   const student = req.params.studentId;
@@ -197,6 +221,7 @@ const sendTokenResponse = (user, req, res) => {
     httpOnly: true,
   };
 
+  // Redirect according to user role
   if (user.role === 'Admin') {
     req.flash('success', `Welcome, ${user.name}`);
     res.cookie('token', token, options).redirect('/users');
@@ -207,11 +232,11 @@ const sendTokenResponse = (user, req, res) => {
 };
 
 module.exports = {
-  renderUsers,
-  createUser,
   renderLogin,
   loginUser,
   logoutUser,
+  renderUsers,
+  createUser,
   getUser,
   updateUser,
   deleteUser,
