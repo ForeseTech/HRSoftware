@@ -8,7 +8,6 @@ const morgan = require('morgan');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
-const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 
 const studentRouter = require('./routes/studentRoute');
@@ -29,7 +28,6 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.static(path.join(__dirname, '/public')));
 
 // Views and View Engine
-app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views/'));
 
@@ -84,4 +82,5 @@ app.use('/students', studentRouter);
 app.use('/users', userRouter);
 app.use('/incharges', inchargeRouter);
 
+// Export app to server
 module.exports = app;

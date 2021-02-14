@@ -1,44 +1,91 @@
-<% layout("layouts/boilerplate") -%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<main class="container">
-  <%- include("../partials/flash.ejs") %>
-  <h3>Student Register Number : <%= student.register_num %></h3>
-  <h3>Student Name : <%= student.name %></h3>
-  <h3>Student Department : <%= student.dept %></h3>
-  <h2>List Of Interviews:-</h2>
-  <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addInterviewer">Add Interviewer</button>
-  <table class="table table-bordered table-hover text-center">
-    <thead>
-      <tr>
-        <th>SNO</th>
-        <th>Interviewer Name</th>
-        <th>Inteviewer Company</th>
-        <th>Interview Date</th>
-        <th>Interviewer Details</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% student.interviewers.forEach((interviewer, index) => { %>
-      <tr>
-        <td><%= index + 1 %></td>
-        <td><%= interviewer.name %></td>
-        <td><%= interviewer.company %></td>
-        <td><%= interviewer.date %></td>
-        <td>
-          <a href="/users/<%= interviewer._id %>" class="btn btn-dark btn-sm">View</a>
-          <form
-            action="/students/<%= student._id %>/deallocate_user/<%= interviewer._id %>"
-            method="POST"
-            class="d-inline"
-          >
-            <input type="hidden" name="_method" value="PUT" />
-            <button type="submit" class="btn btn-warning btn-sm">Deallocate User</button>
-          </form>
-        </td>
-      </tr>
-      <% }); %>
-    </tbody>
-  </table>
-</main>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.ico" />
 
-<%- include("./modals/add.ejs"); %>
+    <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/custom.css" />
+
+    <!-- Page Title -->
+    <title>FORESE - MOCK PLACEMENTS 2021</title>
+  </head>
+
+  <body>
+    <!-- Include Navbar Partial -->
+    <%- include("../partials/navbar.ejs"); %>
+
+    <!-- Container Begins Here -->
+    <main class="container">
+      <!-- Flash Message Partial -->
+      <div class="mt-2"><%- include("../partials/flash.ejs") %></div>
+
+      <!-- Student Info -->
+      <h3>Student Register Number : <%= student.register_num %></h3>
+      <h3>Student Name : <%= student.name %></h3>
+      <h3>Student Department : <%= student.dept %></h3>
+
+      <!-- Add Interviewer Button -->
+      <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addInterviewer">Add Interviewer</button>
+
+      <!-- Student's table of interviews -->
+      <h2>List Of Interviews:-</h2>
+      <table class="table table-bordered table-hover text-center">
+        <thead>
+          <tr>
+            <th>SNO</th>
+            <th>Interviewer Name</th>
+            <th>Inteviewer Company</th>
+            <th>Interview Date</th>
+            <th>Interviewer Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% student.interviewers.forEach((interviewer, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= interviewer.name %></td>
+            <td><%= interviewer.company %></td>
+            <td><%= interviewer.date %></td>
+            <td>
+              <a href="/users/<%= interviewer._id %>" class="btn btn-dark btn-sm">View</a>
+              <form
+                action="/students/<%= student._id %>/deallocate_user/<%= interviewer._id %>"
+                method="POST"
+                class="d-inline"
+              >
+                <input type="hidden" name="_method" value="PUT" />
+                <button type="submit" class="btn btn-warning btn-sm">Deallocate User</button>
+              </form>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </main>
+
+    <%- include("./modals/add.ejs"); %>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+          $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+        });
+        $('table.table').DataTable({ paging: false });
+      });
+    </script>
+
+    <script src="/js/validateForms.js"></script>
+    <script src="/js/script.js"></script>
+  </body>
+</html>

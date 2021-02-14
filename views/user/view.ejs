@@ -1,51 +1,99 @@
-<% layout("layouts/boilerplate") -%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<main class="container">
-  <div class="mt-2"><%- include("../partials/flash.ejs") %></div>
-  <button class="btn btn-primary mb-3 px-4" data-toggle="modal" data-target="#addStudent">Add Student</button>
-  <table class="table table-bordered table-hover text-center">
-    <thead class="bg-light">
-      <tr>
-        <th>SNO</th>
-        <th>Name</th>
-        <th>Department</th>
-        <th>Aptitude Score</th>
-        <th>GD Score</th>
-        <th>Student Details</th>
-        <th>Rate</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% user.students.forEach((student, index) => { %>
-      <tr>
-        <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
-        <td><%= index + 1 %></td>
-        <td><%= student.name %></td>
-        <td><%= student.dept %></td>
-        <td><%= sumOfValues(student.aptitude_scores) %> / 50</td>
-        <td><%= sumOfValues(student.gd_scores) %> / 30</td>
-        <td><a href="/students/<%= student._id %>">View</a></td>
-        <td>
-          <button
-            class="btn btn-secondary btn-sm rate-student"
-            data-user="<%= user._id %>"
-            data-student="<%= student._id %>"
-            data-aptitude="<%= JSON.stringify(student.aptitude_scores) %>"
-            data-gd="<%= JSON.stringify(student.gd_scores) %>"
-            data-toggle="modal"
-            data-target="#rateStudent"
-          >
-            Rate Student
-          </button>
-          <form action="/users/<%= user._id %>/deallocate_student/<%= student._id %>" method="POST" class="d-inline">
-            <input type="hidden" name="_method" value="PUT" />
-            <button type="submit" class="btn btn-sm btn-warning">Deallocate Student</button>
-          </form>
-        </td>
-      </tr>
-      <% }); %>
-    </tbody>
-  </table>
-</main>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.ico" />
 
-<%- include("./modals/add.ejs") %> <%- include("./modals/rate.ejs") %>
+    <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/custom.css" />
+
+    <!-- Page Title -->
+    <title>FORESE - MOCK PLACEMENTS 2021</title>
+  </head>
+
+  <body>
+    <!-- Include Navbar Partial -->
+    <%- include("../partials/navbar.ejs"); %>
+
+    <main class="container">
+      <div class="mt-2"><%- include("../partials/flash.ejs") %></div>
+      <button class="btn btn-primary mb-3 px-4" data-toggle="modal" data-target="#addStudent">Add Student</button>
+      <table class="table table-bordered table-hover text-center">
+        <thead class="bg-light">
+          <tr>
+            <th>SNO</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Aptitude Score</th>
+            <th>GD Score</th>
+            <th>Student Details</th>
+            <th>Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% user.students.forEach((student, index) => { %>
+          <tr>
+            <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
+            <td><%= index + 1 %></td>
+            <td><%= student.name %></td>
+            <td><%= student.dept %></td>
+            <td><%= sumOfValues(student.aptitude_scores) %> / 50</td>
+            <td><%= sumOfValues(student.gd_scores) %> / 30</td>
+            <td><a href="/students/<%= student._id %>">View</a></td>
+            <td>
+              <button
+                class="btn btn-secondary btn-sm rate-student"
+                data-user="<%= user._id %>"
+                data-student="<%= student._id %>"
+                data-aptitude="<%= JSON.stringify(student.aptitude_scores) %>"
+                data-gd="<%= JSON.stringify(student.gd_scores) %>"
+                data-toggle="modal"
+                data-target="#rateStudent"
+              >
+                Rate Student
+              </button>
+              <form
+                action="/users/<%= user._id %>/deallocate_student/<%= student._id %>"
+                method="POST"
+                class="d-inline"
+              >
+                <input type="hidden" name="_method" value="PUT" />
+                <button type="submit" class="btn btn-sm btn-warning">Deallocate Student</button>
+              </form>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </main>
+
+    <!-- Assign a student to an interviewer -->
+    <%- include("./modals/add.ejs") %>
+
+    <!-- Score a student -->
+    <%- include("./modals/rate.ejs") %>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+          $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+        });
+        $('table.table').DataTable({ paging: false });
+      });
+    </script>
+
+    <script src="/js/validateForms.js"></script>
+    <script src="/js/script.js"></script>
+  </body>
+</html>
