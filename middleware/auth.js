@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
+const Incharge = require('../models/inchargeModel');
 const User = require('../models/userModel');
 
 // Protect Routes
@@ -19,8 +19,13 @@ const isLoggedIn = async (req, res, next) => {
   // Verify Token
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userType = req.headers.referer.split('/')[3];
 
-    req.user = await User.findById(decoded.id);
+    if (userType === 'incharges') {
+      req.user = await Incharge.findById(decoded.id);
+    } else {
+      req.user = await User.findById(decoded.id);
+    }
 
     next();
   } catch (err) {

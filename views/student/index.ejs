@@ -1,81 +1,108 @@
-<% layout("layouts/boilerplate") -%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<main class="container">
-  <% if(students && students.length) { %>
-  <nav class="mb-3">
-    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-      <a class="nav-item nav-link active" data-toggle="tab" href="#online" role="tab">Online</a>
-      <a class="nav-item nav-link" data-toggle="tab" href="#offline" role="tab">Offline</a>
-    </div>
-  </nav>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.ico" />
 
-  <div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane fade show active" id="online" role="tabpanel">
-      <table class="table table-bordered table-hover text-center" id="onlineStudents">
-        <thead class="bg-light">
-          <tr>
-            <th>Register Number</th>
-            <th>Name</th>
-            <th>Department</th>
-            <th>Section</th>
-            <th>Aptitude Score</th>
-            <th>GD Score</th>
-            <th>Interviews</th>
-            <th>View</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% students.forEach((student, index) => { %> <% if(student.preference === "Online") { %>
-          <tr>
-            <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
-            <td class="text-center"><%= student.register_num %></td>
-            <td><%= student.name %></td>
-            <td class="text-center"><%= student.dept %></td>
-            <td class="text-center"><%= student.section != "" ? student.section : "-" %></td>
-            <td><%= sumOfValues(student.aptitude_scores) %></td>
-            <td><%= sumOfValues(student.gd_scores) %></td>
-            <td class="text-center"><%= interviewsPerStudent[student._id] %></td>
-            <td><a href="/students/<%= student._id %>">View</a></td>
-          </tr>
-          <% } %> <% }); %>
-        </tbody>
-      </table>
-    </div>
+    <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
 
-    <div class="tab-pane fade" id="offline" role="tabpanel">
-      <table class="table table-bordered table-hover text-center" id="offlineStudents">
-        <thead class="bg-light">
-          <tr>
-            <th>Register Number</th>
-            <th>Name</th>
-            <th>Department</th>
-            <th>Section</th>
-            <th>Aptitude Score</th>
-            <th>GD Score</th>
-            <th>Interviews</th>
-            <th>View</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% students.forEach((student, index) => { %> <% if(student.preference === "Offline") { %>
-          <tr>
-            <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
-            <td class="text-center"><%= student.register_num %></td>
-            <td><%= student.name %></td>
-            <td class="text-center"><%= student.dept %></td>
-            <td class="text-center"><%= student.section %></td>
-            <td><%= sumOfValues(student.aptitude_scores) %></td>
-            <td><%= sumOfValues(student.gd_scores) %></td>
-            <td class="text-center"><%= interviewsPerStudent[student._id] %></td>
-            <td><a href="/students/<%= student._id %>">View</a></td>
-          </tr>
-          <% } %> <% }); %>
-        </tbody>
-      </table>
-    </div>
-  </div>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/custom.css" />
 
-  <% } else { %>
-  <p>You have not created any students yet.</p>
-  <% } %>
-</main>
+    <!-- Page Title -->
+    <title>FORESE - MOCK PLACEMENTS 2021</title>
+  </head>
+
+  <body>
+    <!-- Include Navbar Partial -->
+    <%- include("../partials/navbar.ejs"); %>
+
+    <!-- Container Begins Here -->
+    <main class="container">
+      <!-- Flash Message Partial -->
+      <div class="mt-2"><%- include("../partials/flash.ejs") %></div>
+
+      <!-- New Student Button -->
+      <button class="btn btn-primary mt-4 mb-3" data-toggle="modal" data-target="#newStudent">Add New Student</button>
+
+      <!-- Navlist for student mode preference -->
+      <nav class="mb-3">
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <a class="nav-item nav-link active" data-toggle="tab" href="#online" role="tab">Online</a>
+          <a class="nav-item nav-link" data-toggle="tab" href="#offline" role="tab">Offline</a>
+        </div>
+      </nav>
+
+      <!-- Table for online students -->
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="online" role="tabpanel">
+          <table class="table table-bordered table-hover text-center" id="onlineStudents">
+            <thead class="bg-light">
+              <tr>
+                <th>Register Number</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Section</th>
+                <th>Aptitude Score</th>
+                <th>GD Score</th>
+                <th>Interviews</th>
+                <th>View</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% students.forEach((student, index) => { %> <% if(student.preference === "Online") { %>
+              <tr>
+                <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
+                <td class="text-center"><%= student.register_num %></td>
+                <td><%= student.name %></td>
+                <td class="text-center"><%= student.dept %></td>
+                <td class="text-center"><%= student.section != "" ? student.section : "-" %></td>
+                <td><%= sumOfValues(student.aptitude_scores) %></td>
+                <td><%= sumOfValues(student.gd_scores) %></td>
+                <td class="text-center"><%= interviewsPerStudent[student._id] %></td>
+                <td><a href="/students/<%= student._id %>">View</a></td>
+              </tr>
+              <% } %> <% }); %>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Table for offline students -->
+        <div class="tab-pane fade" id="offline" role="tabpanel">
+          <table class="table table-bordered table-hover text-center" id="offlineStudents">
+            <thead class="bg-light">
+              <tr>
+                <th>Register Number</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Section</th>
+                <th>Aptitude Score</th>
+                <th>GD Score</th>
+                <th>Interviews</th>
+                <th>View</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% students.forEach((student, index) => { %> <% if(student.preference === "Offline") { %>
+              <tr>
+                <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
+                <td class="text-center"><%= student.register_num %></td>
+                <td><%= student.name %></td>
+                <td class="text-center"><%= student.dept %></td>
+                <td class="text-center"><%= student.section %></td>
+                <td><%= sumOfValues(student.aptitude_scores) %></td>
+                <td><%= sumOfValues(student.gd_scores) %></td>
+                <td class="text-center"><%= interviewsPerStudent[student._id] %></td>
+                <td><a href="/students/<%= student._id %>">View</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

@@ -9,23 +9,23 @@ const renderLogin = (req, res, next) => {
 const loginIncharge = asyncHandler(async (req, res, next) => {
   const { username, password } = req.body;
 
-  const incharge = await Incharge.findOne({ username: username }).select('+password');
+  const user = await Incharge.findOne({ username: username }).select('+password');
 
   // Check if user exists
-  if (!incharge) {
+  if (!user) {
     req.flash('error', 'No such student incharge exists. Please contact the tech lead.');
     return res.redirect('/incharges/login');
   }
 
   // Check if password matches
-  const isMatch = await Incharge.matchPassword(password);
+  const isMatch = await user.matchPassword(password);
   if (!isMatch) {
     req.flash('error', 'Invalid Login Credentials.');
     return res.redirect('/incharges/login');
   }
 
   // Send token response
-  sendTokenResponse(incharge, req, res);
+  sendTokenResponse(user, req, res);
 });
 
 const logoutIncharge = (req, res, next) => {
@@ -34,13 +34,13 @@ const logoutIncharge = (req, res, next) => {
     httpOnly: true,
   });
 
-  req.flash('success', 'You have logged out');
+  req.flash('success', 'You Have Logged Out');
   res.redirect('/incharges/login');
 };
 
 // Get token from model, create cookie and send response
-const sendTokenResponse = (incharge, req, res) => {
-  const token = incharge.getSignedJwtToken();
+const sendTokenResponse = (user, req, res) => {
+  const token = user.getSignedJwtToken();
 
   const options = {
     expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
@@ -48,7 +48,7 @@ const sendTokenResponse = (incharge, req, res) => {
   };
 
   req.flash('success', `Welcome, ${user.name}`);
-  res.cookie('token', token, options).redirect(`/incharges/${incharge.interviewer}`);
+  res.cookie('token', token, options).redirect(`/users/${user.interviewer}`);
 };
 
 module.exports = {

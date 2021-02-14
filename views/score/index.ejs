@@ -1,0 +1,7 @@
+<% layout("layouts/boilerplate") -%>
+<table>
+  <% scores.forEach((score, index) => { %>
+  <td><%= score.student.name %></td>
+  <td><%= score.interviewer.company %></td>
+  <% }); %>
+</table>

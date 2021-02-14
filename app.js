@@ -15,6 +15,8 @@ const studentRouter = require('./routes/studentRoute');
 const userRouter = require('./routes/userRoute');
 const inchargeRouter = require('./routes/inchargeRoute');
 
+const { renderScores } = require('./controllers/scoreController');
+
 // Instantiate express app
 const app = express();
 
@@ -77,6 +79,7 @@ app.get('/', (req, res, next) => {
   res.redirect('/users/login');
 });
 
+app.get('/scores', renderScores);
 app.use('/students', studentRouter);
 app.use('/users', userRouter);
 app.use('/incharges', inchargeRouter);

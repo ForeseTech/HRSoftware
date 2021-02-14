@@ -1,219 +1,269 @@
-<% layout("layouts/boilerplate") -%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<main class="container">
-  <div class="mt-2"><%- include("../partials/flash.ejs") %></div>
-  <button class="btn btn-primary mt-4 mb-3" data-toggle="modal" data-target="#newUser">Add New User</button>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.ico" />
 
-  <ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
-    <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" href="#interviewer" role="tab">Interviewers</a>
-    </li>
-    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#incharge" role="tab">Student Incharges</a></li>
-    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#admin" role="tab">Admin</a></li>
-  </ul>
+    <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
 
-  <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="interviewer" role="tabpanel">
-      <div class="tab-content" id="nav-tabContent">
-        <ul class="nav nav-tabs mt-3 mb-2" id="myTab" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#interviewer20" role="tab"
-              >20<sup>th</sup> February, 2021</a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#interviewer21" role="tab">21<sup>st</sup> February, 2021</a>
-          </li>
-        </ul>
-        <div class="tab-pane fade show active" id="interviewer20" role="tabpanel">
-          <table class="table table-bordered table-hover text-center" id="interviewers">
-            <thead class="bg-light">
-              <tr>
-                <th>Name</th>
-                <th>Company</th>
-                <th>Students Assigned</th>
-                <th>View</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% users.forEach((user, index) => { interview_date = new Date(user.date); %> <%
-              if(interview_date.getDate() == 20 && user.role === "Interviewer") { %>
-              <tr>
-                <td><%= user.name %></td>
-                <td><%= user.company %></td>
-                <td><%= studentsPerInterviewer[user._id] %></td>
-                <td>
-                  <a href="/users/<%= user._id %>" class="btn btn-sm btn-secondary">View</a>
-                  <button
-                    class="btn btn-sm btn-warning edit-interviewer"
-                    data-toggle="modal"
-                    data-name="<%= user.name %>"
-                    data-id="<%= user._id %>"
-                    data-company="<%= user.company%>"
-                    data-target="#editInterviewer"
-                  >
-                    Edit
-                  </button>
-                  <form action="/users/<%= user._id %>" method="POST" class="d-inline">
-                    <input type="hidden" name="_method" value="DELETE" />
-                    <button class="btn btn-sm btn-danger" type="submit">Delete</button>
-                  </form>
-                </td>
-              </tr>
-              <% } %> <% }); %>
-            </tbody>
-          </table>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/custom.css" />
+
+    <!-- Page Title -->
+    <title>FORESE - MOCK PLACEMENTS 2021</title>
+  </head>
+
+  <body>
+    <!-- Include Navbar Partial -->
+    <%- include("../partials/navbar.ejs"); %>
+
+    <!-- Container Begins Here -->
+    <main class="container">
+      <!-- Flash Message Partial -->
+      <div class="mt-2"><%- include("../partials/flash.ejs") %></div>
+
+      <!-- New User Button -->
+      <button class="btn btn-primary mt-4 mb-3" data-toggle="modal" data-target="#newUser">Add New User</button>
+
+      <!-- Navlist for types of users -->
+      <ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#interviewer" role="tab">Interviewers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#incharge" role="tab">Student Incharges</a>
+        </li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#admin" role="tab">Admin</a></li>
+      </ul>
+
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="interviewer" role="tabpanel">
+          <div class="tab-content" id="nav-tabContent">
+            <ul class="nav nav-tabs mt-3 mb-2" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#interviewer20" role="tab"
+                  >20<sup>th</sup> February, 2021</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#interviewer21" role="tab"
+                  >21<sup>st</sup> February, 2021</a
+                >
+              </li>
+            </ul>
+            <div class="tab-pane fade show active" id="interviewer20" role="tabpanel">
+              <table class="table table-bordered table-hover text-center" id="interviewers">
+                <thead class="bg-light">
+                  <tr>
+                    <th>Name</th>
+                    <th>Company</th>
+                    <th>Students Assigned</th>
+                    <th>View</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% users.forEach((user, index) => { interview_date = new Date(user.date); %> <%
+                  if(interview_date.getDate() == 20 && user.role === "Interviewer") { %>
+                  <tr>
+                    <td><%= user.name %></td>
+                    <td><%= user.company %></td>
+                    <td><%= studentsPerInterviewer[user._id] %></td>
+                    <td>
+                      <a href="/users/<%= user._id %>" class="btn btn-sm btn-secondary">View</a>
+                      <button
+                        class="btn btn-sm btn-warning edit-interviewer"
+                        data-toggle="modal"
+                        data-name="<%= user.name %>"
+                        data-id="<%= user._id %>"
+                        data-company="<%= user.company%>"
+                        data-target="#editInterviewer"
+                      >
+                        Edit
+                      </button>
+                      <form action="/users/<%= user._id %>" method="POST" class="d-inline">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+                  <% } %> <% }); %>
+                </tbody>
+              </table>
+            </div>
+            <div class="tab-pane fade" id="interviewer21" role="tabpanel">
+              <table class="table table-bordered table-hover text-center" id="interviewers">
+                <thead class="bg-light">
+                  <tr>
+                    <th>Name</th>
+                    <th>Company</th>
+                    <th>Students Assigned</th>
+                    <th>View</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% users.forEach((user, index) => { interview_date = new Date(user.date); %> <%
+                  if(interview_date.getDate() == 21 && user.role === "Interviewer") { %>
+                  <tr>
+                    <td><%= user.name %></td>
+                    <td><%= user.company %></td>
+                    <td><%= studentsPerInterviewer[user._id] %></td>
+                    <td>
+                      <a href="/users/<%= user._id %>" class="btn btn-sm btn-secondary">View</a>
+                      <button
+                        class="btn btn-sm btn-warning edit-interviewer"
+                        data-toggle="modal"
+                        data-name="<%= user.name %>"
+                        data-id="<%= user._id %>"
+                        data-company="<%= user.company%>"
+                        data-target="#editInterviewer"
+                      >
+                        Edit
+                      </button>
+                      <form action="/users/<%= user._id %>" method="POST" class="d-inline">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+                  <% } %> <% }); %>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
-        <div class="tab-pane fade" id="interviewer21" role="tabpanel">
+
+        <div class="tab-pane fade" id="incharge" role="tabpanel">
+          <div class="tab-content" id="nav-tabContent">
+            <ul class="nav nav-tabs mt-3 mb-2" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#incharge20" role="tab"
+                  >20<sup>th</sup> February, 2021</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#incharge21" role="tab">21<sup>st</sup> February, 2021</a>
+              </li>
+            </ul>
+            <div class="tab-pane fade show active" id="incharge20" role="tabpanel">
+              <table class="table table-bordered table-hover text-center" id="interviewers">
+                <thead class="bg-light">
+                  <tr>
+                    <th>Name</th>
+                    <th>Interviewer Assigned</th>
+                    <th>Interviewer Company</th>
+                    <th>View</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% incharges.forEach((incharge, index) => { %>
+                  <tr>
+                    <td><%= incharge.name %></td>
+                    <td><%= incharge.interviewer.name %></td>
+                    <td><%= incharge.interviewer.company %></td>
+                    <td>
+                      <a href="/users/<%= incharge.interviewer._id %>" class="btn btn-sm btn-secondary">View</a>
+                      <button
+                        class="btn btn-sm btn-warning edit-interviewer"
+                        data-toggle="modal"
+                        data-name="<%= incharge.name %>"
+                        data-id="<%= incharge._id %>"
+                        data-company="<%= incharge.company%>"
+                        data-target="#editUser"
+                      >
+                        Edit
+                      </button>
+                      <form action="/incharges/<%= incharge._id %>" method="POST" class="d-inline">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
+            <div class="tab-pane fade" id="incharge21" role="tabpanel">
+              <table class="table table-bordered table-hover text-center" id="interviewers">
+                <thead class="bg-light">
+                  <tr>
+                    <th>Name</th>
+                    <th>Interviewer Assigned</th>
+                    <th>Interviewer Company</th>
+                    <th>View</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% incharges.forEach((incharge, index) => { %>
+                  <tr>
+                    <td><%= incharge.name %></td>
+                    <td><%= incharge.interviewer.name %></td>
+                    <td><%= incharge.interviewer.company %></td>
+                    <td>
+                      <a href="/incharges/<%= incharge._id %>" class="btn btn-sm btn-secondary">View</a>
+                      <button
+                        class="btn btn-sm btn-warning edit-interviewer"
+                        data-toggle="modal"
+                        data-name="<%= incharge.name %>"
+                        data-id="<%= incharge._id %>"
+                        data-company="<%= incharge.company%>"
+                        data-target="#editUser"
+                      >
+                        Edit
+                      </button>
+                      <form action="/incharges/<%= incharge._id %>" method="POST" class="d-inline">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="admin" role="tabpanel">
           <table class="table table-bordered table-hover text-center" id="interviewers">
             <thead class="bg-light">
               <tr>
                 <th>Name</th>
-                <th>Company</th>
-                <th>Students Assigned</th>
-                <th>View</th>
+                <th>Username</th>
               </tr>
             </thead>
             <tbody>
-              <% users.forEach((user, index) => { interview_date = new Date(user.date); %> <%
-              if(interview_date.getDate() == 21 && user.role === "Interviewer") { %>
+              <% users.forEach((user, index) => { %> <% if(user.role === "Admin") { %>
               <tr>
                 <td><%= user.name %></td>
-                <td><%= user.company %></td>
-                <td><%= studentsPerInterviewer[user._id] %></td>
-                <td>
-                  <a href="/users/<%= user._id %>" class="btn btn-sm btn-secondary">View</a>
-                  <button
-                    class="btn btn-sm btn-warning edit-interviewer"
-                    data-toggle="modal"
-                    data-name="<%= user.name %>"
-                    data-id="<%= user._id %>"
-                    data-company="<%= user.company%>"
-                    data-target="#editInterviewer"
-                  >
-                    Edit
-                  </button>
-                  <form action="/users/<%= user._id %>" method="POST" class="d-inline">
-                    <input type="hidden" name="_method" value="DELETE" />
-                    <button class="btn btn-sm btn-danger" type="submit">Delete</button>
-                  </form>
-                </td>
+                <td><%= user.name %></td>
               </tr>
               <% } %> <% }); %>
             </tbody>
           </table>
         </div>
       </div>
-    </div>
+    </main>
 
-    <div class="tab-pane fade" id="incharge" role="tabpanel">
-      <div class="tab-content" id="nav-tabContent">
-        <ul class="nav nav-tabs mt-3 mb-2" id="myTab" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#incharge20" role="tab"
-              >20<sup>th</sup> February, 2021</a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#incharge21" role="tab">21<sup>st</sup> February, 2021</a>
-          </li>
-        </ul>
-        <div class="tab-pane fade show active" id="incharge20" role="tabpanel">
-          <table class="table table-bordered table-hover text-center" id="interviewers">
-            <thead class="bg-light">
-              <tr>
-                <th>Name</th>
-                <th>Interviewer Assigned</th>
-                <th>Interviewer Company</th>
-                <th>View</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% incharges.forEach((incharge, index) => { %>
-              <tr>
-                <td><%= incharge.name %></td>
-                <td><%= incharge.interviewer.name %></td>
-                <td><%= incharge.interviewer.company %></td>
-                <td>
-                  <a href="/users/<%= incharge.interviewer._id %>" class="btn btn-sm btn-secondary">View</a>
-                  <button
-                    class="btn btn-sm btn-warning edit-interviewer"
-                    data-toggle="modal"
-                    data-name="<%= incharge.name %>"
-                    data-id="<%= incharge._id %>"
-                    data-company="<%= incharge.company%>"
-                    data-target="#editUser"
-                  >
-                    Edit
-                  </button>
-                  <form action="/incharges/<%= incharge._id %>" method="POST" class="d-inline">
-                    <input type="hidden" name="_method" value="DELETE" />
-                    <button class="btn btn-sm btn-danger" type="submit">Delete</button>
-                  </form>
-                </td>
-              </tr>
-              <% }); %>
-            </tbody>
-          </table>
-        </div>
-        <div class="tab-pane fade" id="incharge21" role="tabpanel">
-          <table class="table table-bordered table-hover text-center" id="interviewers">
-            <thead class="bg-light">
-              <tr>
-                <th>Name</th>
-                <th>Interviewer Assigned</th>
-                <th>Interviewer Company</th>
-                <th>View</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% incharges.forEach((incharge, index) => { %>
-              <tr>
-                <td><%= incharge.name %></td>
-                <td><%= incharge.interviewer.name %></td>
-                <td><%= incharge.interviewer.company %></td>
-                <td>
-                  <a href="/incharges/<%= incharge._id %>" class="btn btn-sm btn-secondary">View</a>
-                  <button
-                    class="btn btn-sm btn-warning edit-interviewer"
-                    data-toggle="modal"
-                    data-name="<%= incharge.name %>"
-                    data-id="<%= incharge._id %>"
-                    data-company="<%= incharge.company%>"
-                    data-target="#editUser"
-                  >
-                    Edit
-                  </button>
-                  <form action="/incharges/<%= incharge._id %>" method="POST" class="d-inline">
-                    <input type="hidden" name="_method" value="DELETE" />
-                    <button class="btn btn-sm btn-danger" type="submit">Delete</button>
-                  </form>
-                </td>
-              </tr>
-              <% }); %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    <%- include("./modals/new.ejs") %> <%- include("./modals/edit.ejs") %> <%- include('../partials/footer.ejs'); %>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+      });
+      $('table.table').DataTable({ paging: false });
+    });
+  </script>
 
-    <div class="tab-pane fade" id="admin" role="tabpanel">
-      <table class="table table-bordered table-hover text-center" id="interviewers">
-        <thead class="bg-light">
-          <tr>
-            <th>Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% users.forEach((user, index) => { %> <% if(user.role === "Admin") { %>
-          <tr>
-            <td><%= user.name %></td>
-          </tr>
-          <% } %> <% }); %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</main>
-
-<%- include("./modals/new.ejs") %> <%- include("./modals/edit.ejs") %>
+  <script src="/js/validateForms.js"></script>
+  <script src="/js/script.js"></script>
+</html>

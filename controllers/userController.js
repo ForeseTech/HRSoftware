@@ -100,7 +100,7 @@ const logoutUser = (req, res, next) => {
     httpOnly: true,
   });
 
-  req.flash('success', 'You have logged out');
+  req.flash('success', 'You Have Logged Out');
   res.redirect('/users/login');
 };
 
@@ -168,7 +168,7 @@ const deallocateStudentToUser = asyncHandler(async (req, res, next) => {
 });
 
 const scoreStudent = asyncHandler(async (req, res, next) => {
-  const user = req.params.interviewerId;
+  const interviewer = req.params.interviewerId;
   const student = req.params.studentId;
 
   const scores = {};
@@ -181,11 +181,11 @@ const scoreStudent = asyncHandler(async (req, res, next) => {
 
   const comments = req.body.comments;
 
-  await Score.create({ user, student, scores, comments });
+  await Score.create({ interviewer, student, scores, comments });
 
   // Success Flash Message
-  req.flash('success', 'Student successfully scored');
-  res.redirect(`/users/${user}`);
+  req.flash('success', 'Student Successfully Scored');
+  res.redirect(`/users/${interviewer}`);
 });
 
 // Get token from model, create cookie and send response
@@ -199,11 +199,7 @@ const sendTokenResponse = (user, req, res) => {
 
   if (user.role === 'Admin') {
     req.flash('success', `Welcome, ${user.name}`);
-<<<<<<< HEAD
     res.cookie('token', token, options).redirect('/users');
-=======
-    res.cookie('token', token, options).redirect('/students');
->>>>>>> 390d9b379ca233cdaa6192e4731cf4984103f683
   } else if (user.role === 'Interviewer') {
     req.flash('success', `Welcome, ${user.name}`);
     res.cookie('token', token, options).redirect(`/users/${user._id}`);
