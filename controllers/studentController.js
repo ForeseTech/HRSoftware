@@ -39,6 +39,34 @@ const getStudent = asyncHandler(async (req, res, next) => {
   res.render('student/view', { student, users, name: req.user.name });
 });
 
+// @desc       Create a Student
+// @route      POST /students
+// @access     Private (Admin)
+const createStudent = asyncHandler(async (req, res, next) => {
+  const { register_num, name, dept, section, email, preference } = req.body;
+
+  let gd_scores = {},
+    aptitude_scores = {};
+
+  gd_scores['subject_knowledge'] = parseInt(req.body.subjectKnowledge);
+  gd_scores['communication_skills'] = parseInt(req.body.communicationSkills);
+  gd_scores['body_language'] = parseInt(req.body.bodyLanguage);
+  gd_scores['listening_skills'] = parseInt(req.body.listeningSkills);
+  gd_scores['critical_thinking'] = parseInt(req.body.criticalThinking);
+  gd_scores['leadership_skills'] = parseInt(req.body.leadershipSkills);
+
+  aptitude_scores['core'] = parseInt(req.body.core);
+  aptitude_scores['verbal'] = parseInt(req.body.verbal);
+  aptitude_scores['quants'] = parseInt(req.body.quants);
+  aptitude_scores['programming'] = parseInt(req.body.programming);
+
+  await Student.create({ register_num, name, dept, section, email, preference, gd_scores, aptitude_scores });
+
+  // Success flash message
+  req.flash('success', 'Student Successfully Created');
+  res.redirect('/students');
+});
+
 // @desc       Delete a student from DB
 // @route      DELETE /students/:id
 // @access     Private (Admin)
@@ -92,6 +120,7 @@ const deallocateInterviewerToStudent = asyncHandler(async (req, res, next) => {
 module.exports = {
   renderStudent,
   getStudent,
+  createStudent,
   deleteStudent,
   assignInterviewerToStudent,
   deallocateInterviewerToStudent,

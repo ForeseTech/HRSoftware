@@ -1,0 +1,107 @@
+<!-- New Student Modal -->
+<div class="modal fade" id="newStudent">
+  <div class="modal-dialog form-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add New Student</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form method="POST" action="/students" class="needs-validation" novalidate>
+          <div class="form-group">
+            <!-- Input for student registration number -->
+            <input type="text" name="register_num" class="form-control" placeholder="Enter Register Number" />
+          </div>
+          <div class="form-group">
+            <!-- Input for student name -->
+            <input type="text" name="name" class="form-control" placeholder="Enter Name" />
+          </div>
+          <div class="form-group">
+            <!-- Input for student department -->
+            <select name="dept" class="form-control" required>
+              <option value="" selected disabled>Select Department</option>
+              <option value="AUT">Automobile Engineering</option>
+              <option value="BIO">Biotechnology</option>
+              <option value="CHE">Chemical Engineering</option>
+              <option value="CIV">Civil Engineering</option>
+              <option value="CSE">Computer Science and Engineering</option>
+              <option value="EEE">Electrical and Electronics Engineering</option>
+              <option value="ECE">Electronics and Communications Engineering</option>
+              <option value="INT">Information Technology</option>
+              <option value="MEC">Mechanical Engineering</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select name="section" class="form-control">
+              <!-- Input for student section -->
+              <option value="" selected disabled>Select Section</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <!-- Input for student email -->
+            <input type="email" name="email" class="form-control" placeholder="Enter E-Mail ID" />
+          </div>
+          <div class="form-group">
+            <!-- Input for mode preference -->
+            <select name="preference" class="form-control">
+              <option value="" disabled>Select Preference</option>
+              <option value="Online" selected>Online</option>
+              <option value="Offline">Offline</option>
+            </select>
+          </div>
+          <!-- Input for GD Scores -->
+          <div class="form-group">
+            <label><b>Subject Knowledge</b></label>
+            <input type="number" name="subjectKnowledge" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label><b>Subject Knowledge</b></label>
+            <input type="number" name="communicationSkills" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label><b>Body Language</b></label>
+            <input type="number" name="bodyLanguage" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label><b>Listening Skills</b></label>
+            <input type="number" name="listeningSkills" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label><b>Critical Thinking</b></label>
+            <input type="number" name="criticalThinking" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label><b>Leadership Skills</b></label>
+            <input type="number" name="leadershipSkills" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label><b>Core</b></label>
+            <input type="number" name="core" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label><b>Verbal Ability</b></label>
+            <input type="number" name="verbal" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label><b>Quantitative Ability</b></label>
+            <input type="number" name="quants" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label><b>Programming</b></label>
+            <input type="number" name="programming" class="form-control" />
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Save Student</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

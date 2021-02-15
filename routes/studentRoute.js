@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   renderStudent,
   getStudent,
+  createStudent,
   deleteStudent,
   assignInterviewerToStudent,
   deallocateInterviewerToStudent,
@@ -12,7 +13,10 @@ const {
 const { isLoggedIn, authorize } = require('../middleware/auth');
 
 // View student info routes
-router.route('/').get(isLoggedIn, authorize('Admin'), renderStudent);
+router
+  .route('/')
+  .get(isLoggedIn, authorize('Admin'), renderStudent)
+  .post(isLoggedIn, authorize('Admin'), createStudent);
 router.route('/:id').get(isLoggedIn, authorize('Admin'), getStudent);
 
 // Student allocation and de-allocation routes
