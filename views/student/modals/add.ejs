@@ -11,14 +11,18 @@
 
       <div class="modal-body">
         <form method="POST" action="/students/<%= student._id %>/assign_user" class="needs-validation" novalidate>
-          <select name="user" class="form-control">
-            <option value="" selected disabled>Select Interviewer</option>
+          <label><b>Select Interviewers (Press Ctrl while clicking to select multiple interviewers</b></label>
+          <select name="users" class="form-control" size="15" multiple>
             <% users.forEach(user => { %>
-              <% if(user.role === "Interviewer") { %>  
+              <% if(user.role === "Interviewer") { %> 
                 <%  if(!user.students.includes(student._id)) { %>
-                  <option value="<%= user._id  %>"><%= user.name %> - <%= user.company %> (<%= user.date %>)</option>
-                <% } %>
-              <% } %>
+                  <% date = new Date(user.date) %> 
+                  <% day = date.getDate() %> 
+                  <option value="<%= user._id  %>">
+                    <%= user.name %> - <%= user.company %> (<%= day %> February, 2021)
+                  </option>
+                <% } %> 
+              <% } %> 
             <% }); %>
           </select>
           <div class="modal-footer">

@@ -36,7 +36,7 @@ const getStudent = asyncHandler(async (req, res, next) => {
 
   const users = await User.find({});
 
-  res.render('student/view', { student, users, name: req.user.name });
+  res.render('student/view', { student, users, name: req.user.name, role: req.user.role });
 });
 
 // @desc       Create a Student
@@ -85,13 +85,15 @@ const deleteStudent = asyncHandler(async (req, res, next) => {
 const assignInterviewerToStudent = asyncHandler(async (req, res, next) => {
   // Get studentId and userId
   const studentId = req.params.id;
-  const interviewerId = req.body.user;
+  const interviewers = req.body.users;
 
-  // Push interviewerId to student.interviewers array
-  await Student.updateOne({ _id: studentId }, { $push: { interviewers: interviewerId } });
+  // Push interviewers to student.interviewers array
+  await Student.updateOne({ _id: studentId }, { $push: { interviewers: interviewers } });
 
   // Push studentId to users.students array
-  await User.updateOne({ _id: interviewerId }, { $push: { students: studentId } });
+  interviewers.forEach(async (interviewer) => {
+    await User.updateOne({ _id: interviewer }, { $push: { students: studentId } });
+  });
 
   // Success flash message
   req.flash('success', 'Interviewer Successfully Assigned');

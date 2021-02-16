@@ -14,10 +14,12 @@
           <label><b>Select Students (Press Ctrl while clicking to select multiple students)</b></label>
           <select name="students" class="form-control" size="18" multiple>
             <% students.forEach(student => { %>
-              <% if(student.preference === "Online") { %> 
-                <option value="<%= student._id  %>">
-                  <%= student.register_num %> - <%= student.name %> (<%= student.dept %>)
-                </option>
+              <% if(student.preference === "Online") { %>
+                <% if(!student.interviewers.includes(user._id)) { %>  
+                  <option value="<%= student._id %>">
+                    <%= student.register_num %> - <%= student.name %> (<%= student.dept %>)
+                  </option>
+                <% } %> 
               <% } %> 
             <% }); %>
           </select>
