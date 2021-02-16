@@ -46,16 +46,39 @@
   },
   {
     "_id": "5d713995b721c3bb38c1f5d5",
+    "name": "Nilesh D",
+    "company": "Flipkart",
+    "role": "Interviewer",
+    "date": "2021-02-21",
+    "username": "nilesh_flipkart",
+    "password": "nilesh_flipkart"
+  },
+  {
+    "_id": "5d713995b721c3bb38c1f5d6",
     "name": "Anirudh",
     "role": "Admin",
     "username": "anirudh@forese.in",
     "password": "654321"
   },
   {
-    "_id": "5d713995b721c3bb38c1f5d6",
+    "_id": "5d713995b721c3bb38c1f5d7",
     "name": "Deekshitha",
     "role": "Admin",
     "username": "deekshitha@forese.in",
+    "password": "654321"
+  },
+  {
+    "_id": "5d713995b721c3bb38c1f5d8",
+    "name": "Srivatsan",
+    "role": "Admin",
+    "username": "srivatsan@forese.in",
+    "password": "654321"
+  },
+  {
+    "_id": "5d713995b721c3bb38c1f5d9",
+    "name": "Admin",
+    "role": "Admin",
+    "username": "admin@forese.in",
     "password": "654321"
   }
 ]

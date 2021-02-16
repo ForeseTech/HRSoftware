@@ -10,11 +10,19 @@
       </div>
 
       <div class="modal-body">
-        <form method="POST" action="/users/<%= user._id %>/assign_student" class="needs-validation" novalidate>
-          <label><b>Enter Student Registration Number</b></label>
-          <input type="text" name="register_num" class="form-control" required />
+        <form method="POST" action="/users/<%= user._id %>/assign_student">
+          <label><b>Select Students (Press Ctrl while clicking to select multiple students)</b></label>
+          <select name="students" class="form-control" size="18" multiple>
+            <% students.forEach(student => { %>
+              <% if(student.preference === "Online") { %> 
+                <option value="<%= student._id  %>">
+                  <%= student.register_num %> - <%= student.name %> (<%= student.dept %>)
+                </option>
+              <% } %> 
+            <% }); %>
+          </select>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-success">Assign Student</button>
+            <button type="submit" class="btn btn-success">Assign Student(s)</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
           </div>
         </form>

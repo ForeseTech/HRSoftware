@@ -7,16 +7,19 @@ const Database = require('./config/db');
 // Load models
 const Student = require('./models/studentModel');
 const User = require('./models/userModel');
+const Incharge = require('./models/inchargeModel');
 
 // Read JSON files
 const students = JSON.parse(fs.readFileSync(`${__dirname}/resources/data/students.json`, 'utf-8'));
 const users = JSON.parse(fs.readFileSync(`${__dirname}/resources/data/users.json`, 'utf-8'));
+const incharges = JSON.parse(fs.readFileSync(`${__dirname}/resources/data/incharges.json`, 'utf-8'));
 
 // Import into DB
 const importData = async () => {
   try {
     await Student.create(students);
     await User.create(users);
+    await Incharge.create(incharges);
 
     console.log('Data Imported...'.green);
     process.exit();
@@ -30,6 +33,7 @@ const deleteData = async () => {
   try {
     await Student.deleteMany();
     await User.deleteMany();
+    await Incharge.deleteMany();
 
     console.log('Data Destroyed...'.red);
     process.exit();

@@ -59,6 +59,8 @@ const logoutUser = (req, res, next) => {
 const renderUsers = asyncHandler(async (req, res, next) => {
   // Get all users
   const users = await User.find({}).populate('students');
+
+  // Get all student incharges
   const incharges = await Incharge.find({}).populate('interviewer');
 
   // Aggregate number of students per user
@@ -118,7 +120,10 @@ const getUser = asyncHandler(async (req, res, next) => {
   // Get user data from DB
   const user = await User.findById(userId).populate('students');
 
-  res.render('user/view', { user, name: req.user.name, role: req.user.role });
+  // Get all students
+  const students = await Student.find({});
+
+  res.render('user/view', { user, students, name: req.user.name, role: req.user.role });
 });
 
 // @desc       Delete particular interviewer/student incharge
@@ -138,23 +143,20 @@ const deleteUser = asyncHandler(async (req, res, next) => {
 // @access     Private (Admin, Student Incharge)
 const assignStudentToUser = asyncHandler(async (req, res, next) => {
   // Get register number and userId
-  const registerNum = req.body.register_num;
+  // const registerNum = req.body.register_num;
   const interviewerId = req.params.interviewerId;
-
-  // Search for Student
-  const student = await Student.findOne({ register_num: parseInt(registerNum) });
-
-  // Get studentId
-  const studentId = student['_id'];
+  const students = req.body.students;
 
   // Push intervirwerId to student.users array
-  await Student.updateOne({ _id: studentId }, { $push: { interviewers: interviewerId } });
+  students.forEach(async (student) => {
+    await Student.updateOne({ _id: student }, { $push: { interviewers: interviewerId } });
+  });
 
-  // Push studentId to users.students array
-  await User.updateOne({ _id: interviewerId }, { $push: { students: studentId } });
+  // Push studentId(s) to users.students array
+  await User.updateOne({ _id: interviewerId }, { $push: { students: students } });
 
   // Success Flash Message
-  req.flash('success', 'Student successfully assigned');
+  req.flash('success', 'Student(s) Successfully Assigned');
   res.redirect(`/users/${interviewerId}`);
 });
 

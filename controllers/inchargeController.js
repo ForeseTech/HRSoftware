@@ -69,6 +69,18 @@ const getIncharge = asyncHandler(async (req, res, next) => {
   res.render('incharge/view', { user, name: req.user.name });
 });
 
+// @desc       Delete a student incharge
+// @route      DELETE /incharges/:id
+// @access     Private (Admin)
+const deleteIncharge = asyncHandler(async (req, res, next) => {
+  // Find by Id and delete the incharge
+  await Incharge.findByIdAndDelete(req.params.id);
+
+  // Success Flash Message
+  req.flash('success', 'Student Incharge Successfully Deleted');
+  res.redirect('/users');
+});
+
 // @desc       Assign a student to a particular interviewer
 // @route      POST /incharges/:interviewerId/assign_student
 // @access     Private (Admin, Student Incharge)
@@ -132,6 +144,7 @@ module.exports = {
   loginIncharge,
   logoutIncharge,
   getIncharge,
+  deleteIncharge,
   assignStudentToUser,
   deallocateStudentToUser,
 };
