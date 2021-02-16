@@ -20,6 +20,16 @@ body {
   background: #555;
 }
 
+.scoreParameter {
+  margin-bottom: 0;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+textarea {
+  resize: none;
+}
+
 /* CSS for the footer */
 footer {
   display: block;

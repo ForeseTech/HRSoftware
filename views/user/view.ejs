@@ -129,8 +129,8 @@
       rateBtns[i].addEventListener('click', function () {
         const rateStudentForm = document.getElementById('rate-student-form');
 
-        const aptitudeScoresTable = document.querySelectorAll('#aptitudeScores tbody tr td');
-        const gdScoresTable = document.querySelectorAll('#gdScores tbody tr td');
+        const aptitudeScoresTable = document.querySelectorAll('#aptitudeScores tbody tr td:nth-of-type(2)');
+        const gdScoresTable = document.querySelectorAll('#gdScores tbody tr td:nth-of-type(2)');
 
         const userId = this.getAttribute('data-user') ?? '';
         const studentId = this.getAttribute('data-student') ?? '';
@@ -138,18 +138,18 @@
         rateStudentForm.action = `/users/${userId}/students/${studentId}`;
 
         const aptitudeScores = JSON.parse(this.getAttribute('data-aptitude'));
-        aptitudeScoresTable[0].innerHTML = aptitudeScores['core'];
-        aptitudeScoresTable[1].innerHTML = aptitudeScores['verbal'];
-        aptitudeScoresTable[2].innerHTML = aptitudeScores['quants'];
-        aptitudeScoresTable[3].innerHTML = aptitudeScores['programming'];
+        aptitudeScoresTable[0].innerHTML = `${aptitudeScores['core']} / 20`;
+        aptitudeScoresTable[1].innerHTML = `${aptitudeScores['verbal']} / 10`;
+        aptitudeScoresTable[2].innerHTML = `${aptitudeScores['quants']} / 10`;
+        aptitudeScoresTable[3].innerHTML = `${aptitudeScores['programming']} / 10`;
 
         const gdScores = JSON.parse(this.getAttribute('data-gd'));
-        gdScoresTable[0].innerHTML = gdScores['subject_knowledge'];
-        gdScoresTable[1].innerHTML = gdScores['communication_skills'];
-        gdScoresTable[2].innerHTML = gdScores['body_language'];
-        gdScoresTable[3].innerHTML = gdScores['listening_skills'];
-        gdScoresTable[4].innerHTML = gdScores['critical_thinking'];
-        gdScoresTable[5].innerHTML = gdScores['leadership_skills'];
+        gdScoresTable[0].innerHTML = `${gdScores['subject_knowledge']} / 5`;
+        gdScoresTable[1].innerHTML = `${gdScores['communication_skills']} / 5`;
+        gdScoresTable[2].innerHTML = `${gdScores['body_language']} / 5`;
+        gdScoresTable[3].innerHTML = `${gdScores['listening_skills']} / 5`;
+        gdScoresTable[4].innerHTML = `${gdScores['critical_thinking']} / 5`;
+        gdScoresTable[5].innerHTML = `${gdScores['leadership_skills']} / 5`;
       });
     }
   </script>

@@ -10,45 +10,71 @@
       </div>
 
       <div class="modal-body">
-        <p>Aptitude Test Results</p>
-        <table class="table table-bordered text-center" id="aptitudeScores">
-          <thead>
-            <th>Core (20)</th>
-            <th>Verbal (10)</th>
-            <th>Quants (10)</th>
-            <th>Coding (10)</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="row">
+          <div class="col-md-6">
+            <p class="text-uppercase"><b>Aptitude Test Results</b></p>
+            <table class="table table-sm table-bordered table-hover text-center" id="aptitudeScores">
+              <thead class="text-uppercase">
+                <th>Parameter</th>
+                <th>Score</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-uppercase"><b>Core</b></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="text-uppercase"><b>Verbal</b></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="text-uppercase"><b>Quants</b></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="text-uppercase"><b>Coding</b></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-        <p>Group Discussion Results</p>
-        <table class="table table-bordered text-center" id="gdScores">
-          <thead>
-            <th>Subject Knowledge (5)</th>
-            <th>Communication Skills (5)</th>
-            <th>Body Language (5)</th>
-            <th>Listening Skills (5)</th>
-            <th>Critical Thinking (5)</th>
-            <th>Leadership Skills (5)</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+          <div class="col-md-6">
+            <p class="text-uppercase"><b>Group Discussion Results</b></p>
+            <table class="table table-sm table-bordered table-hover text-center" id="gdScores">
+              <thead class="text-uppercase">
+                <th>Parameter</th>
+                <th>Score</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-uppercase"><b>Subject Knowledge</b></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="text-uppercase"><b>Communication Skills</b></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="text-uppercase"><b>Body Language</b></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="text-uppercase"><b>Listening Skills</b></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="text-uppercase"><b>Critical Thinking</b></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="text-uppercase"><b>Leadership Skills</b></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
         <form method="POST" class="needs-validation" id="rate-student-form" novalidate>
           <div class="form-row">
             <div class="col-md-4">
@@ -259,8 +285,17 @@
           </div>
 
           <div class="form-row">
-            <div class="form-group col-md-12">
-              <textarea name="comments" rows="10" placeholder="Enter Comments" class="form-control"></textarea>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label><b>Comments</b></label>
+                <textarea
+                  name="comments"
+                  rows="4"
+                  placeholder="Comments for the student (Strengths, Weaknesses, Areas of Imrprovement)"
+                  class="form-control"
+                  required
+                ></textarea>
+              </div>
             </div>
           </div>
           <div class="modal-footer">

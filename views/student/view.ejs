@@ -47,12 +47,13 @@
           </tr>
         </thead>
         <tbody>
-          <% student.interviewers.forEach((interviewer, index) => { %>
+          <% student.interviewers.forEach((interviewer, index) => { %> 
+            <% let interview_date = new Date(interviewer.date) %> %>
           <tr>
             <td><%= index + 1 %></td>
             <td><%= interviewer.name %></td>
             <td><%= interviewer.company %></td>
-            <td><%= interviewer.date %></td>
+            <td><%= interview_date.getDate() %> February, 2021</td>
             <td>
               <a href="/users/<%= interviewer._id %>" class="btn btn-dark btn-sm">View</a>
               <form

@@ -1,2 +1,3 @@
 views/student/modals/add.ejs
 views/user/modals/add.ejs
+views/student/view.ejs
