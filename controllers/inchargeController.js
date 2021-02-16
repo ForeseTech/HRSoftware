@@ -64,7 +64,6 @@ const getIncharge = asyncHandler(async (req, res, next) => {
 
   // Get Student Incharge data from DB
   const user = await Incharge.findById(inchargeId).populate({ path: 'interviewer', populate: { path: 'students' } });
-  console.log(user);
 
   res.render('incharge/view', { user, name: req.user.name });
 });

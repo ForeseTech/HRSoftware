@@ -172,7 +172,6 @@
                     <th>Username</th>
                     <th>Interviewer Assigned</th>
                     <th>Interviewer Company</th>
-                    <th>Student Incharge</th>
                     <th>Number of Students Assigned</th>
                     <th>Action</th>
                   </tr>
@@ -180,7 +179,7 @@
                 <tbody>
                   <% incharges.forEach(incharge => { %>
                     <% date = new Date(incharge.interviewer.date); %> 
-                    <% if(date.getDate() == 21) { %>
+                    <% if(date.getDate() == 20) { %>
                       <tr>
                         <td><%= incharge.name %></td>
                         <td><%= incharge.username %></td>

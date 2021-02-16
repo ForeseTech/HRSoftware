@@ -134,7 +134,8 @@ const getUser = asyncHandler(async (req, res, next) => {
 // @access     Private (Admin)
 const deleteUser = asyncHandler(async (req, res, next) => {
   // Find by Id and delete the user
-  await User.findByIdAndDelete(req.params.id);
+  const user = await User.findById(req.params.id);
+  user.remove();
 
   // Success Flash Message
   req.flash('success', 'User Successfully Deleted');

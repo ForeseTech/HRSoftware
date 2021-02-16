@@ -51,6 +51,16 @@ UserSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
+// Remove interviewerId from student.interviewers when an interviewer is to be deleted.
+// Delete the incharge whose is the incharge of the to be deleted interviewerId
+UserSchema.post('remove', async function (next) {
+  if (this.role === 'Interviewer') {
+    await this.model('Student').updateMany({ $pull: { interviewers: this._id } });
+
+    await this.model('Incharge').deleteOne({ interviewer: this._id });
+  }
+});
+
 // Match user entered password to hashed password in database
 UserSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);

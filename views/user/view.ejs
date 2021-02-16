@@ -47,16 +47,18 @@
         </thead>
         <tbody>
           <% user.students.forEach((student, index) => { %>
-          <tr>
-            <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
-            <td><%= index + 1 %></td>
-            <td><%= student.name %></td>
-            <td><%= student.dept %></td>
-            <td><%= sumOfValues(student.aptitude_scores) %> / 50</td>
-            <td><%= sumOfValues(student.gd_scores) %> / 30</td>
-            <% if(role === "Admin") { %>
-            <td><a href="/students/<%= student._id %>">View</a></td>
-            <% } %>
+            <tr>
+              <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
+              <td><%= index + 1 %></td>
+              <td><%= student.name %></td>
+              <td><%= student.dept %></td>
+              <td><%= sumOfValues(student.aptitude_scores) %> / 50</td>
+              <td><%= sumOfValues(student.gd_scores) %> / 30</td>
+              
+              <% if(role === "Admin") { %>
+                <td><a href="/students/<%= student._id %>">View</a></td>
+              <% } %>
+
               <% if(role === "Interviewer") { %>
                 <% let flag = 0 %> 
                 <% scores.forEach((score) => {  %> 
@@ -92,8 +94,7 @@
                   </form>
                 </td>
               <% } %>
-            </td>
-          </tr>
+            </tr>
           <% }); %>
         </tbody>
       </table>
