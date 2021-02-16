@@ -57,20 +57,32 @@
             <% if(role === "Admin") { %>
             <td><a href="/students/<%= student._id %>">View</a></td>
             <% } %>
-            <td>
               <% if(role === "Interviewer") { %>
-              <button
-                class="btn btn-secondary btn-sm rate-student"
-                data-user="<%= user._id %>"
-                data-student="<%= student._id %>"
-                data-aptitude="<%= JSON.stringify(student.aptitude_scores) %>"
-                data-gd="<%= JSON.stringify(student.gd_scores) %>"
-                data-toggle="modal"
-                data-target="#rateStudent"
-              >
-                Rate Student
-              </button>
-              <% } %> <% if(role === "Admin") { %>
+                <% let flag = 0 %> 
+                <% scores.forEach((score) => {  %> 
+                  <% if(score.student._id.equals(student._id)) { %>
+                    <% flag = 1 %>  
+                      <td class="text text-success">&#9989;</td>
+                  <% } %> 
+                <% }); %> 
+                <% if(flag == 0) { %> 
+                  <td>
+                    <button
+                      class="btn btn-secondary btn-sm rate-student px-4"
+                      data-user="<%= user._id %>"
+                      data-student="<%= student._id %>"
+                      data-aptitude="<%= JSON.stringify(student.aptitude_scores) %>"
+                      data-gd="<%= JSON.stringify(student.gd_scores) %>"
+                      data-toggle="modal"
+                      data-target="#rateStudent"
+                    >
+                      Rate Student
+                    </button>
+                  </td>
+                  <% } %> 
+              <% } %> 
+
+              <% if(role === "Admin") { %>
               <form
                 action="/users/<%= user._id %>/deallocate_student/<%= student._id %>"
                 method="POST"

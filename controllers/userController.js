@@ -115,15 +115,18 @@ const createUser = asyncHandler(async (req, res, next) => {
 // @access     Private (Admin, Interviewer)
 const getUser = asyncHandler(async (req, res, next) => {
   // Get User ID
-  const userId = req.params.id;
+  const interviewerId = req.params.id;
 
   // Get user data from DB
-  const user = await User.findById(userId).populate('students');
+  const user = await User.findById(interviewerId).populate('students');
 
   // Get all students
   const students = await Student.find({});
 
-  res.render('user/view', { user, students, name: req.user.name, role: req.user.role });
+  // Get scores of students who have been interviewed by the user
+  const scores = await Score.find({ interviewer: interviewerId }).populate('student');
+
+  res.render('user/view', { user, students, scores, name: req.user.name, role: req.user.role });
 });
 
 // @desc       Delete particular interviewer/student incharge
