@@ -13,14 +13,17 @@
         <form method="POST" action="/students" class="needs-validation" novalidate>
           <div class="form-group">
             <!-- Input for student registration number -->
+            <label><b>Register Number</b></label>
             <input type="text" name="register_num" class="form-control" placeholder="Enter Register Number" />
           </div>
           <div class="form-group">
             <!-- Input for student name -->
+            <label><b>Name</b></label>
             <input type="text" name="name" class="form-control" placeholder="Enter Name" />
           </div>
           <div class="form-group">
             <!-- Input for student department -->
+            <label><b>Department</b></label>
             <select name="dept" class="form-control" required>
               <option value="" selected disabled>Select Department</option>
               <option value="AUT">Automobile Engineering</option>
@@ -45,56 +48,86 @@
           </div>
           <div class="form-group">
             <!-- Input for student email -->
+            <label><b>E-Mail ID</b></label>
             <input type="email" name="email" class="form-control" placeholder="Enter E-Mail ID" />
           </div>
           <div class="form-group">
             <!-- Input for mode preference -->
+            <label><b>Mode Preference</b></label>
             <select name="preference" class="form-control">
               <option value="" disabled>Select Preference</option>
               <option value="Online" selected>Online</option>
               <option value="Offline">Offline</option>
             </select>
           </div>
+
           <!-- Input for GD Scores -->
-          <div class="form-group">
-            <label><b>Subject Knowledge</b></label>
-            <input type="number" name="subjectKnowledge" class="form-control" />
+          <p><b>GD Scores</b></p>
+          <div class="form-row">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label><b>Subject Knowledge</b></label>
+                <input type="number" name="subjectKnowledge" class="form-control" />
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label><b>Subject Knowledge</b></label>
+                <input type="number" name="communicationSkills" class="form-control" />
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label><b>Body Language</b></label>
+                <input type="number" name="bodyLanguage" class="form-control" />
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label><b>Listening Skills</b></label>
+                <input type="number" name="listeningSkills" class="form-control" />
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label><b>Critical Thinking</b></label>
+                <input type="number" name="criticalThinking" class="form-control" />
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label><b>Leadership Skills</b></label>
+                <input type="number" name="leadershipSkills" class="form-control" />
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label><b>Subject Knowledge</b></label>
-            <input type="number" name="communicationSkills" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label><b>Body Language</b></label>
-            <input type="number" name="bodyLanguage" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label><b>Listening Skills</b></label>
-            <input type="number" name="listeningSkills" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label><b>Critical Thinking</b></label>
-            <input type="number" name="criticalThinking" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label><b>Leadership Skills</b></label>
-            <input type="number" name="leadershipSkills" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label><b>Core</b></label>
-            <input type="number" name="core" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label><b>Verbal Ability</b></label>
-            <input type="number" name="verbal" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label><b>Quantitative Ability</b></label>
-            <input type="number" name="quants" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label><b>Programming</b></label>
-            <input type="number" name="programming" class="form-control" />
+
+          <p><b>Aptitude Scores</b></p>
+          <div class="form-row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label><b>Core</b></label>
+                <input type="number" name="core" class="form-control" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label><b>Verbal Ability</b></label>
+                <input type="number" name="verbal" class="form-control" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label><b>Quantitative Ability</b></label>
+                <input type="number" name="quants" class="form-control" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label><b>Programming</b></label>
+                <input type="number" name="programming" class="form-control" />
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-success">Save Student</button>

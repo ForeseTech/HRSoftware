@@ -19,7 +19,13 @@
 
 <select name="interviewer" class="form-control mt-2 d-none">
   <option value="" selected disabled>Select the HR You Are Incharge For</option>
-  <% users.forEach((user) => { if(user.role === "Interviewer") { %>
-  <option value="<%= user._id  %>"><%= user.name %> - <%= user.company %> (<%= user.date %>)</option>
-  <% }}); %>
+  <% users.forEach((user) => { %>
+    <% if(user.role === "Interviewer") { %>
+      <% date = new Date(user.date) %> 
+      <% day = date.getDate() %> 
+      <option value="<%= user._id  %>">
+        <%= user.name %> - <%= user.company %> (<%= day %> February, 2021)
+      </option>
+    <% } %>
+  <% }); %>
 </select>
