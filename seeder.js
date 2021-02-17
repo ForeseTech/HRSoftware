@@ -8,6 +8,7 @@ const Database = require('./config/db');
 const Student = require('./models/studentModel');
 const User = require('./models/userModel');
 const Incharge = require('./models/inchargeModel');
+const Score = require('./models/scoreModel');
 
 // Read JSON files
 const students = JSON.parse(fs.readFileSync(`${__dirname}/resources/data/students.json`, 'utf-8'));
@@ -34,6 +35,7 @@ const deleteData = async () => {
     await Student.deleteMany();
     await User.deleteMany();
     await Incharge.deleteMany();
+    await Score.deleteMany();
 
     console.log('Data Destroyed...'.red);
     process.exit();

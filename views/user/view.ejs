@@ -37,6 +37,7 @@
         <thead class="bg-light">
           <tr>
             <th>SNO</th>
+            <th>Register Number</th>
             <th>Name</th>
             <th>Department</th>
             <th>Aptitude Score</th>
@@ -52,6 +53,7 @@
             <tr>
               <% const sumOfValues = (obj) => Object.values(obj).reduce((a, b) => a + b) %>
               <td><%= index + 1 %></td>
+              <td><%= student.register_num  %></td>
               <td><%= student.name %></td>
               <td><%= student.dept %></td>
               <td><%= sumOfValues(student.aptitude_scores) %> / 50</td>
