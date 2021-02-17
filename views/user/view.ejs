@@ -63,12 +63,14 @@
 
               <% if(role === "Interviewer") { %>
                 <% let flag = 0 %> 
-                <% scores.forEach((score) => {  %> 
-                  <% if(score.student._id.equals(student._id)) { %>
-                    <% flag = 1 %>  
-                      <td class="text text-success">&#9989;</td>
-                  <% } %> 
-                <% }); %> 
+                <% if(scores && scores.length) { %> 
+                  <% scores.forEach((score) => {  %> 
+                    <% if(score.student._id.equals(student._id)) { %>
+                      <% flag = 1 %>  
+                        <td class="text text-success">&#9989;</td>
+                    <% } %> 
+                  <% }); %> 
+                <% } %> 
                 <% if(flag == 0) { %> 
                   <td>
                     <button
