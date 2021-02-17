@@ -27,9 +27,11 @@
       <div class="mt-2"><%- include("../partials/flash.ejs") %></div>
 
       <% if(role === "Admin") { %>
-      <button class="btn btn-primary mb-3 px-4" data-toggle="modal" data-target="#addStudent">Add Student(s)</button>
-      <h3>Interviewer Name : <%= user.name %></h3>
-      <h3>Interviewer Company : <%= user.company %></h3>
+        <button class="btn btn-primary mb-3 px-4" data-toggle="modal" data-target="#addStudent">Add Student(s)</button>
+        <h3>Interviewer Name : <%= user.name %></h3>
+        <h3>Interviewer Company : <%= user.company %></h3>
+        <% let date = new Date(user.date); %> 
+        <h3>Interview Date : <%= date.getDate() %> February, 2021</h3>
       <% } %>
       <table class="table table-bordered table-hover text-center" id="students">
         <thead class="bg-light">

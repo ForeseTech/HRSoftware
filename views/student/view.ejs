@@ -27,15 +27,86 @@
       <div class="mt-2"><%- include("../partials/flash.ejs") %></div>
 
       <!-- Student Info -->
-      <h3>Student Register Number : <%= student.register_num %></h3>
-      <h3>Student Name : <%= student.name %></h3>
-      <h3>Student Department : <%= student.dept %></h3>
+      <div class="row">
+        <div class="col-md-4">
+          <p class="text-uppercase"><b>Student Details</b></p>
+          <h3>Register Number : <%= student.register_num %></h3>
+          <h3>Name : <%= student.name %></h3>
+          <h3>Department : <%= student.dept %></h3>
+          <h3>Preference : <%= student.preference %></h3>
+        </div>
+
+        <!-- Table for Aptitude Scores -->
+        <div class="col-md-4">
+          <p class="text-uppercase"><b>Aptitude Test Results</b></p>
+          <table class="table table-sm table-bordered table-hover text-center" id="aptitudeScores">
+            <thead class="text-uppercase">
+              <th>Parameter</th>
+              <th>Score</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-uppercase"><b>Core</b></td>
+                <td><%= student.aptitude_scores["core"] %> / 20</td>
+              </tr>
+              <tr>
+                <td class="text-uppercase"><b>Verbal</b></td>
+                <td><%= student.aptitude_scores["verbal"] %> / 10</td>
+              </tr>
+              <tr>
+                <td class="text-uppercase"><b>Quants</b></td>
+                <td><%= student.aptitude_scores["quants"] %> / 10</td>
+              </tr>
+              <tr>
+                <td class="text-uppercase"><b>Coding</b></td>
+                <td><%= student.aptitude_scores["programming"] %> / 10</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Table for GD Scores -->
+        <div class="col-md-4">
+          <p class="text-uppercase"><b>Group Discussion Results</b></p>
+          <table class="table table-sm table-bordered table-hover text-center" id="gdScores">
+            <thead class="text-uppercase">
+              <th>Parameter</th>
+              <th>Score</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-uppercase"><b>Subject Knowledge</b></td>
+                <td><%= student.gd_scores["subject_knowledge"] %> / 5</td>
+              </tr>
+              <tr>
+                <td class="text-uppercase"><b>Communication Skills</b></td>
+                <td><%= student.gd_scores["communication_skills"] %> / 5</td>
+              </tr>
+              <tr>
+                <td class="text-uppercase"><b>Body Language</b></td>
+                <td><%= student.gd_scores["body_language"] %> / 5</td>
+              </tr>
+              <tr>
+                <td class="text-uppercase"><b>Listening Skills</b></td>
+                <td><%= student.gd_scores["listening_skills"] %> / 5</td>
+              </tr>
+              <tr>
+                <td class="text-uppercase"><b>Critical Thinking</b></td>
+                <td><%= student.gd_scores["critical_thinking"] %> / 5</td>
+              </tr>
+              <tr>
+                <td class="text-uppercase"><b>Leadership Skills</b></td>
+                <td><%= student.gd_scores["leadership_skills"] %> / 5</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       <!-- Add Interviewer Button -->
       <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addInterviewer">Add Interviewer</button>
 
       <!-- Student's table of interviews -->
-      <h2>List Of Interviews:-</h2>
       <table class="table table-bordered table-hover text-center" id="interviewers">
         <thead>
           <tr>
