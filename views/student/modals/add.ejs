@@ -11,6 +11,7 @@
 
       <div class="modal-body">
         <form method="POST" action="/students/<%= student._id %>/assign_user" class="needs-validation" novalidate>
+          <input type="hidden" name="_method" value="PUT" />
           <label><b>Select Interviewers (Press Ctrl while clicking to select multiple interviewers</b></label>
           <select name="users" class="form-control" size="15" multiple>
             <% users.forEach(user => { %>

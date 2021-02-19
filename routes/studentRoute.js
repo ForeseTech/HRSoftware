@@ -20,7 +20,7 @@ router
 router.route('/:id').get(isLoggedIn, authorize('Admin'), getStudent);
 
 // Student allocation and de-allocation routes
-router.route('/:id/assign_user').post(isLoggedIn, authorize('Admin'), assignInterviewerToStudent);
+router.route('/:id/assign_user').put(isLoggedIn, authorize('Admin'), assignInterviewerToStudent);
 router
   .route('/:studentId/deallocate_user/:interviewerId')
   .put(isLoggedIn, authorize('Admin'), deallocateInterviewerToStudent);

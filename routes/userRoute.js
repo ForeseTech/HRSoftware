@@ -25,7 +25,7 @@ router.route('/').get(isLoggedIn, authorize('Admin'), renderUsers).post(isLogged
 router.route('/:id').get(isLoggedIn, getUser).delete(isLoggedIn, authorize('Admin'), deleteUser);
 
 // Assign and Deallocate Student Routes
-router.route('/:interviewerId/assign_student').post(isLoggedIn, authorize('Admin'), assignStudentToUser);
+router.route('/:interviewerId/assign_student').put(isLoggedIn, authorize('Admin'), assignStudentToUser);
 router
   .route('/:interviewerId/deallocate_student/:studentId')
   .put(isLoggedIn, authorize('Admin'), deallocateStudentToUser);

@@ -20,7 +20,7 @@ router.route('/logout').get(logoutIncharge);
 router.route('/:id').get(authorizeIncharge, getIncharge).delete(isLoggedIn, authorize('Admin'), deleteIncharge);
 
 // Assign and Deallocate Student Routes
-router.route('/:interviewerId/assign_student').post(authorizeIncharge, assignStudentToUser);
+router.route('/:interviewerId/assign_student').put(authorizeIncharge, assignStudentToUser);
 router.route('/:interviewerId/deallocate_student/:studentId').put(authorizeIncharge, deallocateStudentToUser);
 
 module.exports = router;

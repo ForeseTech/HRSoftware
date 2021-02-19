@@ -91,10 +91,16 @@ const assignStudentToUser = asyncHandler(async (req, res, next) => {
   // Search for Student
   const student = await Student.findOne({ register_num: parseInt(registerNum) });
 
+  // If student does not exist, show error
+  if (!student) {
+    req.flash('error', 'Sorry, no such student exists. Please contact the concerned Executive Director');
+    return res.redirect(`/incharges/${req.user._id}`);
+  }
+
   // Get studentId
   const studentId = student['_id'];
 
-  // Push intervirwerId to student.users array
+  // Push intervierwerId to student.users array
   await Student.updateOne({ _id: studentId }, { $push: { interviewers: interviewerId } });
 
   // Push studentId to users.students array

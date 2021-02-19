@@ -11,6 +11,7 @@
 
       <div class="modal-body">
         <form method="POST" action="/users/<%= user._id %>/assign_student">
+          <input type="hidden" name="_method" value="PUT" />
           <label><b>Select Students (Press Ctrl while clicking to select multiple students)</b></label>
           <select name="students" class="form-control" size="18" multiple>
             <% students.forEach(student => { %>

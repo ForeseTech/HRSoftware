@@ -76,7 +76,7 @@
                 <% if(flag == 0) { %> 
                   <td>
                     <button
-                      class="btn btn-secondary btn-sm rate-student px-4"
+                      class="btn btn-secondary btn-sm px-4 rate-student"
                       data-user="<%= user._id %>"
                       data-student="<%= student._id %>"
                       data-aptitude="<%= JSON.stringify(student.aptitude_scores) %>"
@@ -104,16 +104,18 @@
           <% }); %>
         </tbody>
       </table>
+
+      <br>
+      <p class="mb-0">We shall forever remain deeply indebted to you for helping us make this event a grand success</p>
+      <p>
+        Please let us know your experience by filling up this <a href="https://docs.google.com/forms/d/e/1FAIpQLScb2qY-GrNbEkjHUmejVs4ZD7EM95-BAOGcwjGtpMwQM-gtuA/viewform?usp=sf_link">feedback form</a>.</p>
     </main>
 
     <!-- Include Footer Partial -->
     <%- include("../partials/footer.ejs"); %>
 
-    <!-- Assign a student to an interviewer -->
-    <%- include("./modals/add.ejs") %>
-
     <!-- Score a student -->
-    <%- include("./modals/rate.ejs") %>
+    <%- include("./modals/rate.ejs"); %>
   </body>
 
   <!-- jQuery -->
