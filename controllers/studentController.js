@@ -91,9 +91,13 @@ const assignInterviewerToStudent = asyncHandler(async (req, res, next) => {
   await Student.updateOne({ _id: studentId }, { $push: { interviewers: interviewers } });
 
   // Push studentId to users.students array
-  interviewers.forEach(async (interviewer) => {
-    await User.updateOne({ _id: interviewer }, { $push: { students: studentId } });
-  });
+  if (Array.isArray(interviewers)) {
+    interviewers.forEach(async (interviewer) => {
+      await User.updateOne({ _id: interviewer }, { $push: { students: studentId } });
+    });
+  } else {
+    await User.updateOne({ _id: interviewers }, { $push: { students: studentId } });
+  }
 
   // Success flash message
   req.flash('success', 'Interviewer Successfully Assigned');

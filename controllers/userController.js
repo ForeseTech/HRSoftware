@@ -152,9 +152,13 @@ const assignStudentToUser = asyncHandler(async (req, res, next) => {
   const students = req.body.students;
 
   // Push intervirwerId to student.users array
-  students.forEach(async (student) => {
-    await Student.updateOne({ _id: student }, { $push: { interviewers: interviewerId } });
-  });
+  if (Array.isArray(students)) {
+    students.forEach(async (student) => {
+      await Student.updateOne({ _id: student }, { $push: { interviewers: interviewerId } });
+    });
+  } else {
+    await Student.updateOne({ _id: students }, { $push: { interviewers: interviewerId } });
+  }
 
   // Push studentId(s) to users.students array
   await User.updateOne({ _id: interviewerId }, { $push: { students: students } });
