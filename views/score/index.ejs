@@ -30,6 +30,7 @@
           <th>Interviewer Name</th>
           <th>Interviewer Company</th>
           <th>Comments</th>
+          <th>Action</th>
         </thead>
         <tbody>
           <% scores.forEach((score, index) => { %>
@@ -40,6 +41,12 @@
             <td><%= score.interviewer.name %></td>
             <td><%= score.interviewer.company %></td>
             <td><%= score.comments %></td>
+            <td>
+              <form action="/scores/<%= score._id %>" method="POST" class="d-inline">
+                <input type="hidden" name="_method" value="DELETE" />
+                <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+              </form>
+            </td>
           </tr>
           <% }) %>
         </tbody>
