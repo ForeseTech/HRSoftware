@@ -130,20 +130,6 @@ const deallocateStudentToUser = asyncHandler(async (req, res, next) => {
   res.redirect(`/incharges/${req.user._id}`);
 });
 
-// @desc       Logout student incharge
-// @route      GET /incharges/logout
-// @access     Public
-const logoutUser = (req, res, next) => {
-  res.cookie('token', 'none', {
-    expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true,
-  });
-
-  // Success flash response
-  req.flash('success', 'You Have Logged Out');
-  res.redirect('/users/login');
-};
-
 // Get token from model, create cookie and send response
 const sendTokenResponse = (user, req, res) => {
   const token = user.getSignedJwtToken();
@@ -166,5 +152,5 @@ module.exports = {
   deleteIncharge,
   assignStudentToUser,
   deallocateStudentToUser,
-  logoutUser,
+  logoutIncharge,
 };

@@ -2,6 +2,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
+// Import necessary modules
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
@@ -10,10 +11,14 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const methodOverride = require('method-override');
 
+// Include necessary routes
 const studentRouter = require('./routes/studentRoute');
 const userRouter = require('./routes/userRoute');
 const inchargeRouter = require('./routes/inchargeRoute');
 const scoreRouter = require('./routes/scoreRoute');
+
+// Include error handling middleware
+const errorHandler = require('./middleware/error');
 
 // Instantiate express app
 const app = express();
@@ -80,6 +85,9 @@ app.use('/students', studentRouter);
 app.use('/users', userRouter);
 app.use('/incharges', inchargeRouter);
 app.use('/scores', scoreRouter);
+
+// Error handling middleware
+app.use(errorHandler);
 
 // Export app to server
 module.exports = app;

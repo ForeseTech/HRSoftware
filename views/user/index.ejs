@@ -262,19 +262,33 @@
       </div>
     </main>
 
-    <%- include('../partials/footer.ejs'); %> <%- include("./modals/new.ejs") %> 
+  <!-- Footer Partial -->
+  <%- include('../partials/footer.ejs'); %> 
+  
+  <!-- New User Modal -->
+  <%- include("./modals/new.ejs"); %> 
+
+  </body>
+
+  <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
+  <!-- PopperJS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 
+  <!-- BootstrapJS -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+  <!-- DataTablesJS -->
   <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 
+  <!-- Bootstrap DataTables -->
   <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
 
+  <!-- Form Validation -->
   <script src="/js/validateForms.js"></script>
 
+  <!-- Initialize DataTables -->
   <script>
     $(document).ready(function () {
       $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
