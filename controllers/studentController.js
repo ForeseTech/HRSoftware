@@ -45,6 +45,13 @@ const getStudent = asyncHandler(async (req, res, next) => {
 const createStudent = asyncHandler(async (req, res, next) => {
   const { register_num, name, dept, section, email, preference } = req.body;
 
+  const student = await Student.findOne({ register_num: register_num });
+  if (student) {
+    // Error flash message
+    req.flash('error', 'This student registration number already exists in the database and hence cannot be created.');
+    return res.redirect('/students');
+  }
+
   let gd_scores = {},
     aptitude_scores = {};
 
