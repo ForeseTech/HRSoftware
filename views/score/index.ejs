@@ -21,7 +21,11 @@
     <!-- Include Navbar Partial -->
     <%- include("../partials/navbar.ejs"); %>
 
+    <!-- Container class begins here -->
     <main class="container">
+      <!-- Flash Message Partial -->
+      <div class="mt-2"><%- include("../partials/flash.ejs") %></div>
+
       <table class="table table-bordered table-hover text-center" id="scores">
         <thead>
           <th>SNO</th>
@@ -52,6 +56,7 @@
         </tbody>
       </table>
     </main>
+    <!-- Container class ends here -->
 
     <!-- Include Footer Partial -->
     <%- include("../partials/footer.ejs"); %>
