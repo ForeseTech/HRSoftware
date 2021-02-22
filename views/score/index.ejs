@@ -39,7 +39,6 @@
           <!-- Table for scores for interviews on 20 Feb -->
           <table class="table table-bordered table-hover text-center">
             <thead>
-              <th>SNO</th>
               <th>Register Number</th>
               <th>Student Name</th>
               <th>Interviewer Name</th>
@@ -48,11 +47,10 @@
               <th>Action</th>
             </thead>
             <tbody>
-              <% scores.forEach((score, index) => { %>
+              <% scores.forEach(score => { %>
                 <% date = new Date(score.interviewer.date); %> 
                 <% if(date.getDate() == 20) { %>
                   <tr>
-                    <td><%= index + 1%></td>
                     <td><%= score.student.register_num %></td>
                     <td><%= score.student.name %></td>
                     <td><%= score.interviewer.name %></td>
@@ -75,7 +73,6 @@
           <!-- Table for scores for interviews on 20 Feb -->
           <table class="table table-bordered table-hover text-center">
             <thead>
-              <th>SNO</th>
               <th>Register Number</th>
               <th>Student Name</th>
               <th>Interviewer Name</th>
@@ -84,11 +81,10 @@
               <th>Action</th>
             </thead>
             <tbody>
-              <% scores.forEach((score, index) => { %>
+              <% scores.forEach(score => { %>
                 <% date = new Date(score.interviewer.date); %> 
                 <% if(date.getDate() == 20) { %>
                   <tr>
-                    <td><%= index + 1%></td>
                     <td><%= score.student.register_num %></td>
                     <td><%= score.student.name %></td>
                     <td><%= score.interviewer.name %></td>
