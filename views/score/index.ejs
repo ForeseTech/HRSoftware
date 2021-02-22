@@ -26,41 +26,94 @@
       <!-- Flash Message Partial -->
       <div class="mt-2"><%- include("../partials/flash.ejs") %></div>
 
-      <table class="table table-bordered table-hover text-center" id="scores">
-        <thead>
-          <th>SNO</th>
-          <th>Register Number</th>
-          <th>Student Name</th>
-          <th>Interviewer Name</th>
-          <th>Interviewer Company</th>
-          <th>Comments</th>
-          <th>Action</th>
-        </thead>
-        <tbody>
-          <% scores.forEach((score, index) => { %>
-          <tr>
-            <td><%= index + 1%></td>
-            <td><%= score.student.register_num %></td>
-            <td><%= score.student.name %></td>
-            <td><%= score.interviewer.name %></td>
-            <td><%= score.interviewer.company %></td>
-            <td><%= score.comments %></td>
-            <td>
-              <form action="/scores/<%= score._id %>" method="POST" class="d-inline">
-                <input type="hidden" name="_method" value="DELETE" />
-                <button class="btn btn-sm btn-danger" type="submit">Delete</button>
-              </form>
-            </td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
+      <!-- Navlist for interview date -->
+      <nav class="mb-3">
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <a class="nav-item nav-link active" data-toggle="tab" href="#scores20" role="tab">20<sup>th</sup> February, 2021</a>
+          <a class="nav-item nav-link" data-toggle="tab" href="#scores21" role="tab">21<sup>st</sup> February, 2021</a>
+        </div>
+      </nav>
+
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="scores20" role="tabpanel">
+          <!-- Table for scores for interviews on 20 Feb -->
+          <table class="table table-bordered table-hover text-center">
+            <thead>
+              <th>SNO</th>
+              <th>Register Number</th>
+              <th>Student Name</th>
+              <th>Interviewer Name</th>
+              <th>Interviewer Company</th>
+              <th>Comments</th>
+              <th>Action</th>
+            </thead>
+            <tbody>
+              <% scores.forEach((score, index) => { %>
+                <% date = new Date(score.interviewer.date); %> 
+                <% if(date.getDate() == 20) { %>
+                  <tr>
+                    <td><%= index + 1%></td>
+                    <td><%= score.student.register_num %></td>
+                    <td><%= score.student.name %></td>
+                    <td><%= score.interviewer.name %></td>
+                    <td><%= score.interviewer.company %></td>
+                    <td><%= score.comments %></td>
+                    <td>
+                      <form action="/scores/<%= score._id %>" method="POST" class="d-inline">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+                <% } %> 
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tab-pane fade" id="scores21" role="tabpanel">
+          <!-- Table for scores for interviews on 20 Feb -->
+          <table class="table table-bordered table-hover text-center">
+            <thead>
+              <th>SNO</th>
+              <th>Register Number</th>
+              <th>Student Name</th>
+              <th>Interviewer Name</th>
+              <th>Interviewer Company</th>
+              <th>Comments</th>
+              <th>Action</th>
+            </thead>
+            <tbody>
+              <% scores.forEach((score, index) => { %>
+                <% date = new Date(score.interviewer.date); %> 
+                <% if(date.getDate() == 20) { %>
+                  <tr>
+                    <td><%= index + 1%></td>
+                    <td><%= score.student.register_num %></td>
+                    <td><%= score.student.name %></td>
+                    <td><%= score.interviewer.name %></td>
+                    <td><%= score.interviewer.company %></td>
+                    <td><%= score.comments %></td>
+                    <td>
+                      <form action="/scores/<%= score._id %>" method="POST" class="d-inline">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+                <% } %> 
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </main>
     <!-- Container class ends here -->
 
     <!-- Include Footer Partial -->
     <%- include("../partials/footer.ejs"); %>
   </body>
+
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
@@ -79,8 +132,14 @@
   <!-- Script for Form Validation -->
   <script src="/js/validateForms.js"></script>
 
-  <!-- Initialize Datatables -->
+  <!-- Initialize DataTables -->
   <script>
-    $('#scores').DataTable({ paging: false });
+    $(document).ready(function () {
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+      });
+      $('table.table').DataTable({ paging: false });
+    });
   </script>
+
 </html>

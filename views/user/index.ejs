@@ -189,7 +189,7 @@
                         <td><%= incharge.interviewer.company %></td>
                         <td><%= studentsPerInterviewer[incharge.interviewer._id] %></td>
                         <td>
-                          <a href="/incharges/<%= incharge._id %>" class="btn btn-sm btn-secondary">View</a>
+                          <a href="/users/<%= incharge.interviewer._id %>" class="btn btn-sm btn-secondary">View</a>
                           
                           <form action="/incharges/<%= incharge._id %>" method="POST" class="d-inline">
                             <input type="hidden" name="_method" value="DELETE" />
@@ -225,7 +225,7 @@
                         <td><%= incharge.interviewer.company %></td>
                         <td><%= studentsPerInterviewer[incharge.interviewer._id] %></td>
                         <td>
-                          <a href="/incharges/<%= incharge._id %>" class="btn btn-sm btn-secondary">View</a>
+                          <a href="/users/<%= incharge.interviewer._id %>" class="btn btn-sm btn-secondary">View</a>
                           
                           <form action="/incharges/<%= incharge._id %>" method="POST" class="d-inline">
                             <input type="hidden" name="_method" value="DELETE" />
