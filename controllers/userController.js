@@ -121,7 +121,7 @@ const getUser = asyncHandler(async (req, res, next) => {
   const user = await User.findById(interviewerId).populate('students');
 
   // Get all students
-  const students = await Student.find({});
+  const students = await Student.find({}).sort({ dept: 1, register_num: 1 });
 
   // Get scores of students who have been interviewed by the user
   const scores = await Score.find({ interviewer: interviewerId }).populate('student');

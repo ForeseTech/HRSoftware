@@ -9,6 +9,7 @@ const StudentSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
+    uppercase: true,
     trim: true,
   },
   dept: {

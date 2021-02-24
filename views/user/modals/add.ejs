@@ -10,20 +10,39 @@
       </div>
 
       <div class="modal-body">
-        <form method="POST" action="/users/<%= user._id %>/assign_student">
+        <form method="POST" action="/users/<%= user._id %>/assign_student" id="assignStudentForm">
           <input type="hidden" name="_method" value="PUT" />
           <label><b>Select Students (Press Ctrl while clicking to select multiple students)</b></label>
-          <select name="students" class="form-control" size="18" multiple>
-            <% students.forEach(student => { %>
-              <% if(student.preference === "Online") { %>
-                <% if(!student.interviewers.includes(user._id)) { %>  
-                  <option value="<%= student._id %>">
-                    <%= student.register_num %> - <%= student.name %> (<%= student.dept %>)
-                  </option>
-                <% } %> 
-              <% } %> 
-            <% }); %>
-          </select>
+          <div class="form-row">
+            <div class="col-md-1">
+              <div class="form-group">
+                <select name="dept" class="form-control" size="9" multiple>
+                  <option value="AUT">AUT</option>
+                  <option value="BIO">BIO</option>
+                  <option value="CHE">CHE</option>
+                  <option value="CIV">CIV</option>
+                  <option value="CSE">CSE</option>
+                  <option value="ECE">ECE</option>
+                  <option value="EEE">EEE</option>
+                  <option value="INT">INT</option>
+                  <option value="MEC">MEC</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-11">
+              <div class="form-group">
+                <select name="students" class="form-control" size="18" multiple>
+                <% students.forEach(student => { %>
+                  <% if(!student.interviewers.includes(user._id)) { %>  
+                    <option value="<%= student._id %>" class="d-none">
+                      <%= student.register_num %> - <%= student.name %> (<%= student.dept %>)
+                    </option>
+                  <% } %> 
+                <% }); %>
+                </select>
+              </div>
+            </div>
+          </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-success">Assign Student(s)</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
@@ -33,3 +52,28 @@
     </div>
   </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script>
+  const assignStudentForm = document.getElementById("assignStudentForm");
+  const deptInput = assignStudentForm.elements[1];
+  const studentInput = assignStudentForm.elements[2];
+
+  deptInput.addEventListener("change", function(e) {
+    let depts  = $(e.target).val();
+    for(let i = 0 ; i < studentInput.length; i++) {
+      let student = studentInput.options[i];
+      let studentText = student.text
+      let deptRegex = /\((.*)\)/;
+      let studentDept = studentText.match(deptRegex)[1]
+      if(!depts.includes(studentDept)) {
+        student.classList.add("d-none")
+      } else {
+        student.classList.remove("d-none")
+      }
+        console.log(student)
+
+    }
+  })
+</script>
