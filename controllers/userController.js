@@ -58,7 +58,7 @@ const logoutUser = (req, res, next) => {
 // @access     Private (Admin)
 const renderUsers = asyncHandler(async (req, res, next) => {
   // Get all users
-  const users = await User.find({}).populate('students');
+  const users = await User.find({}).sort('-createdAt').populate('students');
 
   // Get all student incharges
   const incharges = await Incharge.find({}).populate('interviewer');

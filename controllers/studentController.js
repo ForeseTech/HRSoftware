@@ -34,7 +34,7 @@ const getStudent = asyncHandler(async (req, res, next) => {
   // Get student data from DB
   const student = await Student.findById(studentId).populate('interviewers');
 
-  const users = await User.find({});
+  const users = await User.find({}).sort({ createdAt: 1 });
 
   res.render('student/view', { student, users, name: req.user.name, role: req.user.role });
 });

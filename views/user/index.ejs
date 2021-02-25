@@ -54,6 +54,16 @@
                   >21<sup>st</sup> February, 2021</a
                 >
               </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#interviewer27" role="tab"
+                  >27<sup>st</sup> February, 2021</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#interviewer28" role="tab"
+                  >28<sup>st</sup> February, 2021</a
+                >
+              </li>
             </ul>
             <!-- Interviewers participating on 20 Febrauary, 2021 -->
             <div class="tab-pane fade show active" id="interviewer20" role="tabpanel">
@@ -103,6 +113,7 @@
                 </tbody>
               </table>
             </div>
+
             <!-- Interviewers participating on 21 Febrauary, 2021 -->
             <div class="tab-pane fade" id="interviewer21" role="tabpanel">
               <table class="table table-bordered table-hover text-center" id="interviewers">
@@ -151,8 +162,107 @@
                 </tbody>
               </table>
             </div>
+
+          <!-- Interviewers participating on 27 Febrauary, 2021 -->
+            <div class="tab-pane fade" id="interviewer27" role="tabpanel">
+              <table class="table table-bordered table-hover text-center" id="interviewers">
+                <thead class="bg-light">
+                  <tr>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Company</th>
+                    <th>Student Incharge</th>
+                    <th>Number of Interviewees</th>
+                    <th>View</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% users.forEach((user, index) => { %>
+                    <% interview_date = new Date(user.date); %> 
+                    <% if(interview_date.getDate() == 27 && user.role === "Interviewer") { %>
+                      <tr>
+                        <td><%= user.username %></td>
+                        <td><%= user.name %></td>
+                        <td><%= user.company %></td>
+                        <td>
+                          <% let flag = 0 %> 
+                          <% incharges.forEach((incharge) => { %> 
+                            <% if(incharge.interviewer._id.equals(user._id)) { %> 
+                              <% flag = 1 %> 
+                              <%= incharge.name %> 
+                            <% } %> 
+                          <% }); %> 
+                          <% if(flag == 0) { %> 
+                            <b>Not Yet Assigned</b>
+                          <% } %> 
+                        </td>
+                        <td><%= studentsPerInterviewer[user._id] %></td>
+                        <td>
+                          <a href="/users/<%= user._id %>" class="btn btn-sm btn-secondary">View</a>
+                        
+                          <form action="/users/<%= user._id %>" method="POST" class="d-inline">
+                            <input type="hidden" name="_method" value="DELETE" />
+                            <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                          </form>
+                        </td>
+                      </tr>
+                    <% } %> 
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
+
+          <!-- Interviewers participating on 28 Febrauary, 2021 -->
+            <div class="tab-pane fade" id="interviewer28" role="tabpanel">
+              <table class="table table-bordered table-hover text-center" id="interviewers">
+                <thead class="bg-light">
+                  <tr>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Company</th>
+                    <th>Student Incharge</th>
+                    <th>Number of Interviewees</th>
+                    <th>View</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% users.forEach((user, index) => { %>
+                    <% interview_date = new Date(user.date); %> 
+                    <% if(interview_date.getDate() == 28 && user.role === "Interviewer") { %>
+                      <tr>
+                        <td><%= user.username %></td>
+                        <td><%= user.name %></td>
+                        <td><%= user.company %></td>
+                        <td>
+                          <% let flag = 0 %> 
+                          <% incharges.forEach((incharge) => { %> 
+                            <% if(incharge.interviewer._id.equals(user._id)) { %> 
+                              <% flag = 1 %> 
+                              <%= incharge.name %> 
+                            <% } %> 
+                          <% }); %> 
+                          <% if(flag == 0) { %> 
+                            <b>Not Yet Assigned</b>
+                          <% } %> 
+                        </td>
+                        <td><%= studentsPerInterviewer[user._id] %></td>
+                        <td>
+                          <a href="/users/<%= user._id %>" class="btn btn-sm btn-secondary">View</a>
+                        
+                          <form action="/users/<%= user._id %>" method="POST" class="d-inline">
+                            <input type="hidden" name="_method" value="DELETE" />
+                            <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                          </form>
+                        </td>
+                      </tr>
+                    <% } %> 
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
+      </div>
 
         <div class="tab-pane fade" id="incharge" role="tabpanel">
           <div class="tab-content" id="nav-tabContent">
