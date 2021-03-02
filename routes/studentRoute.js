@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  renderStudent,
+  renderStudents,
   getStudent,
   createStudent,
   deleteStudent,
@@ -15,7 +15,7 @@ const { isLoggedIn, authorize } = require('../middleware/auth');
 // View student info routes
 router
   .route('/')
-  .get(isLoggedIn, authorize('Admin'), renderStudent)
+  .get(isLoggedIn, authorize('Admin'), renderStudents)
   .post(isLoggedIn, authorize('Admin'), createStudent);
 router.route('/:id').get(isLoggedIn, authorize('Admin'), getStudent);
 

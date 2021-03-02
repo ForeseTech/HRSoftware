@@ -63,15 +63,12 @@ const renderUsers = asyncHandler(async (req, res, next) => {
   // Get all student incharges
   const incharges = await Incharge.find({}).populate('interviewer');
 
-  // Aggregate number of students per interviewer
-  const students = await User.aggregate([
-    { $match: { role: 'Interviewer' } },
-    { $project: { count: { $size: '$students' } } },
-  ]);
+  const numOfStudents = await Score.aggregate([{ $group: { _id: '$interviewer', count: { $sum: 1 } } }]);
 
+  // Convert numOfStudents to a dictionary-like object
   let studentsPerInterviewer = {};
-  for (let i = 0; i < students.length; i++) {
-    studentsPerInterviewer[students[i]._id] = students[i].count;
+  for (let i = 0; i < numOfStudents.length; i++) {
+    studentsPerInterviewer[numOfStudents[i]._id] = numOfStudents[i].count;
   }
 
   res.render('user/index', {

@@ -1,6 +1,7 @@
 // Include required models
 const Student = require('../models/studentModel');
 const User = require('../models/userModel');
+const Score = require('../models/scoreModel');
 
 // Middleware for handling async methods
 const asyncHandler = require('../middleware/async');
@@ -8,17 +9,16 @@ const asyncHandler = require('../middleware/async');
 // @desc       View all students
 // @route      GET /students
 // @access     Private (Admin)
-const renderStudent = asyncHandler(async (req, res, next) => {
+const renderStudents = asyncHandler(async (req, res, next) => {
   // Get all students, sort by department and then by register number
   const students = await Student.find({}).sort({ dept: 1, register_num: 1 });
 
-  // Get number of interviews per student
-  const numOfInterviews = await Student.aggregate([{ $project: { interviewers: { $size: '$interviewers' } } }]);
+  const numOfInterviews = await Score.aggregate([{ $group: { _id: '$student', count: { $sum: 1 } } }]);
 
   // Convert numOfInterviews to a dictionary-like object
   let interviewsPerStudent = {};
   for (let i = 0; i < numOfInterviews.length; i++) {
-    interviewsPerStudent[numOfInterviews[i]._id] = numOfInterviews[i].interviewers;
+    interviewsPerStudent[numOfInterviews[i]._id] = numOfInterviews[i].count;
   }
 
   res.render('student/index', { students, interviewsPerStudent, name: req.user.name, role: req.user.role });
@@ -131,7 +131,7 @@ const deallocateInterviewerToStudent = asyncHandler(async (req, res, next) => {
 });
 
 module.exports = {
-  renderStudent,
+  renderStudents,
   getStudent,
   createStudent,
   deleteStudent,

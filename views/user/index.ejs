@@ -75,7 +75,7 @@
                     <th>Name</th>
                     <th>Company</th>
                     <th>Student Incharge</th>
-                    <th>Students Assigned</th>
+                    <th>Number of Interviews</th>
                     <th>View</th>
                   </tr>
                 </thead>
@@ -124,7 +124,7 @@
                     <th>Name</th>
                     <th>Company</th>
                     <th>Student Incharge</th>
-                    <th>Number of Interviewees</th>
+                    <th>Number of Interviews</th>
                     <th>View</th>
                   </tr>
                 </thead>
@@ -173,7 +173,7 @@
                     <th>Name</th>
                     <th>Company</th>
                     <th>Student Incharge</th>
-                    <th>Number of Interviewees</th>
+                    <th>Number of Interviews</th>
                     <th>View</th>
                   </tr>
                 </thead>
@@ -197,7 +197,7 @@
                             <b>Not Yet Assigned</b>
                           <% } %> 
                         </td>
-                        <td><%= studentsPerInterviewer[user._id] %></td>
+                        <td><%= studentsPerInterviewer[user._id] ? studentsPerInterviewer[user._id] : 0 %></td>
                         <td>
                           <a href="/users/<%= user._id %>" class="btn btn-sm btn-secondary">View</a>
                         
@@ -222,7 +222,7 @@
                     <th>Name</th>
                     <th>Company</th>
                     <th>Student Incharge</th>
-                    <th>Number of Interviewees</th>
+                    <th>Number of Interviews</th>
                     <th>View</th>
                   </tr>
                 </thead>
@@ -246,7 +246,7 @@
                             <b>Not Yet Assigned</b>
                           <% } %> 
                         </td>
-                        <td><%= studentsPerInterviewer[user._id] %></td>
+                        <td><%= studentsPerInterviewer[user._id] ? studentsPerInterviewer[user._id] : 0 %></td>
                         <td>
                           <a href="/users/<%= user._id %>" class="btn btn-sm btn-secondary">View</a>
                         
@@ -277,7 +277,7 @@
               </li>
             </ul>
 
-            <!-- Studen Incharges on 20 February -->
+            <!-- Student Incharges on 20 February -->
             <div class="tab-pane fade show active" id="incharge20" role="tabpanel">
               <table class="table table-bordered table-hover text-center" id="interviewers">
                 <thead class="bg-light">

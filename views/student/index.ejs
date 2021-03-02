@@ -63,7 +63,9 @@
                 <td class="text-center"><%= student.section != "" ? student.section : "-" %></td>
                 <td><%= sumOfValues(student.aptitude_scores) %></td>
                 <td><%= sumOfValues(student.gd_scores) %></td>
-                <td class="text-center"><%= interviewsPerStudent[student._id] %></td>
+                <td class="text-center">
+                  <%= interviewsPerStudent[student._id] ? interviewsPerStudent[student._id] : 0 %>
+                </td>
                 <td><a href="/students/<%= student._id %>">View</a></td>
               </tr>
               <% } %> <% }); %>
@@ -96,7 +98,9 @@
                 <td class="text-center"><%= student.section %></td>
                 <td><%= sumOfValues(student.aptitude_scores) %></td>
                 <td><%= sumOfValues(student.gd_scores) %></td>
-                <td class="text-center"><%= interviewsPerStudent[student._id] %></td>
+                <td class="text-center">
+                  <%= interviewsPerStudent[student._id] ? interviewsPerStudent[student._id] : 0 %>
+                </td>
                 <td><a href="/students/<%= student._id %>">View</a></td>
               </tr>
               <% } %> <% }); %>
