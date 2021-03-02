@@ -63,7 +63,7 @@ const renderUsers = asyncHandler(async (req, res, next) => {
   // Get all student incharges
   const incharges = await Incharge.find({}).populate('interviewer');
 
-  // Aggregate number of students per user
+  // Aggregate number of students per interviewer
   const students = await User.aggregate([
     { $match: { role: 'Interviewer' } },
     { $project: { count: { $size: '$students' } } },
